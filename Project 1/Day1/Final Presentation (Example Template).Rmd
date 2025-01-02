@@ -1,0 +1,51 @@
+---
+title: "INSERT TITLE HERE"
+author: "Anna Brown, Rishika Deshmukh, and Ada Zhang"
+date: "`r Sys.Date()`"
+output:
+     html_document:
+          toc: true
+          toc_depth: 2
+          toc_float: true
+          theme: cosmo
+          code_folding: hide
+---
+
+# INTRODUCTION
+Initial Problem
+
+# METHODOLOGY
+Dataset Review and Background Research
+
+We originally accessed these data sets on January 2, 2025.
+
+Variables in my (cleaned) dataset include:
+
+| Variable             | Description                                                    |
+|----------------------|----------------------------------------------------------------|
+| Var 1                | Description 1                                                  |
+
+
+Source of Data
+[www.pewresearch.org](https://www.pewresearch.org/politics/2023/07/12/voter-turnout-2018-2022/){.btn .btn-primary}
+
+## DATA CLEANING
+#### LOADING PACKAGES
+```{r message=FALSE}
+library(tidyverse)
+library(dplyr)
+library(patchwork)
+library(DT)
+```
+#### IMPORT ORIGINAL DATA
+```{r}
+# Set the file path
+file_path <- "/Users/annabrown/Desktop/Final Project/Original Dataframes/2016-2022 Validated Voter Detailed Tables - Sheet 1.csv"
+
+# Import rows 4 to 174 of the CSV file into R
+df <- read.csv(file_path, skip = 3, nrows = 171)
+```
+#### GENERAL CLEANING
+
+#### Analysis
+# CONCLUSION

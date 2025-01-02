@@ -1,0 +1,21 @@
+---
+title: "Day2Presentation"
+output: html_document
+date: "2025-01-02"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Initial Problem: 
+**Does a higher GDP correlate with greater issuance of F1 and H1B visas?**
+
+# Follow-ups
+Additionally, we can explore potential secondary questions, such as:
+
+- **How do presidential terms relate to the number of visa issuances?**
+
+- **What policies drive fluctuations in F1 and H1B visa approvals?**
+
+

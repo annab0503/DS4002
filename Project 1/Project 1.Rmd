@@ -15,8 +15,6 @@ output:
 This analysis delves into the relationship between a country's GDP and the issuance of F1 (student) and H1B (work) visas over time. By examining data across various countries and continents, we aim to uncover patterns that highlight the influence of economic performance on visa distribution. We hypothesize that higher GDP correlates with an increased number of F1 and H1B visas issued. Conversely, countries experiencing slower economic growth may see fewer visas granted. 
 
 # METHODOLOGY
-*Describe data cleaning/merging process and location of replication materials (link to github)*
-
 To analyze our initial problem, we used three data sources (originally accessed on January 2, 2025):
 
 1. [U.S. State Department](https://travel.state.gov/content/travel/en/legal/visa-law0/visa-statistics/nonimmigrant-visa-statistics.html){.btn .btn-primary}

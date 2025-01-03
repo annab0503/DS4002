@@ -12,62 +12,73 @@ output:
 ---
 
 # INTRODUCTION
-This analysis delves into the relationship between a country's GDP and the issuance of F1 (student) and H1B (work) visas over time. By examining data across various countries and continents, we aim to uncover patterns that highlight the influence of economic performance on visa distribution. We hypothesize that higher GDP correlates with an increased number of F1 and H1B visas issued. Conversely, countries experiencing slower economic growth may see fewer visas granted. 
+
+This analysis delves into the relationship between a country's GDP and the issuance of F1 (student) and H1B (work) visas over time. By examining data across various countries and continents, we aim to uncover patterns that highlight the influence of economic performance on visa distribution. We hypothesize that higher GDP correlates with an increased number of F1 and H1B visas issued. Conversely, countries experiencing slower economic growth may see fewer visas granted.
 
 # METHODOLOGY
+
 To analyze our initial problem, we used three data sources (originally accessed on January 2, 2025):
 
-1. [U.S. State Department](https://travel.state.gov/content/travel/en/legal/visa-law0/visa-statistics/nonimmigrant-visa-statistics.html){.btn .btn-primary}
-  - *review of dataset*
-  - *summary of background research/previous uses*
+1.  [U.S. State Department](https://travel.state.gov/content/travel/en/legal/visa-law0/visa-statistics/nonimmigrant-visa-statistics.html){.btn .btn-primary}
 
-2. [World Bank](https://wits.worldbank.org/CountryProfile/en/country/by-country/startyear/ltst/endyear/ltst/indicator/NY-GDP-MKTP-CD#){.btn .btn-primary}
-  - *review of dataset*
-  - *summary of background research/previous uses*
+-   *review of dataset*
+-   *summary of background research/previous uses*
 
-3. [U.S. Census Bureau](https://www.census.gov/data-tools/demo/idb/#/table?dashboard_page=country&COUNTRY_YR_ANIM=2025&menu=tableViz&quickReports=CUSTOM&CUSTOM_COLS=POP,GR,RNI,POP_DENS,CBR,CDR,NMR,NIM&TABLE_RANGE=1997,2014&TABLE_YEARS=1997,1998,1999,2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2025&TABLE_USE_RANGE=Y&TABLE_USE_YEARS=Y&TABLE_STEP=1&TABLE_ADD_YEARS=2025){.btn .btn-primary}
-  - *review of dataset*
-  - *summary of background research/previous uses*
+2.  [World Bank](https://wits.worldbank.org/CountryProfile/en/country/by-country/startyear/ltst/endyear/ltst/indicator/NY-GDP-MKTP-CD#){.btn .btn-primary}
+
+-   *review of dataset*
+-   *summary of background research/previous uses*
+
+3.  [U.S. Census Bureau](https://www.census.gov/data-tools/demo/idb/#/table?dashboard_page=country&COUNTRY_YR_ANIM=2025&menu=tableViz&quickReports=CUSTOM&CUSTOM_COLS=POP,GR,RNI,POP_DENS,CBR,CDR,NMR,NIM&TABLE_RANGE=1997,2014&TABLE_YEARS=1997,1998,1999,2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2025&TABLE_USE_RANGE=Y&TABLE_USE_YEARS=Y&TABLE_STEP=1&TABLE_ADD_YEARS=2025){.btn .btn-primary}
+
+-   *review of dataset*
+-   *summary of background research/previous uses*
 
 We used a python jupityer notebook to clean each data frame, then merge them into a merged data frame for future analysis and vizualization. All replication documents can be found within our public [GitHub repository](https://github.com/annab0503/DS4002/tree/main/Project%201/Analysis%20Data).
 
 Variables in our (cleaned) dataset include:
 
-| Variable                       | Description                                                                                |
-|--------------------------------|--------------------------------------------------------------------------------------------|
-| Country                        | geographic entity of interest                                                              |
-| Fiscal Year                    | year for which data is reported, based on the U.S. fiscal calendar                         |
-| Type of U.S. Visa              | classification of U.S. visas issued (e.g., work, student, family)                          |
-| Quantity of U.S. Visas Granted | total number of visas issued for a given type and year                                     |
-| Population                     | quantity of people living in a given geographic area                                       |
-| GDP                            | Gross Domestic Product measured in current U.S. dollars                                    |
-| Annual Growth Rate             | annual percent change in population, accounting for natural increase and net migration     |
-| Rate of Natural Increase       | percent difference between the crude birth rate and the crude death rate                   |
-| Population Density             | total population of a geographic area divided by its land area in square kilometers        |
-| Crude Birth Rate               | avg. annual number of births during a year per 1,000 population at midyear                 |
-| Net International Migrants     | number of immigrants minus the number of emigrants, including citizens and non-citizens    |
+| Variable                       | Description                                                                             | Source                |
+|----------------|-----------------------------------------|----------------|
+| Country                        | geographic entity of interest                                                           |                       |
+| Fiscal Year                    | year for which data is reported, based on the U.S. fiscal calendar                      |                       |
+| Type of U.S. Visa              | classification of U.S. visas issued (e.g., work, student, family)                       | U.S. State Department |
+| Quantity of U.S. Visas Granted | total number of visas issued for a given type and year                                  | U.S. State Department |
+| Population                     | quantity of people living in a given geographic area                                    | U.S. Census Bureau    |
+| GDP                            | Gross Domestic Product measured in current U.S. dollars                                 | U.S. Census Bureau    |
+| Annual Growth Rate             | annual percent change in population, accounting for natural increase and net migration  | World Bank            |
+| Rate of Natural Increase       | percent difference between the crude birth rate and the crude death rate                | U.S. Census Bureau    |
+| Population Density             | total population of a geographic area divided by its land area in square kilometers     | U.S. Census Bureau    |
+| Crude Birth Rate               | avg. annual number of births during a year per 1,000 population at midyear              | U.S. Census Bureau    |
+| Net International Migrants     | number of immigrants minus the number of emigrants, including citizens and non-citizens | U.S. Census Bureau    |
 
 ## DATA CLEANING
+
 #### LOADING PACKAGES
+
 ```{r message=FALSE}
 library(tidyverse)
 library(dplyr)
 library(patchwork)
 library(DT)
+library(readr)
 ```
 
 #### IMPORT DATA
+
 ```{r}
 # Set the file path
-file_path <- "/Users/annabrown/Downloads/merged_data.csv"
+url <- "https://github.com/annab0503/DS4002/raw/main/Project%201/Analysis%20Data/analysis_data.csv"
 
-# Import data frame
-df <- read.csv(file_path)
+# Read the CSV file from the URL
+analysis_data <- read_csv(url)
 
-# View imported data frame
-head(df)
+# View the data
+head(analysis_data)
 ```
+
 #### GENERAL CLEANING
 
 #### Analysis
+
 # CONCLUSION

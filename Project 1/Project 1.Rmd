@@ -166,6 +166,51 @@ head(analysis_data)
 
 #### ANALYSIS
 
+```{r}
+
+library(leaflet)
+library(dplyr)
+library(countrycode)
+
+df_visas_summary <- data.frame(
+  Country = c("United States", "India", "China", "Germany", "Japan", "Mexico", "United Kingdom", "Guatemala", "Jamaica", "South Africa", "Korea, South"),
+  skilled_visas = c(500000, 200000, 300000, 150000, 250000, 180000, 170000, 80000, 90000, 160000, 210000),
+  unskilled_visas = c(400000, 350000, 200000, 120000, 220000, 250000, 180000, 70000, 60000, 150000, 180000),
+  student_visas = c(350000, 180000, 250000, 130000, 200000, 180000, 140000, 60000, 70000, 120000, 160000)
+)
+
+# Get the country codes (ISO 3166-1 alpha-3) for each country in df_visas_summary
+df_visas_summary$country_code <- countrycode(df_visas_summary$Country, "country.name", "iso3c")
+
+# Get country centroids from the world map data
+world_map_data <- map_data("world")
+
+# Calculate centroids (latitude and longitude) for countries
+centroids <- world_map_data %>%
+  group_by(region) %>%
+  summarise(lat = mean(lat), lon = mean(long))
+
+# Merge the country data with centroids using country names
+df_centroids <- df_visas_summary %>%
+  left_join(centroids, by = c("Country" = "region"))
+
+# View the merged data (now it includes latitudes and longitudes)
+print(df_centroids)
+
+# Create the interactive leaflet map without the legend
+leaflet(df_centroids) %>%
+  addTiles() %>%
+  addCircles(
+    lat = ~lat, lng = ~lon,  # Use 'lng' for longitude
+    popup = ~paste("<strong>Country:</strong>", Country,
+                   "<br><strong>Skilled Labor Visas:</strong>", skilled_visas,
+                   "<br><strong>Unskilled Labor Visas:</strong>", unskilled_visas,
+                   "<br><strong>Student Visas:</strong>", student_visas),
+    radius = 50000, color = "#FF0000", fillOpacity = 0.7
+  )
+
+```
+
 ```{r fig.width=12, fig.height=6, echo=FALSE, warning=FALSE}
 # Define presidential administration transition years 
 key_events <- c(2001, 2009, 2015, 2020)  # Adjust these as per your dataset
@@ -249,6 +294,59 @@ ggplot(aggregated_data, aes(x = `Fiscal Year`, y = Total_Visas, color = `Visa Ca
            angle = 90, vjust = 1.5, hjust = 1, color = "black", size = 4, family = "Futura")
 ```
 
+```{r}
+
+plot_top_5_visas <- function(visa_category, scale_type = "log") {
+  # Filter data for the specific visa category
+  df_category <- analysis_data %>%
+    filter(`Visa Category` == visa_category)
+  
+  # Get the top 5 countries by the total number of visas granted
+  top_5_countries <- df_category %>%
+    group_by(Country) %>%
+    summarise(total_visas = sum(`Quantity of U.S. Visas Granted`, na.rm = TRUE), .groups = "drop") %>%
+    top_n(5, total_visas) %>%
+    pull(Country)
+  
+  # Filter data for the top 5 countries
+  df_top_5 <- df_category %>%
+    filter(Country %in% top_5_countries)
+  
+  # Summarize the total number of visas per year for these countries
+  df_summary <- df_top_5 %>%
+    group_by(`Fiscal Year`, Country) %>%
+    summarise(total_visas = sum(`Quantity of U.S. Visas Granted`, na.rm = TRUE), .groups = "drop")
+  
+  # Generate the graph
+  plot <- ggplot(df_summary, aes(x = `Fiscal Year`, y = total_visas, color = Country)) +
+    geom_line(size = 1) +
+    labs(title = paste("Top 5 Countries with Most", visa_category, "by Year"),
+         x = "Year",
+         y = "Total Number of Visas (Log Scale)") +
+    theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+    scale_color_brewer(palette = "Set3") +
+    theme_minimal() +
+    theme(legend.title = element_blank())
+  
+  # Apply log scale to the y-axis
+  plot <- plot + scale_y_log10()
+  
+  # Return the plot
+  return(plot)
+}
+
+# Generate and display the graphs for all visa categories with log scale
+plot_top_5_visas("Skilled Labor Visas", scale_type = "log")
+
+```
+```{r}
+plot_top_5_visas("Unskilled Labor Visas", scale_type = "log")
+```
+
+```{r}
+plot_top_5_visas("Student and Exchange Visitor Visas", scale_type = "log")
+
+```
 # CONCLUSION
 
 # WORKS CITED

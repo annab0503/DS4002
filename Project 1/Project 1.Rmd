@@ -126,7 +126,7 @@ We used a Python Jupityer Notebook to clean each data frame, then merge them int
 Variables in our (cleaned) dataset include:
 
 | Variable                       | Description                                                                             | Source                |
-|------------------|-------------------------------------|------------------|
+|--------------------------------|-----------------------------------------------------------------------------------------|-----------------------|
 | Country                        | geographic entity of interest                                                           |                       |
 | Fiscal Year                    | year for which data is reported, based on the U.S. fiscal calendar                      |                       |
 | Visa Category                  | classification of U.S. visas issued (e.g., unskilled labor, skilled labor, student)     | U.S. State Department |

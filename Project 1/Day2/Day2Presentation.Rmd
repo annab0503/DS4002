@@ -55,6 +55,12 @@ Additionally, we can explore potential secondary questions, such as:
   -In 2002, An interim final rule is announced, requiring anybody on a B visa to transition to a F or M visa prior to starting a program of study.
   
   
+#Cleaned Data
+
+```{r merged_data, echo=FALSE, fig.cap="merged data", out.width = '100%'}
+knitr::include_graphics("mergeddata.png")
+```
+
 Works Cited
 
 - https://www.dol.gov/agencies/whd/immigration/h1b
@@ -64,3 +70,5 @@ Works Cited
 - https://www.migrationpolicy.org/article/h-1b-temporary-skilled-worker-program
 
 - https://timelines.issarice.com/wiki/Timeline_of_student_visa_policy_in_the_United_States
+
+

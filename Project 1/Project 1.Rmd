@@ -63,72 +63,70 @@ Types of Work Visa include H-1B(Specialty workers), L-1 (Intra-company transfere
 
 -   **Policies on F1 Student Visa**
 
-    - 1996: Illegal Immigration Reform and Immigrant Responsibility Act (IIRIRA)
+    -   1996: Illegal Immigration Reform and Immigrant Responsibility Act (IIRIRA)
 
-    - Mandated the development of a program to collect information on nonimmigrant foreign students
+    -   Mandated the development of a program to collect information on nonimmigrant foreign students
 
-    - 2002: Tightening of B Visa Regulations: regulations were amended to require individuals on B visas to change to F or M status before pursuing a course of study.
+    -   2002: Tightening of B Visa Regulations: regulations were amended to require individuals on B visas to change to F or M status before pursuing a course of study.
 
-    - 2003: Implementation of SEVIS improving the tracking and monitoring of international students in the U.S 
-    - Obama expanded and extended the federal Optional Practical Training program for STEM students to 29 months 
-    
-    - Under the Trump Administration(2017-2021), F-1 visa regulations became tighter. 
-    
-      - More rigorous evaluation of student visa applications and renewals. 
-      
-      - Proposed limitations on the length of stay, introducing fixed-term visa policies
+    -   2003: Implementation of SEVIS improving the tracking and monitoring of international students in the U.S
 
+    -   Obama expanded and extended the federal Optional Practical Training program for STEM students to 29 months
+
+    -   Under the Trump Administration(2017-2021), F-1 visa regulations became tighter.
+
+        -   More rigorous evaluation of student visa applications and renewals.
+
+        -   Proposed limitations on the length of stay, introducing fixed-term visa policies
 
 -   **Unskilled Labor Visa**
 
-  - H-2A, H-2B, H-2R, etc
-  
-  - Our main focus is H-2A and H-2B
-  
+-   H-2A, H-2B, H-2R, etc
+
+-   Our main focus is H-2A and H-2B
+
     -H-2A: Agricultural workers (temporary labor for agricultural jobs that are seasonal or peak-period).
-  
+
     -H-2B: Temporary non-agricultural workers (e.g., hospitality, construction, and landscaping work).
-    
-- **Foreign Workers help U.S economy**
 
-  - Job Creation – H-1B workers fill skill gaps, boosting jobs and economic growth.
-  
-  - Low Unemployment – Sectors with many H-1B workers show consistently low jobless rates.
-  
-  - Innovation – H-1B workers drive patents, startups, and business expansion.
-  
-  - High Wages – H-1B wages outpace U.S. averages, often exceeding prevailing rates. (americanimmigrationcouncil.org)
+-   **Foreign Workers help U.S economy**
 
+    -   Job Creation – H-1B workers fill skill gaps, boosting jobs and economic growth.
+
+    -   Low Unemployment – Sectors with many H-1B workers show consistently low jobless rates.
+
+    -   Innovation – H-1B workers drive patents, startups, and business expansion.
+
+    -   High Wages – H-1B wages outpace U.S. averages, often exceeding prevailing rates. (americanimmigrationcouncil.org)
 
 # METHODOLOGY
+
 To analyze our initial problem, we used three data sources (originally accessed on January 2, 2025):
 
-1. [U.S. State Department](https://travel.state.gov/content/travel/en/legal/visa-law0/visa-statistics/nonimmigrant-visa-statistics.html){.btn .btn-primary}
+1.  [U.S. State Department](https://travel.state.gov/content/travel/en/legal/visa-law0/visa-statistics/nonimmigrant-visa-statistics.html){.btn .btn-primary}
 
 Dataset Overview: The U.S. State Department's visa statistics provide detailed data on nonimmigrant visas issued by the U.S. government. It includes information about visa types and countries of origin. The dataset can be segmented by visa categories, geographic regions, and other criteria
 
 Previous Uses: This dataset is widely used by researchers and policymakers to analyze trends in U.S. immigration, such as the number of visas issued to foreign nationals over time. The U.S. Department of Homeland Security and various research organizations use the visa statistics to evaluate the effects of visa policy changes. For instance, the Migration Policy Institute (MPI) uses this data to assess the impacts of changes in U.S. visa issuance on international student enrollment trends in U.S. universities.
 
-
-2. [World Bank](https://wits.worldbank.org/CountryProfile/en/country/by-country/startyear/ltst/endyear/ltst/indicator/NY-GDP-MKTP-CD#){.btn .btn-primary}
+2.  [World Bank](https://wits.worldbank.org/CountryProfile/en/country/by-country/startyear/ltst/endyear/ltst/indicator/NY-GDP-MKTP-CD#){.btn .btn-primary}
 
 Dataset Overview: The World Bank dataset focuses on country-level economic indicators, specifically Gross Domestic Product (GDP) measured in current US dollars. The World Bank's World Integrated Trade Solution platform provides access to a wide array of economic, trade, and development data, which includes GDP data for all countries.
 
 Previous Uses: The World Bank’s GDP data is widely used for forecasting global economic trends. For example, the World Economic Outlook regularly uses this data to produce global forecasts, guiding economic policies of member countries. Cross-country GDP comparisons are foundational in understanding global disparities in development. Dollar and Kraay (2003) used World Bank GDP data to argue that economic growth directly correlates with poverty reduction in developing nations.
 
-3. [U.S. Census Bureau](https://www.census.gov/data-tools/demo/idb/#/table?dashboard_page=country&COUNTRY_YR_ANIM=2025&menu=tableViz&quickReports=CUSTOM&CUSTOM_COLS=POP,GR,RNI,POP_DENS,CBR,CDR,NMR,NIM&TABLE_RANGE=1997,2014&TABLE_YEARS=1997,1998,1999,2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2025&TABLE_USE_RANGE=Y&TABLE_USE_YEARS=Y&TABLE_STEP=1&TABLE_ADD_YEARS=2025){.btn .btn-primary}
+3.  [U.S. Census Bureau](https://www.census.gov/data-tools/demo/idb/#/table?dashboard_page=country&COUNTRY_YR_ANIM=2025&menu=tableViz&quickReports=CUSTOM&CUSTOM_COLS=POP,GR,RNI,POP_DENS,CBR,CDR,NMR,NIM&TABLE_RANGE=1997,2014&TABLE_YEARS=1997,1998,1999,2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2025&TABLE_USE_RANGE=Y&TABLE_USE_YEARS=Y&TABLE_STEP=1&TABLE_ADD_YEARS=2025){.btn .btn-primary}
 
 Dataset Overview: The U.S. Census Bureau's International Data Base (IDB) provides demographic information for countries worldwide, including population size, growth rates, fertility rates, mortality rates, life expectancy, and migration patterns. The data spans multiple decades and is updated regularly. The IDB is valuable for understanding long-term trends in population and demographic characteristics across countries.
 
 Previous Uses: Researchers have used the IDB to assess global population growth and predict demographic shifts. This is important for understanding the social and economic challenges faced by countries with rapidly growing populations, as well as the implications for urbanization, labor markets, and social services.
-
 
 We used a Python Jupityer Notebook to clean each data frame, then merge them into a merged data frame for future analysis and vizualization using a common variable of country and year. All replication documents can be found within our public [GitHub repository](https://github.com/annab0503/DS4002/tree/main/Project%201/Analysis%20Data).
 
 Variables in our (cleaned) dataset include:
 
 | Variable                       | Description                                                                             | Source                |
-|--------------------------------|-----------------------------------------------------------------------------------------|-----------------------|
+|------------------|-------------------------------------|------------------|
 | Country                        | geographic entity of interest                                                           |                       |
 | Fiscal Year                    | year for which data is reported, based on the U.S. fiscal calendar                      |                       |
 | Visa Category                  | classification of U.S. visas issued (e.g., unskilled labor, skilled labor, student)     | U.S. State Department |
@@ -157,7 +155,7 @@ library(readr)
 
 ```{r}
 # Set the file path
-url <- "https://github.com/annab0503/DS4002/raw/main/Project%201/Analysis%20Data/analysis_data.csv"
+url <- "https://raw.githubusercontent.com/annab0503/DS4002/main/Project%201/Analysis%20Data/analysis_data.csv"
 
 # Read the CSV file from the URL
 analysis_data <- read_csv(url)
@@ -165,13 +163,95 @@ analysis_data <- read_csv(url)
 # View the data
 head(analysis_data)
 ```
-#### GENERAL CLEANING
 
 #### ANALYSIS
 
+```{r fig.width=12, fig.height=6, echo=FALSE, warning=FALSE}
+# Define presidential administration transition years 
+key_events <- c(2001, 2009, 2015, 2020)  # Adjust these as per your dataset
+
+# Aggregate data by Fiscal Year and Visa Category, converting Total_Visas to units of 1000 
+aggregated_data <- analysis_data %>% 
+  group_by(`Fiscal Year`, `Visa Category`) %>% 
+  summarise(Total_Visas = sum(`Quantity of U.S. Visas Granted`) / 1000, .groups = 'drop')  # Convert to thousands
+
+# Custom color scheme for visa categories 
+visa_colors <- c( 
+  "Skilled Labor Visas" = "#F84947",  # Red 
+  "Unskilled Labor Visas" = "#F1C40F",  # Golden Yellow 
+  "Student and Exchange Visitor Visas" = "#5794D4"  # Blue 
+)
+
+# Create the stacked area chart with vertical indicators for presidential transitions 
+ggplot(aggregated_data, aes(x = `Fiscal Year`, y = Total_Visas, fill = `Visa Category`)) + 
+  geom_area() +  # Stacked area chart 
+  geom_vline(xintercept = key_events, linetype = "dashed", color = "gray") + 
+  scale_fill_manual(values = visa_colors) +  # Apply custom colors 
+  labs(
+    title = "Shifting Borders: The Impact of U.S. Political Events on Visa Issuance Trends", 
+    x = "Fiscal Year", 
+    y = "Total Quantity of Visas (in thousands)", 
+    fill = "Visa Category" 
+  ) + 
+  theme_minimal() +  # Minimal theme for a clean look 
+  theme(
+    text = element_text(size = 12, family = "Futura"),  # Set font family to Futura 
+    legend.position = "right",  # Position the legend on the right 
+    plot.title = element_text(hjust = 0.5, family = "Futura", size = 16, margin = margin(b = 15)),  # Title customization 
+    axis.title = element_text(family = "Futura"),  # Axis labels in Futura 
+    axis.text = element_text(family = "Futura"),  # Axis text in Futura 
+    legend.title = element_text(family = "Futura"),  # Legend title in Futura 
+    legend.title.align = 0.5  # Center the legend title 
+  ) + 
+  # Add key event labels with adjustments for better visibility 
+  annotate("text", x = key_events, y = Inf, label = c("9/11 Attack", "Great Recession", "Rep. Control of Congress", "COVID Pandemic"), 
+           angle = 90, vjust = 1.5, hjust = 1, color = "black", size = 3, family = "Futura")
+```
+
+```{r fig.width=12, fig.height=6, echo=FALSE, warning=FALSE}
+# Define presidential administration transition years
+transition_years <- c(2001, 2009, 2017, 2021)  # Years of presidential transitions
+
+# Aggregate data by Fiscal Year and Visa Category, converting Total_Visas to units of 1000
+aggregated_data <- analysis_data %>%
+  group_by(`Fiscal Year`, `Visa Category`) %>%
+  summarise(Total_Visas = sum(`Quantity of U.S. Visas Granted`) / 1000, .groups = 'drop')  # Convert to thousands
+
+# Custom color scheme for visa categories
+visa_colors <- c(
+  "Skilled Labor Visas" = "#F84947",  # Red for Skilled Labor Visas
+  "Unskilled Labor Visas" = "#F1C40F",  # Golden Yellow for Unskilled Labor Visas
+  "Student and Exchange Visitor Visas" = "#5794D4"  # Blue for Student and Exchange Visitor Visas
+)
+
+# Create the line chart with vertical indicators for presidential transitions
+ggplot(aggregated_data, aes(x = `Fiscal Year`, y = Total_Visas, color = `Visa Category`, group = `Visa Category`)) + 
+  geom_line(size = 1) + 
+  geom_vline(xintercept = transition_years, linetype = "dashed", color = "gray") + 
+  scale_color_manual(values = visa_colors) + 
+  labs( 
+    title = "From Bush to Biden: How Presidential Administrations Impact Types U.S. Visas Issued", 
+    x = "Fiscal Year", 
+    y = "Total Quantity of Visas (in thousands)", 
+    color = "Visa Category" 
+  ) + 
+  theme_minimal() + 
+  theme( 
+    text = element_text(size = 12, family = "Futura"),  # Font family: Futura 
+    legend.position = "right",  # Place the legend on the right 
+    plot.title = element_text(hjust = 0.5, family = "Futura", size = 16, margin = margin(b = 15)),
+    axis.title = element_text(family = "Futura"),  # Axis labels in Futura font 
+    axis.text = element_text(family = "Futura"),  # Axis text in Futura font 
+    legend.title = element_text(family = "Futura"),  # Legend title in Futura 
+    legend.title.align = 0.5  # Center the legend title 
+  ) + 
+  annotate("text", x = transition_years, y = Inf, label = c("Bush", "Obama", "Trump", "Biden"), 
+           angle = 90, vjust = 1.5, hjust = 1, color = "black", size = 4, family = "Futura")
+```
+
 # CONCLUSION
 
-Works Cited
+# WORKS CITED
 
 -   <https://www.dol.gov/agencies/whd/immigration/h1b>
 
@@ -183,9 +263,8 @@ Works Cited
 
 -   <https://www.thecrimson.com/article/2020/12/11/trump-immigration-higher-education/>
 
--   https://www.americanimmigrationcouncil.org/research/h1b-visa-program-fact-sheet 
+-   <https://www.americanimmigrationcouncil.org/research/h1b-visa-program-fact-sheet>
 
-- Migration Policy Institute. [Migration Policy Institute Website](https://www.migrationpolicy.org/)
+-   Migration Policy Institute. [Migration Policy Institute Website](https://www.migrationpolicy.org/)
 
-- Preston, S., & Elo, I. (1995). *Demography: Analysis of Mortality and Fertility Rates*. [DOI: 10.1016/S0304-3932(02)00206-4](https://doi.org/10.1016/S0304-3932(02)00206-4).
-
+-   Preston, S., & Elo, I. (1995). *Demography: Analysis of Mortality and Fertility Rates*. [DOI: 10.1016/S0304-3932(02)00206-4](https://doi.org/10.1016/S0304-3932(02)00206-4).

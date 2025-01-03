@@ -39,7 +39,7 @@ We used a python jupityer notebook to clean each data frame, then merge them int
 Variables in our (cleaned) dataset include:
 
 | Variable                       | Description                                                                             | Source                |
-|----------------|-----------------------------------------|----------------|
+|--------------------------------|-----------------------------------------------------------------------------------------|-----------------------|
 | Country                        | geographic entity of interest                                                           |                       |
 | Fiscal Year                    | year for which data is reported, based on the U.S. fiscal calendar                      |                       |
 | Type of U.S. Visa              | classification of U.S. visas issued (e.g., work, student, family)                       | U.S. State Department |

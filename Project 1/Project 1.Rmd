@@ -127,8 +127,8 @@ Variables in our (cleaned) dataset include:
 
 | Variable                       | Description                                                                             | Source                |
 |--------------------------------|-----------------------------------------------------------------------------------------|-----------------------|
-| Country                        | geographic entity of interest                                                           |                       |
-| Fiscal Year                    | year for which data is reported, based on the U.S. fiscal calendar                      |                       |
+| Country                        | geographic entity of interest                                                           | All                   |
+| Fiscal Year                    | year for which data is reported, based on the U.S. fiscal calendar                      | All                   |
 | Visa Category                  | classification of U.S. visas issued (e.g., unskilled labor, skilled labor, student)     | U.S. State Department |
 | Quantity of U.S. Visas Granted | total number of visas issued for a given type and year                                  | U.S. State Department |
 | Population                     | quantity of people living in a given geographic area                                    | U.S. Census Bureau    |

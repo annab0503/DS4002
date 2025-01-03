@@ -101,8 +101,6 @@ Types of Work Visa include H-1B(Specialty workers), L-1 (Intra-company transfere
 
 
 # METHODOLOGY
-
-# METHODOLOGY
 To analyze our initial problem, we used three data sources (originally accessed on January 2, 2025):
 
 1. [U.S. State Department](https://travel.state.gov/content/travel/en/legal/visa-law0/visa-statistics/nonimmigrant-visa-statistics.html){.btn .btn-primary}

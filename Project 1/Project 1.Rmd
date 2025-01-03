@@ -42,7 +42,7 @@ Variables in our (cleaned) dataset include:
 |--------------------------------|-----------------------------------------------------------------------------------------|-----------------------|
 | Country                        | geographic entity of interest                                                           |                       |
 | Fiscal Year                    | year for which data is reported, based on the U.S. fiscal calendar                      |                       |
-| Type of U.S. Visa              | classification of U.S. visas issued (e.g., work, student, family)                       | U.S. State Department |
+| Visa Category                  | classification of U.S. visas issued (e.g., unskilled labor, skilled labor, student)     | U.S. State Department |
 | Quantity of U.S. Visas Granted | total number of visas issued for a given type and year                                  | U.S. State Department |
 | Population                     | quantity of people living in a given geographic area                                    | U.S. Census Bureau    |
 | GDP                            | Gross Domestic Product measured in current U.S. dollars                                 | U.S. Census Bureau    |
@@ -76,9 +76,8 @@ analysis_data <- read_csv(url)
 # View the data
 head(analysis_data)
 ```
-
 #### GENERAL CLEANING
 
-#### Analysis
+#### ANALYSIS
 
 # CONCLUSION

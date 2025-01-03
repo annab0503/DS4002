@@ -102,24 +102,30 @@ Types of Work Visa include H-1B(Specialty workers), L-1 (Intra-company transfere
 
 # METHODOLOGY
 
+# METHODOLOGY
 To analyze our initial problem, we used three data sources (originally accessed on January 2, 2025):
 
-1.  [U.S. State Department](https://travel.state.gov/content/travel/en/legal/visa-law0/visa-statistics/nonimmigrant-visa-statistics.html){.btn .btn-primary}
+1. [U.S. State Department](https://travel.state.gov/content/travel/en/legal/visa-law0/visa-statistics/nonimmigrant-visa-statistics.html){.btn .btn-primary}
 
--   *review of dataset*
--   *summary of background research/previous uses*
+Dataset Overview: The U.S. State Department's visa statistics provide detailed data on nonimmigrant visas issued by the U.S. government. It includes information about visa types and countries of origin. The dataset can be segmented by visa categories, geographic regions, and other criteria
 
-2.  [World Bank](https://wits.worldbank.org/CountryProfile/en/country/by-country/startyear/ltst/endyear/ltst/indicator/NY-GDP-MKTP-CD#){.btn .btn-primary}
+Previous Uses: This dataset is widely used by researchers and policymakers to analyze trends in U.S. immigration, such as the number of visas issued to foreign nationals over time. The U.S. Department of Homeland Security and various research organizations use the visa statistics to evaluate the effects of visa policy changes. For instance, the Migration Policy Institute (MPI) uses this data to assess the impacts of changes in U.S. visa issuance on international student enrollment trends in U.S. universities.
 
--   *review of dataset*
--   *summary of background research/previous uses*
 
-3.  [U.S. Census Bureau](https://www.census.gov/data-tools/demo/idb/#/table?dashboard_page=country&COUNTRY_YR_ANIM=2025&menu=tableViz&quickReports=CUSTOM&CUSTOM_COLS=POP,GR,RNI,POP_DENS,CBR,CDR,NMR,NIM&TABLE_RANGE=1997,2014&TABLE_YEARS=1997,1998,1999,2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2025&TABLE_USE_RANGE=Y&TABLE_USE_YEARS=Y&TABLE_STEP=1&TABLE_ADD_YEARS=2025){.btn .btn-primary}
+2. [World Bank](https://wits.worldbank.org/CountryProfile/en/country/by-country/startyear/ltst/endyear/ltst/indicator/NY-GDP-MKTP-CD#){.btn .btn-primary}
 
--   *review of dataset*
--   *summary of background research/previous uses*
+Dataset Overview: The World Bank dataset focuses on country-level economic indicators, specifically Gross Domestic Product (GDP) measured in current US dollars. The World Bank's World Integrated Trade Solution platform provides access to a wide array of economic, trade, and development data, which includes GDP data for all countries.
 
-We used a python jupityer notebook to clean each data frame, then merge them into a merged data frame for future analysis and vizualization. All replication documents can be found within our public [GitHub repository](https://github.com/annab0503/DS4002/tree/main/Project%201/Analysis%20Data).
+Previous Uses: The World Bank’s GDP data is widely used for forecasting global economic trends. For example, the World Economic Outlook regularly uses this data to produce global forecasts, guiding economic policies of member countries. Cross-country GDP comparisons are foundational in understanding global disparities in development. Dollar and Kraay (2003) used World Bank GDP data to argue that economic growth directly correlates with poverty reduction in developing nations.
+
+3. [U.S. Census Bureau](https://www.census.gov/data-tools/demo/idb/#/table?dashboard_page=country&COUNTRY_YR_ANIM=2025&menu=tableViz&quickReports=CUSTOM&CUSTOM_COLS=POP,GR,RNI,POP_DENS,CBR,CDR,NMR,NIM&TABLE_RANGE=1997,2014&TABLE_YEARS=1997,1998,1999,2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2025&TABLE_USE_RANGE=Y&TABLE_USE_YEARS=Y&TABLE_STEP=1&TABLE_ADD_YEARS=2025){.btn .btn-primary}
+
+Dataset Overview: The U.S. Census Bureau's International Data Base (IDB) provides demographic information for countries worldwide, including population size, growth rates, fertility rates, mortality rates, life expectancy, and migration patterns. The data spans multiple decades and is updated regularly. The IDB is valuable for understanding long-term trends in population and demographic characteristics across countries.
+
+Previous Uses: Researchers have used the IDB to assess global population growth and predict demographic shifts. This is important for understanding the social and economic challenges faced by countries with rapidly growing populations, as well as the implications for urbanization, labor markets, and social services.
+
+
+We used a Python Jupityer Notebook to clean each data frame, then merge them into a merged data frame for future analysis and vizualization using a common variable of country and year. All replication documents can be found within our public [GitHub repository](https://github.com/annab0503/DS4002/tree/main/Project%201/Analysis%20Data).
 
 Variables in our (cleaned) dataset include:
 
@@ -180,4 +186,8 @@ Works Cited
 -   <https://www.thecrimson.com/article/2020/12/11/trump-immigration-higher-education/>
 
 -   https://www.americanimmigrationcouncil.org/research/h1b-visa-program-fact-sheet 
+
+- Migration Policy Institute. [Migration Policy Institute Website](https://www.migrationpolicy.org/)
+
+- Preston, S., & Elo, I. (1995). *Demography: Analysis of Mortality and Fertility Rates*. [DOI: 10.1016/S0304-3932(02)00206-4](https://doi.org/10.1016/S0304-3932(02)00206-4).
 

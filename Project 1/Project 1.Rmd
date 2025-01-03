@@ -15,6 +15,91 @@ output:
 
 This analysis delves into the relationship between a country's GDP and the issuance of F1 (student) and H1B (work) visas over time. By examining data across various countries and continents, we aim to uncover patterns that highlight the influence of economic performance on visa distribution. We hypothesize that higher GDP correlates with an increased number of F1 and H1B visas issued. Conversely, countries experiencing slower economic growth may see fewer visas granted.
 
+# FOLLOW-UP QUESTIONS
+
+Additionally, we can explore potential secondary questions, such as:
+
+-   **How do presidential terms relate to the number of visa issuances?**
+
+-   **What policies drive fluctuations in F1 and H1B visa approvals?**
+
+# BACKGROUND
+
+-   **Overview of U.S. Work Visas**
+
+Types of Work Visa include H-1B(Specialty workers), L-1 (Intra-company transferees ), O-1(Individuals with extraordinary ability in their field), P-1,2,3, and etc. Our research focuses on H1B, the most populated U.S. work visa for highly skilled foreign professionals.
+
+-   **What is H1B work visa?**
+
+    The H-1B program allows U.S. employers to hire nonimmigrant workers for specialty occupations that require:
+
+    -   Highly specialized knowledge.\
+
+    -   At least a **bachelor’s degree** or its equivalent. (Dol.gov)
+
+-   **H1B Policies change over time**
+
+    -   1998 Industry Lobbying: High-tech industry representatives lobbied for an increase in the H-1B visa cap.
+
+    -   In September 1997, the 65,000 annual cap for H-1B visas was reached for the first time. The cap provided new evidence of unmet demand for high-tech workers, particularly in the computer industry.
+
+    -   In 1998, bills were introduced in the House and Senate to raise the H-1B cap from 65,000 to 115,000.
+
+    -   Cap was lifted to 195,000 visas for 2001, 2002, and 2003 under the 2000 American Competitiveness in the 21st Century Act (AC-21).
+
+    -   The annual H-1B cap reverted to 65,000 in 2004.
+
+    -   To protect American workers during the recession, Congress targeted the H-1B program in the American Recovery and Reinvestment Act of 2009.
+
+    -   The number of filed petitions fell by nearly 20 percent between 2007 and 2009.
+
+    -   H-1B fees also fluctuate.
+
+-   **Student Visa**
+
+    -   F-1, J-1 (exchange programs), and M (nonacademic institution)
+
+    -The F-1 visa allows a student to temporarily live in the United States for a defined period of time while studying at a school, college, seminary, or conservatory.
+
+-   **Policies on F1 Student Visa**
+
+    - 1996: Illegal Immigration Reform and Immigrant Responsibility Act (IIRIRA)
+
+    - Mandated the development of a program to collect information on nonimmigrant foreign students
+
+    - 2002: Tightening of B Visa Regulations: regulations were amended to require individuals on B visas to change to F or M status before pursuing a course of study.
+
+    - 2003: Implementation of SEVIS improving the tracking and monitoring of international students in the U.S 
+    - Obama expanded and extended the federal Optional Practical Training program for STEM students to 29 months 
+    
+    - Under the Trump Administration(2017-2021), F-1 visa regulations became tighter. 
+    
+      - More rigorous evaluation of student visa applications and renewals. 
+      
+      - Proposed limitations on the length of stay, introducing fixed-term visa policies
+
+
+-   **Unskilled Labor Visa**
+
+  - H-2A, H-2B, H-2R, etc
+  
+  - Our main focus is H-2A and H-2B
+  
+    -H-2A: Agricultural workers (temporary labor for agricultural jobs that are seasonal or peak-period).
+  
+    -H-2B: Temporary non-agricultural workers (e.g., hospitality, construction, and landscaping work).
+    
+- **Foreign Workers help U.S economy**
+
+  - Job Creation – H-1B workers fill skill gaps, boosting jobs and economic growth.
+  
+  - Low Unemployment – Sectors with many H-1B workers show consistently low jobless rates.
+  
+  - Innovation – H-1B workers drive patents, startups, and business expansion.
+  
+  - High Wages – H-1B wages outpace U.S. averages, often exceeding prevailing rates. (americanimmigrationcouncil.org)
+
+
 # METHODOLOGY
 
 To analyze our initial problem, we used three data sources (originally accessed on January 2, 2025):
@@ -81,3 +166,18 @@ head(analysis_data)
 #### ANALYSIS
 
 # CONCLUSION
+
+Works Cited
+
+-   <https://www.dol.gov/agencies/whd/immigration/h1b>
+
+-   <https://ccis.ucsd.edu/_files/wp11.pdf>
+
+-   <https://www.migrationpolicy.org/article/h-1b-temporary-skilled-worker-program>
+
+-   <https://timelines.issarice.com/wiki/Timeline_of_student_visa_policy_in_the_United_States>
+
+-   <https://www.thecrimson.com/article/2020/12/11/trump-immigration-higher-education/>
+
+-   https://www.americanimmigrationcouncil.org/research/h1b-visa-program-fact-sheet 
+

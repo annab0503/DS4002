@@ -10,120 +10,94 @@ output:
           theme: cosmo
           code_folding: hide
 ---
+```{r echo=FALSE, warning=FALSE, message=FALSE, results="hide"}
+# Load required libraries
+library(countrycode)
+library(dplyr)
+library(ggplot2)
+library(leaflet)
+library(maps)
+library(patchwork)
+library(readr)
+library(tidyverse)
+library(DT)
 
-# INTRODUCTION
+# Set the file path
+url <- "https://raw.githubusercontent.com/annab0503/DS4002/main/Project%201/Analysis%20Data/analysis_data.csv"
 
-This analysis delves into the relationship between a country's GDP and the issuance of F1 (student) and H1B (work) visas over time. By examining data across various countries and continents, we aim to uncover patterns that highlight the influence of economic performance on visa distribution. We hypothesize that higher GDP correlates with an increased number of F1 and H1B visas issued. Conversely, countries experiencing slower economic growth may see fewer visas granted.
+# Read the CSV file from the URL
+analysis_data <- read_csv(url)
+```
 
-# FOLLOW-UP QUESTIONS
+<h1 style="text-align: center;">Introduction</h1> 
 
-Additionally, we can explore potential secondary questions, such as:
+**What shapes the United States' approach to issuing visas?** Is it foreign economic performance, shifting domestic priorities, or political agendas? Visa issuance reflects dynamic priorities and evolving international trends. This research explores how economic factors, such as foreign GDP, and U.S. policy decisions influence visa issuance and examines how the U.S. balances domestic needs, foreign relations, and economic realities.
 
--   **How do presidential terms relate to the number of visa issuances?**
+Among the many U.S. visa categories, three key types most closely tied to economic outcomes are the focus of this analysis:
 
--   **What policies drive fluctuations in F1 and H1B visa approvals?**
+- **Student and Exchange Visitor Visas**: Fostering human capital development (e.g., F-1 for academic students, J-1 for exchange visitors, and M-1 for vocational students).  
+- **Skilled Labor Visas**: Supplying specialized expertise (e.g., H-1B for specialty workers, L-1 for intra-company transferees, and O-1 for extraordinary ability individuals).  
+- **Unskilled Labor Visas**: Supporting essential workforce needs (e.g., H-2A for agricultural workers and H-2B for temporary non-agricultural workers).  
 
-# BACKGROUND
+By examining these categories, we investigate how economic indicators, government policies, and labor market demands shape visa issuance trends. Specifically, this study asks:  
+- Do foreign GDP levels correlate with visa allocation?  
+- How do presidential administrations influence visa policies?  
+- Are skilled workers prioritized during economic growth?  
+- How do policy changes affect unskilled labor opportunities?  
 
--   **Overview of U.S. Work Visas**
+This analysis sheds light on the intersection of U.S. immigration policy and global economic conditions, offering insights into how the U.S. adapts its visa strategies to evolving domestic and international needs.
 
-Types of Work Visa include H-1B(Specialty workers), L-1 (Intra-company transferees ), O-1(Individuals with extraordinary ability in their field), P-1,2,3, and etc. Our research focuses on H1B, the most populated U.S. work visa for highly skilled foreign professionals.
+<h1 style="text-align: center;">Background</h1> 
 
--   **What is H1B work visa?**
+The U.S. immigration system encompasses a diverse range of visa categories designed to meet both the aspirations of foreign nationals and the economic needs of the country. Among these, three visa categories—**Student and Exchange Visitor Visas**, **Skilled Labor Visas**, and **Unskilled Labor Visas**—stand out for their significant economic impact. These categories represent critical components of a thriving economy: **human capital development** through international students and exchange visitors, **specialized expertise** provided by skilled labor, and **essential workforce support** through unskilled labor. This research focuses on understanding how these categories shape foreign worker flows and their contributions to the U.S. economy in the context of evolving policies and economic factors.  
 
-    The H-1B program allows U.S. employers to hire nonimmigrant workers for specialty occupations that require:
+## Skilled Labor Visas  
 
-    -   Highly specialized knowledge.\
+The **H-1B visa** is the most prominent skilled labor visa, allowing U.S. employers to hire highly skilled foreign professionals for specialty occupations requiring advanced knowledge and at least a bachelor’s degree or its equivalent. Over the years, the H-1B program has been influenced by economic and political factors. For instance, in 1998, high-tech industry lobbying led to proposals to increase the H-1B visa cap, citing a significant unmet demand for skilled workers. In response, the **American Competitiveness in the 21st Century Act** temporarily raised the cap to 195,000 between 2001 and 2003, before reverting to 65,000 in 2004. The 2008 recession brought further scrutiny, with Congress targeting the program to protect domestic jobs, resulting in a decline in filed petitions. These fluctuations underscore the program’s sensitivity to broader economic conditions and labor market demands.  
 
-    -   At least a **bachelor’s degree** or its equivalent. (Dol.gov)
+## Student and Exchange Visitor Visas  
 
--   **H1B Policies change over time**
+Visas such as the **F-1, J-1,** and **M-1** facilitate international education and cultural exchange in the U.S., playing a key role in human capital development. Policies have evolved over time to ensure better regulation and monitoring of international students. For example, the 1996 **Illegal Immigration Reform and Immigrant Responsibility Act** (IIRIRA) introduced measures to track foreign students, while the 2003 implementation of the **Student and Exchange Visitor Information System** (SEVIS) improved monitoring capabilities. Under the Obama administration, the federal **Optional Practical Training (OPT)** program was expanded for STEM students, reflecting the importance of international talent in innovation and research. However, the Trump administration tightened F-1 visa regulations, proposing fixed-term policies and stricter evaluations, highlighting how political priorities influence visa policies.  
 
-    -   1998 Industry Lobbying: High-tech industry representatives lobbied for an increase in the H-1B visa cap.
+## Unskilled Labor Visas  
 
-    -   In September 1997, the 65,000 annual cap for H-1B visas was reached for the first time. The cap provided new evidence of unmet demand for high-tech workers, particularly in the computer industry.
+Unskilled labor visas, including the **H-2A** and **H-2B**, address the demand for temporary agricultural and non-agricultural labor, respectively. The H-2A visa supports agricultural operations during peak seasons, ensuring labor availability for tasks such as planting and harvesting, while the H-2B visa fills gaps in industries like hospitality, construction, and landscaping. These visas are crucial for industries reliant on seasonal or peak-period labor, reflecting the essential role of temporary workers in maintaining economic stability in key sectors.  
 
-    -   In 1998, bills were introduced in the House and Senate to raise the H-1B cap from 65,000 to 115,000.
+## Economic Perspectives on Foreign Workers  
 
-    -   Cap was lifted to 195,000 visas for 2001, 2002, and 2003 under the 2000 American Competitiveness in the 21st Century Act (AC-21).
+Economic discussions about foreign workers revolve around their contributions to growth and innovation as well as concerns about their impact on the domestic labor market. Proponents argue that foreign workers fill critical labor shortages, enhance innovation, and sustain industries with fluctuating labor demands. For example, H-1B visa holders are often associated with technological advancements, patents, and entrepreneurial activities that drive competitiveness. Similarly, unskilled labor visas ensure the stability of sectors like agriculture and tourism, which are vital to the U.S. economy.  
 
-    -   The annual H-1B cap reverted to 65,000 in 2004.
+Critics, however, caution against potential wage suppression and increased competition for domestic workers, emphasizing the need for careful policy design to ensure equitable benefits. This research delves into these dynamics, examining how U.S. visa policies reflect broader economic priorities and labor market realities while balancing domestic interests with international interdependence.
 
-    -   To protect American workers during the recession, Congress targeted the H-1B program in the American Recovery and Reinvestment Act of 2009.
+<h1 style="text-align: center;">Methodology</h1> 
 
-    -   The number of filed petitions fell by nearly 20 percent between 2007 and 2009.
+## Data Sources
 
-    -   H-1B fees also fluctuate.
+Our analysis draws on three primary data sources (originally accessed on January 2, 2025), each providing unique insights into visa trends and the broader economic landscape:
 
--   **Student Visa**
+###  [U.S. State Department](https://travel.state.gov/content/travel/en/legal/visa-law0/visa-statistics/nonimmigrant-visa-statistics.html){.btn .btn-primary}
+The U.S. State Department's visa statistics offer detailed records of nonimmigrant visas issued by type and country of origin. This dataset is pivotal in understanding trends over time, including shifts in the distribution of student, skilled labor, and unskilled labor visas. Researchers have historically relied on this dataset to assess the effects of policy changes on international mobility.
 
-    -   F-1, J-1 (exchange programs), and M (nonacademic institution)
+### [World Bank](https://wits.worldbank.org/CountryProfile/en/country/by-country/startyear/ltst/endyear/ltst/indicator/NY-GDP-MKTP-CD#){.btn .btn-primary}
+Economic indicators, particularly Gross Domestic Product (GDP) data measured in current U.S. dollars, were sourced from the World Bank’s database. These metrics provide a foundation for examining how global economic performance correlates with U.S. visa issuance. For example, GDP data has been a cornerstone of studies investigating global disparities and their implications for migration patterns.
 
-    -The F-1 visa allows a student to temporarily live in the United States for a defined period of time while studying at a school, college, seminary, or conservatory.
+### [U.S. Census Bureau](https://www.census.gov/data-tools/demo/idb/#/table?dashboard_page=country&COUNTRY_YR_ANIM=2025&menu=tableViz&quickReports=CUSTOM&CUSTOM_COLS=POP,GR,RNI,POP_DENS,CBR,CDR,NMR,NIM&TABLE_RANGE=1997,2014&TABLE_YEARS=1997,1998,1999,2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2025&TABLE_USE_RANGE=Y&TABLE_USE_YEARS=Y&TABLE_STEP=1&TABLE_ADD_YEARS=2025){.btn .btn-primary}
+Demographic data from the U.S. Census Bureau's International Data Base (IDB) offered critical context on population dynamics, including growth rates, migration patterns, and population density. These variables are essential for understanding the socio-economic backdrop influencing visa policies.
 
--   **Policies on F1 Student Visa**
+## Data Cleaning and Integration
 
-    -   1996: Illegal Immigration Reform and Immigrant Responsibility Act (IIRIRA)
+To ensure accuracy and compatibility, we executed a rigorous data-cleaning process in Python using a Jupyter Notebook. This process involved:
 
-    -   Mandated the development of a program to collect information on nonimmigrant foreign students
+- **Standardizing Variables**: Key variables such as country names were standardized across datasets to ensure consistency.
+- **Handling Missing Data**: Missing values were identified and treated based on the nature of the variable, employing methods such as imputation or exclusion where appropriate.
+- **Merging Datasets**: The cleaned datasets were integrated into a unified dataframe using shared keys like country and fiscal year, allowing for seamless analysis across multiple dimensions.
+- **Validation**: Cross-referencing with original sources ensured the accuracy of merged data and derived variables.
 
-    -   2002: Tightening of B Visa Regulations: regulations were amended to require individuals on B visas to change to F or M status before pursuing a course of study.
+Detailed replication documents, including the Python code used for cleaning and merging, are available in our GitHub repository.
 
-    -   2003: Implementation of SEVIS improving the tracking and monitoring of international students in the U.S
+## Variables for Analysis
 
-    -   Obama expanded and extended the federal Optional Practical Training program for STEM students to 29 months
-
-    -   Under the Trump Administration(2017-2021), F-1 visa regulations became tighter.
-
-        -   More rigorous evaluation of student visa applications and renewals.
-
-        -   Proposed limitations on the length of stay, introducing fixed-term visa policies
-
--   **Unskilled Labor Visa**
-
--   H-2A, H-2B, H-2R, etc
-
--   Our main focus is H-2A and H-2B
-
-    -H-2A: Agricultural workers (temporary labor for agricultural jobs that are seasonal or peak-period).
-
-    -H-2B: Temporary non-agricultural workers (e.g., hospitality, construction, and landscaping work).
-
--   **Foreign Workers help U.S economy**
-
-    -   Job Creation – H-1B workers fill skill gaps, boosting jobs and economic growth.
-
-    -   Low Unemployment – Sectors with many H-1B workers show consistently low jobless rates.
-
-    -   Innovation – H-1B workers drive patents, startups, and business expansion.
-
-    -   High Wages – H-1B wages outpace U.S. averages, often exceeding prevailing rates. (americanimmigrationcouncil.org)
-
-# METHODOLOGY
-
-To analyze our initial problem, we used three data sources (originally accessed on January 2, 2025):
-
-1.  [U.S. State Department](https://travel.state.gov/content/travel/en/legal/visa-law0/visa-statistics/nonimmigrant-visa-statistics.html){.btn .btn-primary}
-
-Dataset Overview: The U.S. State Department's visa statistics provide detailed data on nonimmigrant visas issued by the U.S. government. It includes information about visa types and countries of origin. The dataset can be segmented by visa categories, geographic regions, and other criteria
-
-Previous Uses: This dataset is widely used by researchers and policymakers to analyze trends in U.S. immigration, such as the number of visas issued to foreign nationals over time. The U.S. Department of Homeland Security and various research organizations use the visa statistics to evaluate the effects of visa policy changes. For instance, the Migration Policy Institute (MPI) uses this data to assess the impacts of changes in U.S. visa issuance on international student enrollment trends in U.S. universities.
-
-2.  [World Bank](https://wits.worldbank.org/CountryProfile/en/country/by-country/startyear/ltst/endyear/ltst/indicator/NY-GDP-MKTP-CD#){.btn .btn-primary}
-
-Dataset Overview: The World Bank dataset focuses on country-level economic indicators, specifically Gross Domestic Product (GDP) measured in current US dollars. The World Bank's World Integrated Trade Solution platform provides access to a wide array of economic, trade, and development data, which includes GDP data for all countries.
-
-Previous Uses: The World Bank’s GDP data is widely used for forecasting global economic trends. For example, the World Economic Outlook regularly uses this data to produce global forecasts, guiding economic policies of member countries. Cross-country GDP comparisons are foundational in understanding global disparities in development. Dollar and Kraay (2003) used World Bank GDP data to argue that economic growth directly correlates with poverty reduction in developing nations.
-
-3.  [U.S. Census Bureau](https://www.census.gov/data-tools/demo/idb/#/table?dashboard_page=country&COUNTRY_YR_ANIM=2025&menu=tableViz&quickReports=CUSTOM&CUSTOM_COLS=POP,GR,RNI,POP_DENS,CBR,CDR,NMR,NIM&TABLE_RANGE=1997,2014&TABLE_YEARS=1997,1998,1999,2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2025&TABLE_USE_RANGE=Y&TABLE_USE_YEARS=Y&TABLE_STEP=1&TABLE_ADD_YEARS=2025){.btn .btn-primary}
-
-Dataset Overview: The U.S. Census Bureau's International Data Base (IDB) provides demographic information for countries worldwide, including population size, growth rates, fertility rates, mortality rates, life expectancy, and migration patterns. The data spans multiple decades and is updated regularly. The IDB is valuable for understanding long-term trends in population and demographic characteristics across countries.
-
-Previous Uses: Researchers have used the IDB to assess global population growth and predict demographic shifts. This is important for understanding the social and economic challenges faced by countries with rapidly growing populations, as well as the implications for urbanization, labor markets, and social services.
-
-We used a Python Jupityer Notebook to clean each data frame, then merge them into a merged data frame for future analysis and vizualization using a common variable of country and year. All replication documents can be found within our public [GitHub repository](https://github.com/annab0503/DS4002/tree/main/Project%201/Analysis%20Data).
-
-Variables in our (cleaned) dataset include:
+Our cleaned dataset includes the following variables, each essential for addressing our research questions:
 
 | Variable                       | Description                                                                             | Source                |
 |--------------------------------|-----------------------------------------------------------------------------------------|-----------------------|
@@ -139,77 +113,13 @@ Variables in our (cleaned) dataset include:
 | Crude Birth Rate               | avg. annual number of births during a year per 1,000 population at midyear              | U.S. Census Bureau    |
 | Net International Migrants     | number of immigrants minus the number of emigrants, including citizens and non-citizens | U.S. Census Bureau    |
 
-## DATA CLEANING
+## Analytical Approach
 
-#### LOADING PACKAGES
+To analyze the data, we employed a visualization-driven methodology to explore trends, patterns, and relationships. Visualization techniques, such as interactive maps, bar charts, and scatterplots, provided intuitive insights into how U.S. visa issuance aligns with economic and demographic indicators.
 
-```{r message=FALSE}
-library(tidyverse)
-library(dplyr)
-library(patchwork)
-library(DT)
-library(readr)
-```
+By leveraging data visualization, we identified trends and formulated hypotheses. This approach enabled us to present complex data in an accessible manner, uncovering insights into how economic indicators and policy shifts shape U.S. visa issuance strategies.
 
-#### IMPORT DATA
-
-```{r}
-# Set the file path
-url <- "https://raw.githubusercontent.com/annab0503/DS4002/main/Project%201/Analysis%20Data/analysis_data.csv"
-
-# Read the CSV file from the URL
-analysis_data <- read_csv(url)
-
-# View the data
-head(analysis_data)
-```
-
-#### ANALYSIS
-
-```{r}
-
-library(leaflet)
-library(dplyr)
-library(countrycode)
-
-df_visas_summary <- data.frame(
-  Country = c("United States", "India", "China", "Germany", "Japan", "Mexico", "United Kingdom", "Guatemala", "Jamaica", "South Africa", "Korea, South"),
-  skilled_visas = c(500000, 200000, 300000, 150000, 250000, 180000, 170000, 80000, 90000, 160000, 210000),
-  unskilled_visas = c(400000, 350000, 200000, 120000, 220000, 250000, 180000, 70000, 60000, 150000, 180000),
-  student_visas = c(350000, 180000, 250000, 130000, 200000, 180000, 140000, 60000, 70000, 120000, 160000)
-)
-
-# Get the country codes (ISO 3166-1 alpha-3) for each country in df_visas_summary
-df_visas_summary$country_code <- countrycode(df_visas_summary$Country, "country.name", "iso3c")
-
-# Get country centroids from the world map data
-world_map_data <- map_data("world")
-
-# Calculate centroids (latitude and longitude) for countries
-centroids <- world_map_data %>%
-  group_by(region) %>%
-  summarise(lat = mean(lat), lon = mean(long))
-
-# Merge the country data with centroids using country names
-df_centroids <- df_visas_summary %>%
-  left_join(centroids, by = c("Country" = "region"))
-
-# View the merged data (now it includes latitudes and longitudes)
-print(df_centroids)
-
-# Create the interactive leaflet map without the legend
-leaflet(df_centroids) %>%
-  addTiles() %>%
-  addCircles(
-    lat = ~lat, lng = ~lon,  # Use 'lng' for longitude
-    popup = ~paste("<strong>Country:</strong>", Country,
-                   "<br><strong>Skilled Labor Visas:</strong>", skilled_visas,
-                   "<br><strong>Unskilled Labor Visas:</strong>", unskilled_visas,
-                   "<br><strong>Student Visas:</strong>", student_visas),
-    radius = 50000, color = "#FF0000", fillOpacity = 0.7
-  )
-
-```
+<h1 style="text-align: center;">Exploratory Analysis</h1> 
 
 ```{r fig.width=12, fig.height=6, echo=FALSE, warning=FALSE}
 # Define presidential administration transition years 
@@ -294,7 +204,7 @@ ggplot(aggregated_data, aes(x = `Fiscal Year`, y = Total_Visas, color = `Visa Ca
            angle = 90, vjust = 1.5, hjust = 1, color = "black", size = 4, family = "Futura")
 ```
 
-```{r}
+```{r echo=FALSE, warning=FALSE}
 
 plot_top_5_visas <- function(visa_category, scale_type = "log") {
   # Filter data for the specific visa category
@@ -339,21 +249,17 @@ plot_top_5_visas <- function(visa_category, scale_type = "log") {
 plot_top_5_visas("Skilled Labor Visas", scale_type = "log")
 
 ```
-```{r}
+
+```{r echo=FALSE, warning=FALSE}
 plot_top_5_visas("Unskilled Labor Visas", scale_type = "log")
 ```
 
-```{r}
+```{r echo=FALSE, warning=FALSE}
 plot_top_5_visas("Student and Exchange Visitor Visas", scale_type = "log")
 
 ```
 
-
-```{r}
-library(ggplot2)
-library(dplyr)
-
-
+```{r echo=FALSE, warning=FALSE}
 # Check column names to ensure correct referencing
 print(colnames(analysis_data))
 
@@ -405,13 +311,12 @@ p <- ggplot(filtered_data, aes(x = `Fiscal Year`, y = Total.Visas, fill = `Visa 
   )
 
 print(p)
-
-
 ```
 
-# CONCLUSION
+<h1 style="text-align: center;">Conclusion</h1> 
 
-# WORKS CITED
+
+<h1 style="text-align: center;">Works Cited</h1> 
 
 -   <https://www.dol.gov/agencies/whd/immigration/h1b>
 

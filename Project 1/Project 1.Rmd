@@ -347,6 +347,58 @@ plot_top_5_visas("Unskilled Labor Visas", scale_type = "log")
 plot_top_5_visas("Student and Exchange Visitor Visas", scale_type = "log")
 
 ```
+
+```{r}
+
+library(ggplot2)
+library(dplyr)
+
+# Load data
+data <- read.csv('analysis_data.csv')
+
+# Aggregate data
+pop_growth <- data %>% 
+  group_by(Country, Fiscal.Year) %>% 
+  summarise(Population = sum(Population), .groups = 'drop')
+
+visa_distribution <- data %>% 
+  group_by(Country, Fiscal.Year, Visa.Category) %>% 
+  summarise(Total.Visas = sum(Quantity.of.U.S..Visas.Granted), .groups = 'drop')
+
+# Identify top 5 countries by total visa issuances
+top_countries <- visa_distribution %>% 
+  group_by(Country) %>% 
+  summarise(Total.Visas = sum(Total.Visas)) %>% 
+  top_n(5, Total.Visas) %>% 
+  pull(Country)
+
+# Filter for top countries
+filtered_data <- visa_distribution %>% 
+  filter(Country %in% top_countries)
+
+# Plot stacked bar chart
+p <- ggplot(filtered_data, aes(x = Fiscal.Year, y = Total.Visas, fill = Visa.Category)) +
+  geom_bar(stat = 'identity', position = 'stack') +
+  
+  labs(
+    title = 'Stacked Bar Plot of Visa Issuance for Top 5 Countries',
+    x = 'Fiscal Year',
+    y = 'Total Visas Issued',
+    fill = 'Visa Category'
+  ) +
+  facet_wrap(~ Country, scales = 'free_y', nrow = 1) +
+  theme_minimal() +
+  theme(
+    axis.text.x = element_text(angle = 45, hjust = 1),
+    plot.margin = margin(10, 10, 10, 10),
+    aspect.ratio = 0.6  # Make the plot wider
+  )
+
+print(p)
+
+
+```
+
 # CONCLUSION
 
 # WORKS CITED

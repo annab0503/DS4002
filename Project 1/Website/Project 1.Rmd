@@ -38,6 +38,94 @@ showtext_auto()
 font_add_google("Bodoni Moda", "bodoni_moda")  # Alias: bodoni_moda
 font_add_google("Montserrat", "montserrat")     # Alias: montserrat
 ```
+```{r eval=FALSE, include=FALSE}
+# Step 1: Download and Load the Dataset
+url <- "https://github.com/annab0503/DS4002/raw/main/Project%201/Analysis%20Data/analysis_data.csv"
+analysis_data <- read.csv(url)
+
+# Step 2: Load Required Packages
+packages <- c("ggplot2", "rworldmap", "dplyr", "sp")
+
+install_if_missing <- function(p) {
+  if (!requireNamespace(p, quietly = TRUE)) {
+    install.packages(p, dependencies = TRUE)
+  }
+}
+
+lapply(packages, install_if_missing)
+
+library(ggplot2)
+library(rworldmap)
+library(dplyr)
+library(sp)
+
+# Step 3: Load the Dataset from URL
+data <- analysis_data
+
+# Step 5: Loop Through Years from 1997 to 2022
+for (selected_year in 1997:2022) {
+
+  # Step 6: Filter and Aggregate Visa Data by Country and Year
+  visa_data <- data %>%
+    filter(`Fiscal.Year` == selected_year) %>%
+    group_by(Country) %>%
+    summarise(visas_issued = sum(`Quantity.of.U.S..Visas.Granted`, na.rm = TRUE)) %>%
+    ungroup()
+
+  if (nrow(visa_data) == 0) {
+    message(paste("No data available for the fiscal year", selected_year))
+    next
+  }
+
+  # Step 7: Map Visa Data to World Map
+  world_map <- joinCountryData2Map(
+    visa_data,
+    joinCode = "NAME",
+    nameJoinColumn = "Country"
+  )
+
+  if (is.null(world_map)) {
+    message("Country matching failed. Check for inconsistencies in country names.")
+    next
+  }
+
+  # Step 8: Plot the Heat Map
+  breaks <- pretty(visa_data$visas_issued, n = 6)
+
+  # Ensure unique breaks for the plot
+  if (length(unique(breaks)) < 2) {
+    breaks <- unique(c(breaks, max(breaks) + 1))
+  }
+
+  mapCountryData(
+    world_map,
+    nameColumnToPlot = "visas_issued",
+    catMethod = breaks,
+    mapTitle = paste("Visa Issuance Heat Map for Fiscal Year", selected_year),
+    colourPalette = "heat",
+    missingCountryCol = gray(0.8),
+    addLegend = TRUE
+  )
+}
+
+png(paste0("visa_heatmap_fy", selected_year, ".png"), width = 1200, height = 900)
+  mapCountryData(
+    world_map,
+    nameColumnToPlot = "visas_issued",
+    catMethod = breaks,
+    mapTitle = paste("Visa Issuance Heat Map for Fiscal Year", selected_year),
+    colourPalette = "heat",
+    missingCountryCol = gray(0.8),
+    addLegend = TRUE
+  )
+  dev.off()
+
+
+```
+
+```{r graph, echo=FALSE, fig.cap="Visa Issuances Heatmap 1997-2022", out.width = '100%'}
+knitr::include_graphics("visa_heatmap.gif")
+```
 
 # **Introduction**
 

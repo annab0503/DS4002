@@ -3,7 +3,9 @@
 
 /* Body background */
 body {
+    touch-action: pinch-zoom; /* Enable pinch-to-zoom functionality */
     background-color: #DEE9F7; /* Light blue background */
+    overflow: auto; /* Allow scrolling */
 }
 
 /* Header styling */
@@ -103,6 +105,7 @@ h4.date {
 
 /* Table of contents (TOC) */
 #TOC {
+    touch-action: none
     position: fixed;        /* Fixed position on the page */
     top: 0;                 /* Align to the top of the viewport */
     left: 0;                /* Align to the left of the viewport */
@@ -110,6 +113,7 @@ h4.date {
     width: 250px;           /* Set TOC width */
     overflow-y: auto;       /* Allow vertical scrolling */
     background-color: white; /* White background */
+    touch-action: none; /* Disable all touch actions, including pinch-to-zoom */
     z-index: 1000;          /* Ensure TOC appears above other content */
     padding-top: 20px;      /* Space at the top */
 }
@@ -158,6 +162,11 @@ img {
     width: 95%;
 }
 
+/* Image hover effect */
+img:hover {
+    transform: scale(1.2); /* Zoom in by 1.2 times */
+}
+
 /* Section styling */
 #introduction.section.level1,
 #background.section.level1,
@@ -169,3 +178,5 @@ img {
     padding: 10px;           /* Inner spacing */
     margin: 5px;            /* Outer spacing */
 }
+
+

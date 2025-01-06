@@ -199,19 +199,20 @@ Detailed replication documents, including the Python code used for cleaning and 
 
 Our cleaned dataset includes the following variables, each essential for addressing our research questions:
 
-| Variable                       | Description                                                                             | Source                |
-|--------------------------------|-----------------------------------------------------------------------------------------|-----------------------|
-| Country                        | geographic entity of interest                                                           | All                   |
-| Fiscal Year                    | year for which data is reported, based on the U.S. fiscal calendar                      | All                   |
-| Visa Category                  | classification of U.S. visas issued (e.g., unskilled labor, skilled labor, student)     | U.S. State Department |
-| Quantity of U.S. Visas Granted | total number of visas issued for a given type and year                                  | U.S. State Department |
-| Population                     | quantity of people living in a given geographic area                                    | U.S. Census Bureau    |
-| GDP                            | Gross Domestic Product measured in current U.S. dollars                                 | U.S. Census Bureau    |
-| Annual Growth Rate             | annual percent change in population, accounting for natural increase and net migration  | World Bank            |
-| Rate of Natural Increase       | percent difference between the crude birth rate and the crude death rate                | U.S. Census Bureau    |
-| Population Density             | total population of a geographic area divided by its land area in square kilometers     | U.S. Census Bureau    |
-| Crude Birth Rate               | avg. annual number of births during a year per 1,000 population at midyear              | U.S. Census Bureau    |
-| Net International Migrants     | number of immigrants minus the number of emigrants, including citizens and non-citizens | U.S. Census Bureau    |
+| Variable                       | Description                                                                                     | Source                |
+|--------------------------------|-------------------------------------------------------------------------------------------------|-----------------------|
+| Country                        | geographic entity of interest                                                                   | All                   |
+| Fiscal Year                    | year for which data is reported based on the U.S. fiscal calendar, 1997-2022                    | All                   |
+| U.S. Visa Type                 | specific type of visa issued, based on U.S. immigration classifications (e.g., F-1, H-1B, H-2A) | U.S. State Department |
+| Visa Category                  | classification of U.S. visas issued (e.g., unskilled labor, skilled labor, student)             | Created               |
+| Quantity of U.S. Visas Granted | total number of visas issued for a given type and year                                          | U.S. State Department |
+| Population                     | quantity of people living in a given geographic area                                            | U.S. Census Bureau    |
+| GDP                            | Gross Domestic Product measured in current U.S. dollars                                         | U.S. Census Bureau    |
+| Annual Growth Rate             | annual percent change in population, accounting for natural increase and net migration          | World Bank            |
+| Rate of Natural Increase       | percent difference between the crude birth rate and the crude death rate                        | U.S. Census Bureau    |
+| Population Density             | total population of a geographic area divided by its land area in square kilometers             | U.S. Census Bureau    |
+| Crude Birth Rate               | avg. annual number of births during a year per 1,000 population at midyear                      | U.S. Census Bureau    |
+| Net International Migrants     | number of immigrants minus the number of emigrants, including citizens and non-citizens         | U.S. Census Bureau    |
 
 ## Analytical Approach
 

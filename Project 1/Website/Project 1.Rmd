@@ -13,17 +13,37 @@ output:
 ---
 
 ```{r echo=FALSE, warning=FALSE, message=FALSE, results="hide"}
-# Load required libraries
+# Function to check and install missing packages
+install_if_missing <- function(package) {
+  if (!require(package, character.only = TRUE)) {
+    install.packages(package, dependencies = TRUE)
+    library(package, character.only = TRUE)
+  }
+}
+
+# List of required packages
+packages <- c(
+  "countrycode", "dplyr", "DT", "ggplot2", "leaflet", 
+  "maps", "patchwork", "readr", "rworldmap", "showtext", 
+  "sp", "tidyverse"
+)
+
+# Ensure all packages are installed and loaded
+lapply(packages, install_if_missing)
+
+# Load libraries explicitly
 library(countrycode)
 library(dplyr)
+library(DT)
 library(ggplot2)
 library(leaflet)
 library(maps)
 library(patchwork)
 library(readr)
+library(rworldmap)
 library(showtext)
+library(sp)
 library(tidyverse)
-library(DT)
 
 # Set the file path
 url <- "https://raw.githubusercontent.com/annab0503/DS4002/main/Project%201/Analysis%20Data/analysis_data.csv"
@@ -38,34 +58,15 @@ showtext_auto()
 font_add_google("Bodoni Moda", "bodoni_moda")  # Alias: bodoni_moda
 font_add_google("Montserrat", "montserrat")     # Alias: montserrat
 ```
+
 ```{r eval=FALSE, include=FALSE}
-# Step 1: Download and Load the Dataset
-url <- "https://github.com/annab0503/DS4002/raw/main/Project%201/Analysis%20Data/analysis_data.csv"
-analysis_data <- read.csv(url)
-
-# Step 2: Load Required Packages
-packages <- c("ggplot2", "rworldmap", "dplyr", "sp")
-
-install_if_missing <- function(p) {
-  if (!requireNamespace(p, quietly = TRUE)) {
-    install.packages(p, dependencies = TRUE)
-  }
-}
-
-lapply(packages, install_if_missing)
-
-library(ggplot2)
-library(rworldmap)
-library(dplyr)
-library(sp)
-
-# Step 3: Load the Dataset from URL
+# Load the Dataset from URL
 data <- analysis_data
 
-# Step 5: Loop Through Years from 1997 to 2022
+# Loop Through Years from 1997 to 2022
 for (selected_year in 1997:2022) {
 
-  # Step 6: Filter and Aggregate Visa Data by Country and Year
+  # Filter and Aggregate Visa Data by Country and Year
   visa_data <- data %>%
     filter(`Fiscal.Year` == selected_year) %>%
     group_by(Country) %>%
@@ -77,7 +78,7 @@ for (selected_year in 1997:2022) {
     next
   }
 
-  # Step 7: Map Visa Data to World Map
+  # Map Visa Data to World Map
   world_map <- joinCountryData2Map(
     visa_data,
     joinCode = "NAME",
@@ -89,7 +90,7 @@ for (selected_year in 1997:2022) {
     next
   }
 
-  # Step 8: Plot the Heat Map
+  # Plot the Heat Map
   breaks <- pretty(visa_data$visas_issued, n = 6)
 
   # Ensure unique breaks for the plot
@@ -119,8 +120,6 @@ png(paste0("visa_heatmap_fy", selected_year, ".png"), width = 1200, height = 900
     addLegend = TRUE
   )
   dev.off()
-
-
 ```
 
 ```{r graph, echo=FALSE, fig.cap="Visa Issuances Heatmap 1997-2022", out.width = '100%'}
@@ -221,7 +220,7 @@ By leveraging data visualization, we identified trends and formulated hypotheses
 
 # **Exploratory Analysis**
 
-Anna's section
+To identify the factors that shape U.S. immigration policy, we began our analysis by examining the overarching trends in U.S. visa allocation. The stacked bar below highlights a steady increase in the total number of visas issued over the past two decades, reflecting a long-term growth trend. However, this visualization also reveals two distinct periods of decline, beginning in 2001 and 2005, as well as two singular years of sharp drops in 2008 and 2020.
 
 ```{r fig.width=12, fig.height=6, echo=FALSE, warning=FALSE}
 # Define key transition years in U.S. presidential administrations
@@ -277,6 +276,14 @@ ggplot(aggregated_data, aes(x = `Fiscal Year`, y = Total_Visas, fill = `Visa Cat
   annotate("text", x = key_events, y = Inf, label = c("9/11 Attack", "Great Recession", "Rep. Control of Congress", "COVID Pandemic"), 
            angle = 90, vjust = 1.5, hjust = 1, color = "black", size = 3, family = "bontserrat")  # Annotate the key events with rotated text
 ```
+
+Interestingly, the two sustained downturns in visa issuance align with significant political shifts in the U.S., potentially influencing immigration policies. Following the terrorist attacks on September 11, 2001, Congress enacted the Enhanced Border Security and Visa Entry Reform Act of 2002, introducing stricter visa processing requirements and heightened security measures that contributed to the first prolonged decline. Similarly, the political realignment after the 2014 elections, which gave Republicans control of both the Senate and the House for the first time since the 109th Congress, likely played a role in the second period of sustained decline. With the largest Republican majority since 1929–1931, this Congress prioritized enforcement-focused immigration policies, which may have impacted visa issuance trends from 2015 to 2019. These political shifts raise our first question: **How do U.S. policies under different administrations impact visa issuance?**
+
+In contrast, the sharp declines in 2008 and 2020 appear to be driven more by significant economic disruptions than by political changes. The global financial crisis of 2008, for example, reduced both the demand for labor migration and immigrants' financial capacity to move, which likely contributed to the modest yet noticeable downturn in visa numbers. Similarly, the COVID-19 pandemic in 2020 caused an even more pronounced collapse, as global mobility was severely disrupted. The economic uncertainty brought on by the pandemic, including widespread job losses and disruptions to international trade, likely exacerbated the decline in visa issuance, as both potential migrants and employers faced financial instability and reduced capacity for mobility. These economic factors prompt our second question: **What role do foreign GDP levels play in U.S. visa trends?**
+
+Additionally, the variations in visa types during these periods suggest that demographic shifts could be influencing both the quantity and categories of visas sought. This observation raises our third question: **How do population growth and migration patterns shape the flow of visa applicants?** 
+
+These questions drive our deeper analysis, as we aim to understand how the interplay of policy decisions, economic conditions, and demographic changes has shaped U.S. immigration patterns.
 
 ## How do U.S. policies under different administrations influence visa issuance trends?
 
@@ -336,9 +343,7 @@ ggplot(aggregated_data, aes(x = `Fiscal Year`, y = Total_Visas, color = `Visa Ca
 
 ## What is the relationship between foreign GDP levels and U.S. visa issuance?
 
-Rishika's section
-
-```{r, echo=FALSE}
+```{r fig.width=10, fig.height=6, echo=FALSE, warning=FALSE}
 plot_visa_per_capita_vs_gdp <- function(visa_category) {
   # Filter the data for the selected visa category
   df_category <- analysis_data %>%
@@ -370,27 +375,47 @@ plot_visa_per_capita_vs_gdp <- function(visa_category) {
     ) +
     theme_minimal() +
     theme(
-      plot.title = element_text(face = "bold", size = 18, hjust = 0.5),
+      # Customize the primary title
+      plot.title = element_text(hjust = 0.5, family = "bodoni_moda", size = 16, margin = margin(b = 15), face = "bold"),
+      
+      # Customize the legend title
+      legend.title = element_text(family = "bodoni_moda", size = 13, face = "bold"),
+      
+      # Customize the axis labels and axis text
+      axis.title = element_text(family = "montserrat", size = 14),
+      axis.text = element_text(family = "montserrat", size = 12),
+      
+      # Apply Montserrat font for all other text elements in the plot
+      text = element_text(size = 12, family = "montserrat"),
+      
+      # Position the legend on the right side of the plot
+      legend.position = "right",
+      
+      # Align the legend title to the center
+      legend.title.align = 0.5,
+      
+      # Customize x-axis text to angle for readability
       axis.text.x = element_text(angle = 45, hjust = 1)
     ) +
-    scale_color_brewer(palette = "Dark2")
+    scale_color_manual(values = c("#F84947", "#5794D4","#F1C40F", "#A93226", "#092E86"))  # Adjust colors for top countries
   
   return(plot)
 }
 
-# Generate and display the plots for each visa category
+# Generate and display the plots for a specific visa category
 plot_visa_per_capita_vs_gdp("Skilled Labor Visas")
-
 ```
+
 China, India, and Mexico are clustered in the bottom-left corner, indicating that they issue fewer skilled labor visas and have lower GDP per capita. This suggests that while these countries have large populations and growing economies, they may not rely on foreign skilled labor as much as others. This may be due to their emphasis on domestic workforce development and the availability of skilled professionals within their own economies. In contrast, the UK, positioned in the top-right corner, shows a high GDP per capita and a larger share of skilled labor visas, reflecting its more developed economy and reliance on attracting specialized talent for advanced industries. Japan, although its GDP per capita is high, is positioned in the bottom-right corner, suggesting that it issues fewer skilled labor visas, possibly due to more restrictive immigration policies or a preference for utilizing domestic labor. The data highlights important trends in how economies at different stages of development approach skilled labor immigration, with developed economies tending to rely more on foreign talent to support high-tech and specialized industries.
 
-```{r, echo=FALSE}
+```{r fig.width=10, fig.height=6, echo=FALSE, warning=FALSE}
 plot_visa_per_capita_vs_gdp("Unskilled Labor Visas")
 ```
+
 Jamaica is positioned in a line on the left, suggesting that while it has low GDP per capita, it consistently issues a small but steady number of unskilled labor visas. South Africa and Guatemala, placed in the bottom-left area, show lower GDP per capita and similarly limited issuance of unskilled labor visas. Mexico, slightly higher and to the right of South Africa and Guatemala, shows a higher GDP per capita and a moderate issuance of unskilled labor visas, which may reflect a greater level of migration to neighboring countries for low-wage jobs. The UK is placed on the far-right side of the line, indicating that while its GDP per capita is high, it issues unskilled labor visas at a lower level, possibly due to issuance of skilled visas as shown in the previous visualization.
 
 
-```{r, echo=FALSE}
+```{r fig.width=10, fig.height=6, echo=FALSE, warning=FALSE}
 plot_visa_per_capita_vs_gdp("Student and Exchange Visitor Visas")
 ```
 China and India, with their large populations and growing middle class, send large numbers of students abroad despite their relatively lower GDP per capita. This reflects the increasing demand for higher education and global opportunities. South Korea shows a varied pattern, with a significant number of students leaving for education, which may be attributed to a highly educated population and a strong focus on international exposure. Germany and Japan, despite having high GDP per capita, still show substantial student visa trends, indicating the international appeal of their education systems. Both countries have well-established research and academic institutions that attract students from around the world.

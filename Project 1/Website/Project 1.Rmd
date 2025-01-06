@@ -423,12 +423,22 @@ China and India, with their large populations and growing middle class, send lar
 ## How do population growth and migration patterns affect visa issuance?
 
 Ada's section
-```{r echo=FALSE, warning=FALSE}
-# Aggregate data
-pop_growth <- analysis_data %>%
-  group_by(Country, `Fiscal Year`) %>%
-  summarise(Population = sum(Population, na.rm = TRUE), .groups = 'drop')
+```{r, echo=FALSE}
+plot_visa_per_capita_vs_gdp("Student and Exchange Visitor Visas")
+```
+China and India, with their large populations and growing middle class, send large numbers of students abroad despite their relatively lower GDP per capita. This reflects the increasing demand for higher education and global opportunities. South Korea shows a varied pattern, with a significant number of students leaving for education, which may be attributed to a highly educated population and a strong focus on international exposure. Germany and Japan, despite having high GDP per capita, still show substantial student visa trends, indicating the international appeal of their education systems. Both countries have well-established research and academic institutions that attract students from around the world.
 
+## How do population growth and migration patterns affect visa issuance?
+
+Ada's section
+
+
+```{r echo=FALSE}
+library(tidyr)
+library(dplyr)
+library(ggplot2)
+
+# Aggregate data for visa distribution
 visa_distribution <- analysis_data %>%
   group_by(Country, `Fiscal Year`, `Visa Category`) %>%
   summarise(Total.Visas = sum(`Quantity of U.S. Visas Granted`, na.rm = TRUE), .groups = 'drop')
@@ -444,10 +454,13 @@ top_countries <- visa_distribution %>%
 filtered_data <- visa_distribution %>%
   filter(Country %in% top_countries)
 
-# Plot stacked bar chart
+# Plot stacked bar chart for visa issuance
 p <- ggplot(filtered_data, aes(x = `Fiscal Year`, y = Total.Visas, fill = `Visa Category`)) +
+  
+  # Stacked bar for visas
   geom_bar(stat = 'identity', position = 'stack') +
   
+  # Labels and Titles
   labs(
     title = 'Visa Issuance Trends for Top 5 Countries',
     subtitle = 'Stacked bar plot by visa category over the years',
@@ -455,23 +468,188 @@ p <- ggplot(filtered_data, aes(x = `Fiscal Year`, y = Total.Visas, fill = `Visa 
     y = 'Total Visas Issued',
     fill = 'Visa Category'
   ) +
-  facet_wrap(~ Country, scales = 'free_y', nrow = 2) +
+  
+  # Facet by country to show trends
+  facet_wrap(~ Country, nrow = 1) +
+  
+  # Customize colors and themes
   scale_fill_brewer(palette = 'Set2') +
   theme_minimal(base_size = 14) +
+  
+  # Improve axis and text aesthetics
   theme(
     axis.text.x = element_text(angle = 45, hjust = 1, size = 8),
     axis.text.y = element_text(size = 10),
     strip.text = element_text(size = 10, face = 'bold'),
-    plot.title = element_text(hjust = 0.5, size = 18, face = 'bold'),
+    plot.title = element_text(hjust = 0.5, size = 15, face = 'bold'),
     plot.subtitle = element_text(hjust = 0.5, size = 12),
     legend.position = 'top',
-    legend.title = element_text(size = 13),
-    legend.text = element_text(size = 11),
-    plot.margin = margin(15, 15, 15, 15),
-    aspect.ratio = 1.3  # Increase the height further
+    legend.title = element_text(size = 10),
+    legend.text = element_text(size = 10),
+    plot.margin = margin(15, 15, 15, 15)
   )
 
+# Display plot
 print(p)
+
+# Save the plot (wider and taller)
+ggsave("visa_issuance_trends.png", plot = p, width = 20, height = 8, dpi = 300)
+
+```
+
+```{r echo=FALSE}
+library(tidyr)
+library(dplyr)
+library(ggplot2)
+
+# Step 1: Aggregate Visa Data to Find Top 5 Countries
+visa_distribution <- analysis_data %>%
+  group_by(Country, `Fiscal Year`, `Visa Category`) %>%
+  summarise(Total.Visas = sum(`Quantity of U.S. Visas Granted`, na.rm = TRUE), .groups = 'drop')
+
+top_countries <- visa_distribution %>%
+  group_by(Country) %>%
+  summarise(Total.Visas = sum(Total.Visas), .groups = 'drop') %>%
+  slice_max(Total.Visas, n = 5) %>%
+  pull(Country)
+
+# Step 2: Filter Population Data for Top 5 Countries
+filtered_population <- analysis_data %>%
+  filter(Country %in% top_countries)
+
+# Step 3: Aggregate Population by Country and Fiscal Year
+population_growth_data <- filtered_population %>%
+  group_by(Country, `Fiscal Year`) %>%
+  summarise(Population = mean(Population, na.rm = TRUE), .groups = 'drop')
+
+# Step 4: Plot Population Growth Over Time
+p <- ggplot(population_growth_data, aes(x = `Fiscal Year`, y = Population, color = Country)) +
+  geom_line(size = 1.2) +
+  geom_point(size = 2) +
+  
+  # Labels and Titles
+  labs(
+    title = 'Population Growth of Top 5 Countries by Visa Issuance',
+    subtitle = 'Trends over the years',
+    x = 'Fiscal Year',
+    y = 'Population',
+    color = 'Country'
+  ) +
+  
+  # Facet by country to mirror previous visa issuance chart
+  facet_wrap(~ Country, nrow = 1, scales = 'free_y') +
+  
+  # Customize Colors and Themes
+  scale_color_brewer(palette = 'Set2') +
+  theme_minimal(base_size = 14) +
+  
+  # Improve Axis and Text Aesthetics
+  theme(
+    axis.text.x = element_text(angle = 45, hjust = 1, size = 6),
+    axis.text.y = element_text(size = 8),
+    strip.text = element_text(size = 8, face = 'bold'),
+    plot.title = element_text(hjust = 0.5, size = 15, face = 'bold'),
+    plot.subtitle = element_text(hjust = 0.5, size = 12),
+    legend.position = 'top',
+    legend.title = element_text(size = 10),
+    legend.text = element_text(size = 10),
+    plot.margin = margin(20, 20, 20, 20)
+  )
+
+# Display the Plot
+print(p)
+
+# Save the Plot
+ggsave("population_growth_trends.png", plot = p, width = 40, height = 8, dpi = 300)
+
+```
+
+
+
+
+
+
+
+
+
+```{r echo=FALSE}
+
+library(tidyr)
+library(dplyr)
+library(ggplot2)
+library(gridExtra)  # For combining plots
+
+# Step 1: Load U.S. GDP Data from local file
+local_gdp_data <- read.csv("https://github.com/annab0503/DS4002/raw/main/Project%201/Analysis%20Data/gdp_data.csv")
+us_gdp_data_local <- subset(local_gdp_data, Country == 'United States')
+
+# Step 2: Plot U.S. GDP Trends (Local Data)
+p1 <- ggplot(us_gdp_data_local, aes(x = Fiscal.Year, y = GDP)) +
+  geom_line(color = "blue", size = 1) +
+  geom_point(color = "darkblue", size = 2) +
+  labs(
+    title = 'US GDP 1997-2022',
+    subtitle = 'Visualization of U.S. GDP trends by fiscal year',
+    x = 'Fiscal Year',
+    y = 'GDP (in billions USD)'
+  ) +
+  theme_minimal(base_size = 10) +
+  theme(
+    axis.text.x = element_text(angle = 45, hjust = 1, size = 8),
+    axis.text.y = element_text(size = 8),
+    plot.title = element_text(hjust = 0.5, size = 12, face = 'bold'),
+    plot.subtitle = element_text(hjust = 0.5, size = 8)
+  )
+
+# Step 3: Aggregate GDP data by country and fiscal year
+gdp_data <- analysis_data %>%
+  group_by(Country, `Fiscal Year`) %>%
+  summarise(GDP = sum(GDP, na.rm = TRUE), .groups = 'drop')
+
+# Step 4: Get Top 5 Countries by Visa Issuance
+visa_distribution <- analysis_data %>%
+  group_by(Country) %>%
+  summarise(Total.Visas = sum(`Quantity of U.S. Visas Granted`, na.rm = TRUE), .groups = 'drop') %>%
+  slice_max(Total.Visas, n = 5) %>%
+  pull(Country)
+
+# Step 5: Filter for Top 5 Countries Only (No U.S.)
+filtered_gdp <- gdp_data %>%
+  filter(Country %in% visa_distribution)
+
+# Step 6: Plot GDP Trends for Top 5 Countries
+p2 <- ggplot(filtered_gdp, aes(x = `Fiscal Year`, y = GDP, color = Country)) +
+  geom_line(size = 1.2) +
+  labs(
+    title = 'GDP Trends of Top 5 Countries by Visa Issuance',
+    subtitle = 'Comparison of GDP over 1997-2022',
+    x = 'Fiscal Year',
+    y = 'GDP (in billions)',
+    color = 'Country'
+  ) +
+  facet_wrap(~ Country, nrow = 2, scales = 'free_y') +
+  scale_color_manual(values = c(
+    "China" = "blue",
+    "India" = "green",
+    "Mexico" = "purple",
+    "Japan" = "orange",
+    "Korea, South" = "brown"
+  )) +
+  theme_minimal(base_size = 7) +
+  theme(
+    axis.text.x = element_text(angle = 45, hjust = 1, size = 8),
+    axis.text.y = element_text(size = 8),
+    strip.text = element_text(size = 8, face = 'bold'),
+    plot.title = element_text(hjust = 0.5, size = 11, face = 'bold'),
+    plot.subtitle = element_text(hjust = 0.5, size = 8),
+    legend.position = 'top'
+  )
+
+# Step 7: Combine the Two Plots Side by Side
+combined_plot <- grid.arrange(p1, p2, ncol = 2)
+
+# Save the combined plot
+ggsave("combined_gdp_trends.png", plot = combined_plot, width = 20, height = 10, dpi = 300)
 ```
 
 # **Conclusion**

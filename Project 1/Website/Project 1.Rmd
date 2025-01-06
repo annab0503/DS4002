@@ -1,5 +1,5 @@
 ---
-title: "Project 1"
+title: "Analyzing U.S. Visa Issuance Trends: The Impact of Policy, Economic Factors, and Demographic Shifts"
 author: "Anna Brown, Rishika Deshmukh, and Ada Zhang"
 date: "`r format(Sys.Date(), '%B %d, %Y')`"
 output: 
@@ -149,7 +149,7 @@ By examining these factors, this analysis seeks to offer insights into how the U
 
 ## Skilled Labor Visas  
 
-The **H-1B visa** is the most prominent skilled labor visa, allowing U.S. employers to hire highly skilled foreign professionals for specialty occupations requiring advanced knowledge and at least a bachelor’s degree or its equivalent. Over the years, the H-1B program has been influenced by economic and political factors. For instance, in 1998, high-tech industry lobbying led to proposals to increase the H-1B visa cap, citing a significant unmet demand for skilled workers. In response, the **American Competitiveness in the 21st Century Act** temporarily raised the cap to 195,000 between 2001 and 2003, before reverting to 65,000 in 2004. The 2008 recession brought further scrutiny, with Congress targeting the program to protect domestic jobs, resulting in a decline in filed petitions. These fluctuations underscore the program’s sensitivity to broader economic conditions and labor market demands.  (U.S. Department of Labor (n.d.) H-1B Visa Program Overview)
+The **H-1B visa** is the most prominent skilled labor visa, allowing U.S. employers to hire highly skilled foreign professionals for specialty occupations requiring advanced knowledge and at least a bachelor’s degree or its equivalent. Over the years, the H-1B program has been influenced by economic and political factors. For instance, in 1998, high-tech industry lobbying led to proposals to increase the H-1B visa cap, citing a significant unmet demand for skilled workers. In response, the **American Competitiveness in the 21st Century Act** temporarily raised the cap to 195,000 between 2001 and 2003, before reverting to 65,000 in 2004. The 2008 recession brought further scrutiny, with Congress targeting the program to protect domestic jobs, resulting in a decline in filed petitions. These fluctuations underscore the program’s sensitivity to broader economic conditions and labor market demands.  
 
 ## Student and Exchange Visitor Visas
 
@@ -585,10 +585,11 @@ print(p)
 # Save the Plot
 ggsave("population_growth_trends.png", plot = p, width = 40, height = 8, dpi = 300)
 ```
+
 The interplay between **population growth** and **U.S. visa issuance** highlights key drivers of global migration patterns. Countries like China, India, and Mexico show significant population growth from 2000 to 2022, reflecting **increasing migration potential**. With India and China surpassing 1 billion people, demand for education and employment abroad drives skilled labor and student visa applications. Conversely, Japan and South Korea’s populations peak and decline, aligning with stagnating visa issuance and reflecting aging demographics. The data reveals **Mexico’s visa issuance is driven largely by unskilled labor visas**, correlating with consistent U.S. labor demands. In contrast, **India and China lead in skilled labor and student visas**, showcasing their expanding educated workforce. The graphs also indicate a post-2016 decline in Chinese student visas, hinting policy change as Donald Trump enters the office. Ultimately, countries with fast-growing populations see rising visa applications, while nations with stagnant or shrinking populations experience reduced migration pressure. This relationship underscores the broader economic and demographic forces shaping global migration trends.
 
-
 ```{r fig.width=10, fig.height=6, echo=FALSE, warning=FALSE}
+
 # Step 1: Load U.S. Population Data from URL
 us_pop_url <- "https://raw.githubusercontent.com/annab0503/DS4002/main/Project%201/Analysis%20Data/pop_data.csv"
 us_pop_data <- read.csv(us_pop_url)
@@ -603,7 +604,7 @@ us_pop_agg <- us_pop_data %>%
   group_by(Fiscal.Year) %>%
   summarise(
     Population = sum(Population, na.rm = TRUE),
-    RateOfNaturalIncrease = mean(Rate.of.Natural.Increase, na.rm = TRUE),  # Average RNI per year
+    RateOfNaturalIncrease = mean(Rate.of.Natural.Increase, na.rm = TRUE), # Average RNI per year
     .groups = 'drop'
   )
 
@@ -616,19 +617,26 @@ merged_data <- left_join(us_pop_agg, us_visa_data, by = c("Fiscal.Year" = "Fisca
 p <- ggplot(merged_data, aes(x = Population / 1e6, y = Total.Visas / 1e6)) +
   
   # Scatter plot points for each year
-  geom_point(aes(color = as.factor(Fiscal.Year)), size = 4) +
+  geom_point(aes(color = as.factor(Fiscal.Year)), size = 3) +
   
   # Add year labels to each point
   geom_text(aes(label = Fiscal.Year), vjust = -1, size = 3) +
   
   # Line for Rate of Natural Increase (on secondary log scale axis)
-  geom_line(aes(x = Population / 1e6, y = log1p(RateOfNaturalIncrease)), color = "red", size = 1.2, linetype = "dashed") +
-   annotate("text", x = 7000, y = log1p(max(merged_data$RateOfNaturalIncrease)), 
-           label = "Rate of Natural Increase", color = "red", hjust = 0, size = 4) +
+  geom_line(aes(x = Population / 1e6, y = log1p(RateOfNaturalIncrease)), color = "#A93226", size = 1, linetype = "dashed") +
+  
+  # Annotate Rate of Natural Increase Label
+  annotate("text", 
+           x = max(merged_data$Population / 1e6) - 50, 
+           y = log1p(max(merged_data$RateOfNaturalIncrease)), 
+           label = "Rate of Natural Increase", 
+           color = "#A93226", 
+           hjust = 1, vjust = -0.5, 
+           size = 4, family = "montserrat", fontface = "italic") +
   
   # Titles and Labels
   labs(
-    title = 'U.S. Population vs Total U.S. Visa Issuance(1997-2022)',
+    title = 'U.S. Population vs Total U.S. Visa Issuance (1997-2022)',
     subtitle = 'Relationship between U.S. population, global U.S. visa issuance, and Rate of Natural Increase',
     x = 'Population (in millions)',
     y = 'Visa Issuance (in millions)',
@@ -636,25 +644,33 @@ p <- ggplot(merged_data, aes(x = Population / 1e6, y = Total.Visas / 1e6)) +
   ) +
   
   # Customize Theme
-  theme_minimal(base_size = 10) +
+  theme_minimal() +
   theme(
-    plot.title = element_text(hjust = 0.5, size = 14, face = 'bold'),
-    plot.subtitle = element_text(hjust = 0.5, size = 10),
-    axis.text.x = element_text(size = 8),
-    axis.text.y = element_text(size = 8),
-    legend.position = 'right'
+    plot.title = element_text(hjust = 0.5, family = "bodoni_moda", size = 16, face = "bold"),
+    plot.subtitle = element_text(hjust = 0.5, family = "montserrat", size = 12),
+    axis.title = element_text(family = "montserrat", size = 14),
+    axis.text = element_text(family = "montserrat", size = 10),
+    axis.text.x = element_text(angle = 45, hjust = 1),
+    legend.title = element_text(family = "montserrat", size = 12),
+    legend.text = element_text(family = "montserrat", size = 10),
+    legend.position = 'right',
+    plot.margin = margin(20, 20, 40, 20) # Adjust margins to prevent cutoff
   ) +
   
   # Secondary y-axis for log-scaled Rate of Natural Increase
   scale_y_continuous(
     sec.axis = sec_axis(~ exp(.) - 1, name = "Rate of Natural Increase")
-  )
+  ) +
+  
+  # Enhanced contrasting color gradient
+  scale_color_manual(values = colorRampPalette(c("#F84947", "#F1C40F", "#092E86"))(length(unique(merged_data$Fiscal.Year))))
 
 # Display the plot
 print(p)
 
 # Save the plot
-ggsave("us_population_vs_visas_rni_log_1997_2022.png", plot = p, width = 12, height = 8, dpi = 300)
+ggsave("us_population_vs_visas_rni_contrasting_log_1997_2022.png", plot = p, width = 12, height = 8, dpi = 300)
+```
 
 Population growth and migration patterns significantly influence visa issuance trends in the United States. As the U.S. population expands (represented on the x-axis), visa issuance (y-axis) shows a steady upward trajectory. From 1997 to 2019, visa issuance consistently rises, peaking between 2015 and 2019, when both population and visa issuance reach their highest levels. This correlation suggests that population growth fuels demand for visas, reflecting broader economic and social needs.
 
@@ -663,21 +679,24 @@ A critical factor influencing visa issuance is the **declining Rate of Natural I
 However, this trend experiences disruption in 2020, when visa issuance drops sharply, likely due to the COVID-19 pandemic and associated travel restrictions. Despite this setback, by 2022, visa issuance begins to recover, underscoring the ongoing reliance on foreign labor to counteract the declining RNI and address workforce gaps. This rebound highlights how migration patterns play a crucial role in sustaining economic stability in the face of demographic challenges.
 
 # **Conclusion**
+In conclusion, U.S. visa issuance trends have been significantly influenced by the priorities and policies of different presidential administrations. From the balanced approach of the George W. Bush era to the expansion of educational and skilled labor visas under Obama, and the restrictive stance during the Trump administration, each period has left its mark on visa categories. The Biden administration has overseen a recovery, particularly in student and exchange visitor visas, signaling a potential shift toward reopening immigration channels and addressing workforce needs. These trends highlight how visa policies are not only a reflection of domestic priorities but also a tool for shaping the country's economic, educational, and security landscapes.
+
+The data shows clear relationships between GDP per capita and U.S. visa issuance across different categories. High-GDP countries, like the UK, issue more skilled labor visas, reflecting their reliance on foreign talent for specialized industries. In contrast, unskilled labor visas tend to correlate more with proximity and migration dynamics, as seen with Mexico and Guatemala. Student visa trends reveal the global demand for education, with countries like China and India sending large numbers of students abroad despite their lower GDP per capita, while high-GDP countries like Germany and Japan continue to participate actively in international education. These trends demonstrate how economic development, workforce needs, and global education opportunities shape visa issuance patterns, offering a deeper understanding of the relationship between foreign GDP levels and U.S. visa policies.
+
+Population growth and migration patterns are pivotal drivers of visa issuance trends in the United States. As populations expand, particularly in countries like India, China, and Mexico, the demand for visas rises, with growing populations fostering a need for education, employment, and skilled labor migration. Conversely, nations experiencing stagnating or declining populations, such as Japan and South Korea, show reduced visa issuance, aligning with decreased migration pressures. Additionally, the U.S. faces demographic challenges, including a declining Rate of Natural Increase (RNI), which drives an increased reliance on foreign labor to address workforce shortages. The COVID-19 pandemic temporarily disrupted these trends, but the rebound in visa issuance by 2022 emphasizes the ongoing importance of migration in supporting U.S. economic stability. This interplay between demographic shifts and migration trends highlights the complex relationship between population dynamics and immigration policies, shaping the future of U.S. visa issuance.
+
+The limitations of the dataset include missing or incomplete records of visa issuance data for specific years or countries. Additionally, demographic information such as age, gender, and educational level of visa recipients is not available, which restricts our ability to gain insights into the specific groups driving immigration. The dataset is also constrained by the evolving methods of data collection and reporting; the way visa issuance data is reported today differs significantly from how it was documented ten years ago.
 
 # **Works Cited**
 
--     Migration Policy Institute (n.d.) *Migration Policy Institute Website*. Available at: [https://www.migrationpolicy.org/](https://www.migrationpolicy.org/) (Accessed: 6 January 2025).  
+- Migration Policy Institute (n.d.). *Migration Policy Institute Website*. Available at: [https://www.migrationpolicy.org/](https://www.migrationpolicy.org/).
 
--     Preston, S. and Elo, I. (1995) ‘Demography: Analysis of Mortality and Fertility Rates’, *Journal of Monetary Economics*, 36(1), pp. 135–157. Available at: [https://doi.org/10.1016/S0304-3932(02)00206-4](https://doi.org/10.1016/S0304-3932(02)00206-4).  
+- Preston, S. and Elo, I. (1995). "Demography: Analysis of Mortality and Fertility Rates." *Journal of Monetary Economics*, 36(1), pp. 135–157. Available at: [https://doi.org/10.1016/S0304-3932(02)00206-4](https://doi.org/10.1016/S0304-3932(02)00206-4).
 
--    U.S. Department of Labor (n.d.) *H-1B Visa Program Overview*. Available at: [https://www.dol.gov/agencies/whd/immigration/h1b](https://www.dol.gov/agencies/whd/immigration/h1b) (Accessed: 6 January 2025).  
+- U.S. Department of Labor (n.d.). *H-1B Visa Program Overview*. Available at: [https://www.dol.gov/agencies/whd/immigration/h1b](https://www.dol.gov/agencies/whd/immigration/h1b).
 
--     Center for Comparative Immigration Studies (n.d.) *Understanding Visa Issuance Trends*. Available at: [https://ccis.ucsd.edu/_files/wp11.pdf](https://ccis.ucsd.edu/_files/wp11.pdf) (Accessed: 6 January 2025).  
+- Center for Comparative Immigration Studies (n.d.). *Understanding Visa Issuance Trends*. Available at: [https://ccis.ucsd.edu/_files/wp11.pdf](https://ccis.ucsd.edu/_files/wp11.pdf).
 
--     Migration Policy Institute (n.d.) *H-1B Temporary Skilled Worker Program*. Available at: [https://www.migrationpolicy.org/article/h-1b-temporary-skilled-worker-program](https://www.migrationpolicy.org/article/h-1b-temporary-skilled-worker-program) (Accessed: 6 January 2025).  
+- Migration Policy Institute (n.d.). *H-1B Temporary Skilled Worker Program*. Available at: [https://www.migrationpolicy.org/article/h-1b-temporary-skilled-worker-program](https://www.migrationpolicy.org/article/h-1b-temporary-skilled-worker-program).
 
--     Rice, I. (n.d.) *Timeline of Student Visa Policy in the United States*. Available at: [https://timelines.issarice.com/wiki/Timeline_of_student_visa_policy_in_the_United_States](https://timelines.issarice.com/wiki/Timeline_of_student_visa_policy_in_the_United_States) (Accessed: 6 January 2025).  
-
--    Harvard Crimson (2020) *Trump’s Immigration Policies and Higher Education*. Available at: [https://www.thecrimson.com/article/2020/12/11/trump-immigration-higher-education/](https://www.thecrimson.com/article/2020/12/11/trump-immigration-higher-education/) (Accessed: 6 January 2025).  
-
--   American Immigration Council (n.d.) *H-1B Visa Program Fact Sheet*. Available at: [https://www.americanimmigrationcouncil.org/research/h1b-visa-program-fact-sheet](https://www.americanimmigrationcouncil.org/research/h1b-visa-program-fact-sheet) (Accessed: 6 January 2025).
+- Rice, I. (n.d.). *Timeline of Student Visa Policy in the United States*. Available at: [https://timelines.issarice.com/wiki/Timeline_of_student_visa_policy_in_the_United_States](https://timelines.issarice.com/wiki/Timeline_of_student_visa_policy_in_the_United_States)

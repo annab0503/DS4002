@@ -23,7 +23,7 @@ install_if_missing <- function(package) {
 
 # List of required packages
 packages <- c(
-  "countrycode", "dplyr", "DT", "ggplot2", "leaflet", 
+  "countrycode", "dplyr", "DT", "ggplot2", "gridExtra", "leaflet", 
   "maps", "patchwork", "readr", "rworldmap", "showtext", 
   "sp", "tidyverse"
 )
@@ -36,6 +36,7 @@ library(countrycode)
 library(dplyr)
 library(DT)
 library(ggplot2)
+library(gridExtra)
 library(leaflet)
 library(maps)
 library(patchwork)
@@ -122,11 +123,11 @@ png(paste0("visa_heatmap_fy", selected_year, ".png"), width = 1200, height = 900
   dev.off()
 ```
 
-```{r graph, echo=FALSE, fig.cap="Visa Issuances Heatmap 1997-2022", out.width = '100%'}
+# **Introduction**
+
+```{r graph, echo=FALSE, out.width = '100%'}
 knitr::include_graphics("visa_heatmap.gif")
 ```
-
-# **Introduction**
 
 **What drives U.S. visa issuance?** Every year, millions of individuals from around the world apply for U.S. visas. Each application represents a unique story of aspiration, opportunity, and global connection. But behind these personal journeys lies a complex system, shaped by economic realities, shifting policies, and demographic trends. So, what determines who gets to cross U.S. borders?
 
@@ -341,6 +342,14 @@ ggplot(aggregated_data, aes(x = `Fiscal Year`, y = Total_Visas, color = `Visa Ca
            angle = 90, vjust = 1.5, hjust = 1, color = "black", size = 4, family = "montserrat")  # Annotate key events with rotated text in Montserrat font
 ```
 
+The graph highlights distinct trends in visa issuance across presidential administrations, emphasizing how policy priorities have shaped the relative allocation of visa categories. Under President George W. Bush, skilled labor and student/exchange visitor visas experienced modest growth, despite the restrictive environment created by post-9/11 security measures. These increases suggest a measured approach that balanced national security with economic and educational priorities.
+
+The Obama administration saw a marked expansion in visa issuance, particularly for student and exchange visitor visas, reflecting policies that prioritized international collaboration and educational exchange. Skilled labor visas also grew steadily during this time, aligning with efforts to support economic recovery and incentivize employment-based immigration.
+
+Meanwhile, the Trump administration marked a stark departure from these trends, with declines across all major visa categories even prior to the pandemic-induced drop. This period marked the first time in decades where unskilled labor visas surpassed skilled labor visas in issuance, reflecting the administration's preference for labor migration tied to seasonal and temporary work programs over pathways that might facilitate long-term immigration. Student and exchange visitor visas experienced the sharpest decline during this period, partially driven by more stringent eligibility requirements and an overarching restrictive stance on immigration.
+
+Under the Biden administration, visa issuance shows signs of recovery, particularly in the student and exchange visitor category, where numbers have rebounded rapidly. Skilled labor visas are also recovering, though unskilled labor visas continue to maintain a notable share, suggesting an ongoing emphasis on labor migration to address workforce needs. While this rebound is partially attributable to the relaxation of COVID-19 restrictions, it may also reflects a policy shift toward rebuilding immigration channels after a period of contraction.
+
 ## What is the relationship between foreign GDP levels and U.S. visa issuance?
 
 ```{r fig.width=10, fig.height=6, echo=FALSE, warning=FALSE}
@@ -406,13 +415,13 @@ plot_visa_per_capita_vs_gdp <- function(visa_category) {
 plot_visa_per_capita_vs_gdp("Skilled Labor Visas")
 ```
 
-Countries like China, India, and Mexico, which have lower GDP per capita, issue fewer skilled labor visas. This might mean they rely more on their own skilled workers instead of sending them to the U.S. On the other hand, the UK, with a high GDP per capita, issues more skilled labor visas, showing its economy depends on foreign talent for specialized industries. Japan, even though it has a high GDP, issues fewer skilled visas, possibly due to stricter immigration rules or a preference for local workers. This shows that skilled visa numbers may depend on a country’s workforce needs and policies more than just GDP
+China, India, and Mexico are clustered in the bottom-left corner, indicating that they issue fewer skilled labor visas and have lower GDP per capita. This suggests that while these countries have large populations and growing economies, they may not rely on foreign skilled labor as much as others. This may be due to their emphasis on domestic workforce development and the availability of skilled professionals within their own economies. In contrast, the UK, positioned in the top-right corner, shows a high GDP per capita and a larger share of skilled labor visas, reflecting its more developed economy and reliance on attracting specialized talent for advanced industries. Japan, although its GDP per capita is high, is positioned in the bottom-right corner, suggesting that it issues fewer skilled labor visas, possibly due to more restrictive immigration policies or a preference for utilizing domestic labor. The data highlights important trends in how economies at different stages of development approach skilled labor immigration, with developed economies tending to rely more on foreign talent to support high-tech and specialized industries.
 
 ```{r fig.width=10, fig.height=6, echo=FALSE, warning=FALSE}
 plot_visa_per_capita_vs_gdp("Unskilled Labor Visas")
 ```
 
-Jamaica, which has a low GDP per capita, sends a small but steady number of unskilled workers to the U.S. Countries like South Africa and Guatemala are similar but issue even fewer visas, which could mean fewer opportunities or challenges in migrating. Mexico, with a slightly higher GDP, issues more unskilled labor visas, probably because of its close location to the U.S. The UK, with a high GDP, hardly issues any unskilled visas, focusing more on skilled workers instead. This shows unskilled visa numbers are often influenced by geography and job opportunities more than just GDP.
+Jamaica is positioned in a line on the left, suggesting that while it has low GDP per capita, it consistently issues a small but steady number of unskilled labor visas. South Africa and Guatemala, placed in the bottom-left area, show lower GDP per capita and similarly limited issuance of unskilled labor visas. Mexico, slightly higher and to the right of South Africa and Guatemala, shows a higher GDP per capita and a moderate issuance of unskilled labor visas, which may reflect a greater level of migration to neighboring countries for low-wage jobs. The UK is placed on the far-right side of the line, indicating that while its GDP per capita is high, it issues unskilled labor visas at a lower level, possibly due to issuance of skilled visas as shown in the previous visualization.
 
 
 ```{r fig.width=10, fig.height=6, echo=FALSE, warning=FALSE}
@@ -422,25 +431,7 @@ China and India, with their large populations and growing middle class, send lar
 
 ## How do population growth and migration patterns affect visa issuance?
 
-Ada's section
-```{r, echo=FALSE}
-plot_visa_per_capita_vs_gdp("Student and Exchange Visitor Visas")
-```
-
-China and India send a lot of students to the U.S. for education, even though their GDP per capita is lower. This reflects the growing middle class in these countries and the value they place on higher education abroad. South Korea also has strong student visa numbers, which might be due to its focus on international education. Germany and Japan, with high GDP per capita, also send many students, likely because of the appeal of international degrees and their ability to afford it. Student visa trends seem to depend more on education goals and opportunities more than just GDP.
-
-## How do population growth and migration patterns affect visa issuance?
-
-By examining U.S. visa issuance trends alongside population growth, we can identify significant drivers behind migration patterns from the top five countries—China, India, Japan, South Korea, and Mexico.
-
-Ada's section
-
-
-```{r echo=FALSE}
-library(tidyr)
-library(dplyr)
-library(ggplot2)
-
+```{r fig.width=10, fig.height=6, echo=FALSE, warning=FALSE}
 # Aggregate data for visa distribution
 visa_distribution <- analysis_data %>%
   group_by(Country, `Fiscal Year`, `Visa Category`) %>%
@@ -457,16 +448,21 @@ top_countries <- visa_distribution %>%
 filtered_data <- visa_distribution %>%
   filter(Country %in% top_countries)
 
+# Custom color palette
+visa_colors <- c(
+  "Skilled Labor Visas" = "#F84947",
+  "Unskilled Labor Visas" = "#F1C40F",
+  "Student and Exchange Visitor Visas" = "#5794D4"
+)
+
 # Plot stacked bar chart for visa issuance
 p <- ggplot(filtered_data, aes(x = `Fiscal Year`, y = Total.Visas, fill = `Visa Category`)) +
-  
   # Stacked bar for visas
   geom_bar(stat = 'identity', position = 'stack') +
   
   # Labels and Titles
   labs(
     title = 'Visa Issuance Trends for Top 5 Countries',
-    subtitle = 'Stacked bar plot by visa category over the years',
     x = 'Fiscal Year',
     y = 'Total Visas Issued',
     fill = 'Visa Category'
@@ -475,21 +471,32 @@ p <- ggplot(filtered_data, aes(x = `Fiscal Year`, y = Total.Visas, fill = `Visa 
   # Facet by country to show trends
   facet_wrap(~ Country, nrow = 1) +
   
-  # Customize colors and themes
-  scale_fill_brewer(palette = 'Set2') +
-  theme_minimal(base_size = 14) +
+  # Customize colors
+  scale_fill_manual(values = visa_colors) +
   
-  # Improve axis and text aesthetics
+  # Customize theme
+  theme_minimal() +
   theme(
-    axis.text.x = element_text(angle = 45, hjust = 1, size = 8),
-    axis.text.y = element_text(size = 10),
-    strip.text = element_text(size = 10, face = 'bold'),
-    plot.title = element_text(hjust = 0.5, size = 15, face = 'bold'),
-    plot.subtitle = element_text(hjust = 0.5, size = 10),
-    legend.position = 'top',
-    legend.title = element_text(size = 10),
-    legend.text = element_text(size = 10),
-    plot.margin = margin(15, 15, 15, 15)
+    # Title and subtitle
+    plot.title = element_text(hjust = 0.5, family = "bodoni_moda", size = 16, face = "bold"),
+    plot.subtitle = element_text(hjust = 0.5, family = "montserrat", size = 12),
+    
+    # Axis labels and text
+    axis.title = element_text(family = "montserrat", size = 14),
+    axis.text = element_text(family = "montserrat", size = 10),
+    axis.text.x = element_text(angle = 45, hjust = 1),
+    
+    # Strip text for facets
+    strip.text = element_text(family = "montserrat", size = 12, face = "bold"),
+    
+    # Legend customization
+    legend.title = element_text(family = "bodoni_moda", size = 13, face = "bold"),
+    legend.text = element_text(family = "montserrat", size = 12),
+    legend.position = 'bottom', # Move legend to the bottom
+    legend.title.align = 0.5,
+    
+    # Margins
+    plot.margin = margin(20, 20, 20, 20)
   )
 
 # Display plot
@@ -497,14 +504,9 @@ print(p)
 
 # Save the plot (wider and taller)
 ggsave("visa_issuance_trends.png", plot = p, width = 20, height = 8, dpi = 300)
-
 ```
 
-```{r echo=FALSE}
-library(tidyr)
-library(dplyr)
-library(ggplot2)
-
+```{r fig.width=10, fig.height=6, echo=FALSE, warning=FALSE}
 # Step 1: Aggregate Visa Data to Find Top 5 Countries
 visa_distribution <- analysis_data %>%
   group_by(Country, `Fiscal Year`, `Visa Category`) %>%
@@ -542,20 +544,38 @@ p <- ggplot(population_growth_data, aes(x = `Fiscal Year`, y = Population, color
   # Facet by country to mirror previous visa issuance chart
   facet_wrap(~ Country, nrow = 1, scales = 'free_y') +
   
-  # Customize Colors and Themes
-  scale_color_brewer(palette = 'Set2') +
-  theme_minimal(base_size = 14) +
+  # Use manual color palette
+  scale_color_manual(values = c(
+    "#F84947", # Country 1
+    "#5794D4", # Country 2
+    "#F1C40F", # Country 3
+    "#A93226", # Country 4
+    "#092E86"  # Country 5
+  )) +
   
-  # Improve Axis and Text Aesthetics
+  # Consistent Styling with Visa Issuance Chart
+  theme_minimal() +
   theme(
-    axis.text.x = element_text(angle = 45, hjust = 1, size = 6),
-    axis.text.y = element_text(size = 8),
-    strip.text = element_text(size = 8, face = 'bold'),
-    plot.title = element_text(hjust = 0.5, size = 15, face = 'bold'),
-    plot.subtitle = element_text(hjust = 0.5, size = 1),
+    # Title and subtitle
+    plot.title = element_text(hjust = 0.5, family = "bodoni_moda", size = 16, face = "bold"),
+    plot.subtitle = element_text(hjust = 0.5, family = "montserrat", size = 12),
+    
+    # Axis labels and text
+    axis.title = element_text(family = "montserrat", size = 14),
+    axis.text = element_text(family = "montserrat", size = 10),
+    axis.text.x = element_text(angle = 45, hjust = 1),
+    axis.text.y = element_text(size = 10),
+    
+    # Strip text for facets
+    strip.text = element_text(family = "montserrat", size = 12, face = "bold"),
+    
+    # Legend customization
+    legend.title = element_text(family = "bodoni_moda", size = 13, face = "bold"),
+    legend.text = element_text(family = "montserrat", size = 12),
     legend.position = 'top',
-    legend.title = element_text(size = 10),
-    legend.text = element_text(size = 10),
+    legend.title.align = 0.5,
+    
+    # Margins
     plot.margin = margin(20, 20, 20, 20)
   )
 
@@ -564,7 +584,6 @@ print(p)
 
 # Save the Plot
 ggsave("population_growth_trends.png", plot = p, width = 40, height = 8, dpi = 300)
-
 ```
 
 India and China lead in skilled labor and student visas, driven by expanding middle classes and workforce ambitions.
@@ -575,18 +594,7 @@ Japan and South Korea’s visa issuance is stable but lower, aligning with econo
 
 Population growth directly influences U.S. visa issuance. Countries with expanding populations contribute more to migration flows, while aging nations see a slowdown. This relationship highlights the role of demographics in shaping global mobility and labor patterns.
 
-
-
-
-
-
-
-```{r echo=FALSE}
-
-library(tidyr)
-library(dplyr)
-library(ggplot2)
-library(gridExtra)  # For combining plots
+```{r fig.width=10, fig.height=6, echo=FALSE, warning=FALSE}
 
 # Step 1: Load U.S. GDP Data from local file
 local_gdp_data <- read.csv("https://github.com/annab0503/DS4002/raw/main/Project%201/Analysis%20Data/gdp_data.csv")
@@ -661,15 +669,7 @@ combined_plot <- grid.arrange(p1, p2, ncol = 2)
 ggsave("combined_gdp_trends.png", plot = combined_plot, width = 20, height = 10, dpi = 300)
 ```
 
-
-
-
-
-```{r echo=FALSE}
-library(tidyr)
-library(dplyr)
-library(ggplot2)
-
+```{r fig.width=10, fig.height=6, echo=FALSE, warning=FALSE}
 # Step 1: Load U.S. Population Data from URL
 us_pop_url <- "https://raw.githubusercontent.com/annab0503/DS4002/main/Project%201/Analysis%20Data/pop_data.csv"
 us_pop_data <- read.csv(us_pop_url)
@@ -759,7 +759,6 @@ ggsave("us_population_vs_visas_rni_log_1997_2022.png", plot = p, width = 12, hei
   -By 2022, visa issuance rebounds, highlighting the ongoing need for foreign labor to offset the declining RNI and workforce shortages.
 
 # **Conclusion**
-
 
 # **Works Cited**
 

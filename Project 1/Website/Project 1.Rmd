@@ -426,9 +426,12 @@ Ada's section
 ```{r, echo=FALSE}
 plot_visa_per_capita_vs_gdp("Student and Exchange Visitor Visas")
 ```
+
 China and India, with their large populations and growing middle class, send large numbers of students abroad despite their relatively lower GDP per capita. This reflects the increasing demand for higher education and global opportunities. South Korea shows a varied pattern, with a significant number of students leaving for education, which may be attributed to a highly educated population and a strong focus on international exposure. Germany and Japan, despite having high GDP per capita, still show substantial student visa trends, indicating the international appeal of their education systems. Both countries have well-established research and academic institutions that attract students from around the world.
 
 ## How do population growth and migration patterns affect visa issuance?
+
+By examining U.S. visa issuance trends alongside population growth, we can identify significant drivers behind migration patterns from the top five countries—China, India, Japan, South Korea, and Mexico.
 
 Ada's section
 
@@ -482,7 +485,7 @@ p <- ggplot(filtered_data, aes(x = `Fiscal Year`, y = Total.Visas, fill = `Visa 
     axis.text.y = element_text(size = 10),
     strip.text = element_text(size = 10, face = 'bold'),
     plot.title = element_text(hjust = 0.5, size = 15, face = 'bold'),
-    plot.subtitle = element_text(hjust = 0.5, size = 12),
+    plot.subtitle = element_text(hjust = 0.5, size = 10),
     legend.position = 'top',
     legend.title = element_text(size = 10),
     legend.text = element_text(size = 10),
@@ -549,7 +552,7 @@ p <- ggplot(population_growth_data, aes(x = `Fiscal Year`, y = Population, color
     axis.text.y = element_text(size = 8),
     strip.text = element_text(size = 8, face = 'bold'),
     plot.title = element_text(hjust = 0.5, size = 15, face = 'bold'),
-    plot.subtitle = element_text(hjust = 0.5, size = 12),
+    plot.subtitle = element_text(hjust = 0.5, size = 1),
     legend.position = 'top',
     legend.title = element_text(size = 10),
     legend.text = element_text(size = 10),
@@ -564,7 +567,13 @@ ggsave("population_growth_trends.png", plot = p, width = 40, height = 8, dpi = 3
 
 ```
 
+India and China lead in skilled labor and student visas, driven by expanding middle classes and workforce ambitions.
 
+Mexico shows strong growth in unskilled labor visas, reflecting U.S. demand for labor in sectors like agriculture and services.
+
+Japan and South Korea’s visa issuance is stable but lower, aligning with economic maturity and smaller youth populations seeking opportunities abroad.
+
+Population growth directly influences U.S. visa issuance. Countries with expanding populations contribute more to migration flows, while aging nations see a slowdown. This relationship highlights the role of demographics in shaping global mobility and labor patterns.
 
 
 
@@ -651,6 +660,106 @@ combined_plot <- grid.arrange(p1, p2, ncol = 2)
 # Save the combined plot
 ggsave("combined_gdp_trends.png", plot = combined_plot, width = 20, height = 10, dpi = 300)
 ```
+
+
+
+
+
+```{r echo=FALSE}
+library(tidyr)
+library(dplyr)
+library(ggplot2)
+
+# Step 1: Load U.S. Population Data from URL
+us_pop_url <- "https://raw.githubusercontent.com/annab0503/DS4002/main/Project%201/Analysis%20Data/pop_data.csv"
+us_pop_data <- read.csv(us_pop_url)
+
+# Step 2: Aggregate Visa Issuance (Sum for All Countries by Year)
+us_visa_data <- analysis_data %>%
+  group_by(`Fiscal Year`) %>%
+  summarise(Total.Visas = sum(`Quantity of U.S. Visas Granted`, na.rm = TRUE), .groups = 'drop')
+
+# Step 3: Aggregate U.S. Population and RNI by Year
+us_pop_agg <- us_pop_data %>%
+  group_by(Fiscal.Year) %>%
+  summarise(
+    Population = sum(Population, na.rm = TRUE),
+    RateOfNaturalIncrease = mean(Rate.of.Natural.Increase, na.rm = TRUE),  # Average RNI per year
+    .groups = 'drop'
+  )
+
+# Step 4: Merge Population, RNI, and Visa Data by Fiscal Year (1997-2022)
+merged_data <- left_join(us_pop_agg, us_visa_data, by = c("Fiscal.Year" = "Fiscal Year")) %>%
+  drop_na(Population, Total.Visas) %>%
+  filter(Fiscal.Year >= 1997 & Fiscal.Year <= 2022)
+
+# Step 5: Create Scatter Plot for 1997-2022
+p <- ggplot(merged_data, aes(x = Population / 1e6, y = Total.Visas / 1e6)) +
+  
+  # Scatter plot points for each year
+  geom_point(aes(color = as.factor(Fiscal.Year)), size = 4) +
+  
+  # Add year labels to each point
+  geom_text(aes(label = Fiscal.Year), vjust = -1, size = 3) +
+  
+  # Line for Rate of Natural Increase (on secondary log scale axis)
+  geom_line(aes(x = Population / 1e6, y = log1p(RateOfNaturalIncrease)), color = "red", size = 1.2, linetype = "dashed") +
+   annotate("text", x = 7000, y = log1p(max(merged_data$RateOfNaturalIncrease)), 
+           label = "Rate of Natural Increase", color = "red", hjust = 0, size = 4) +
+  
+  # Titles and Labels
+  labs(
+    title = 'U.S. Population vs Total U.S. Visa Issuance(1997-2022)',
+    subtitle = 'Relationship between U.S. population, global U.S. visa issuance, and Rate of Natural Increase',
+    x = 'Population (in millions)',
+    y = 'Visa Issuance (in millions)',
+    color = 'Fiscal Year'
+  ) +
+  
+  # Customize Theme
+  theme_minimal(base_size = 10) +
+  theme(
+    plot.title = element_text(hjust = 0.5, size = 14, face = 'bold'),
+    plot.subtitle = element_text(hjust = 0.5, size = 10),
+    axis.text.x = element_text(size = 8),
+    axis.text.y = element_text(size = 8),
+    legend.position = 'right'
+  ) +
+  
+  # Secondary y-axis for log-scaled Rate of Natural Increase
+  scale_y_continuous(
+    sec.axis = sec_axis(~ exp(.) - 1, name = "Rate of Natural Increase")
+  )
+
+# Display the plot
+print(p)
+
+# Save the plot
+ggsave("us_population_vs_visas_rni_log_1997_2022.png", plot = p, width = 12, height = 8, dpi = 300)
+
+```
+#Visa Issuance Increases with Population Growth (1997-2019):
+
+  -As the U.S. population grows (x-axis), visa issuance (y-axis) steadily rises.
+  
+  -From 1997 to 2019, visa issuance consistently increases, peaking around 2015-2019 when both population and visa issuance reach their highest levels.
+
+
+#Declining RNI Drives Labor Demand (Red Dashed Line):
+
+  -The Rate of Natural Increase (RNI) declines as population grows. A lower RNI indicates slower birth rates and aging populations, reducing the natural growth of the workforce.
+  
+  -This trend increases the demand for foreign labor, contributing to higher visa issuance, particularly for employment-based visas.
+
+
+#2020 and Beyond – A Dip and Recovery:
+
+  -Visa issuance drops sharply in 2020, likely due to the COVID-19 pandemic and travel restrictions.
+  
+  -By 2022, visa issuance rebounds, highlighting the ongoing need for foreign labor to offset the declining RNI and workforce shortages.
+
+# **Conclusion**
+
 
 # **Conclusion**
 

@@ -337,60 +337,63 @@ ggplot(aggregated_data, aes(x = `Fiscal Year`, y = Total_Visas, color = `Visa Ca
 ## What is the relationship between foreign GDP levels and U.S. visa issuance?
 
 Rishika's section
-```{r echo=FALSE, warning=FALSE}
 
-plot_top_5_visas <- function(visa_category, scale_type = "log") {
-  # Filter data for the specific visa category
+```{r, echo=FALSE}
+plot_visa_per_capita_vs_gdp <- function(visa_category) {
+  # Filter the data for the selected visa category
   df_category <- analysis_data %>%
     filter(`Visa Category` == visa_category)
   
-  # Get the top 5 countries by the total number of visas granted
+  # Identify the top 5 countries by total visas granted
   top_5_countries <- df_category %>%
     group_by(Country) %>%
     summarise(total_visas = sum(`Quantity of U.S. Visas Granted`, na.rm = TRUE), .groups = "drop") %>%
     top_n(5, total_visas) %>%
     pull(Country)
   
-  # Filter data for the top 5 countries
+  # Filter for the top 5 countries and calculate Visa per Capita and GDP per Capita
   df_top_5 <- df_category %>%
-    filter(Country %in% top_5_countries)
+    filter(Country %in% top_5_countries) %>%
+    mutate(
+      Visa_per_Capita = `Quantity of U.S. Visas Granted` / `Population`,
+      GDP_per_Capita = `GDP` / `Population`
+    )
   
-  # Summarize the total number of visas per year for these countries
-  df_summary <- df_top_5 %>%
-    group_by(`Fiscal Year`, Country) %>%
-    summarise(total_visas = sum(`Quantity of U.S. Visas Granted`, na.rm = TRUE), .groups = "drop")
-  
-  # Generate the graph
-  plot <- ggplot(df_summary, aes(x = `Fiscal Year`, y = total_visas, color = Country)) +
-    geom_line(size = 1) +
-    labs(title = paste("Top 5 Countries with Most", visa_category, "by Year"),
-         x = "Year",
-         y = "Total Number of Visas (Log Scale)") +
-    theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
-    scale_color_brewer(palette = "Set3") +
+  # Create the plot
+  plot <- ggplot(df_top_5, aes(x = GDP_per_Capita, y = Visa_per_Capita, color = Country)) +
+    geom_point(size = 3) +
+    labs(
+      title = paste("Visa per Capita vs GDP per Capita for", visa_category),
+      x = "GDP per Capita (USD)",
+      y = "Visa per Capita",
+      color = "Country"
+    ) +
     theme_minimal() +
-    theme(legend.title = element_blank())
+    theme(
+      plot.title = element_text(face = "bold", size = 18, hjust = 0.5),
+      axis.text.x = element_text(angle = 45, hjust = 1)
+    ) +
+    scale_color_brewer(palette = "Dark2")
   
-  # Apply log scale to the y-axis
-  plot <- plot + scale_y_log10()
-  
-  # Return the plot
   return(plot)
 }
 
-# Generate and display the graphs for all visa categories with log scale
-plot_top_5_visas("Skilled Labor Visas", scale_type = "log")
+# Generate and display the plots for each visa category
+plot_visa_per_capita_vs_gdp("Skilled Labor Visas")
 
 ```
+China, India, and Mexico are clustered in the bottom-left corner, indicating that they issue fewer skilled labor visas and have lower GDP per capita. This suggests that while these countries have large populations and growing economies, they may not rely on foreign skilled labor as much as others. This may be due to their emphasis on domestic workforce development and the availability of skilled professionals within their own economies. In contrast, the UK, positioned in the top-right corner, shows a high GDP per capita and a larger share of skilled labor visas, reflecting its more developed economy and reliance on attracting specialized talent for advanced industries. Japan, although its GDP per capita is high, is positioned in the bottom-right corner, suggesting that it issues fewer skilled labor visas, possibly due to more restrictive immigration policies or a preference for utilizing domestic labor. The data highlights important trends in how economies at different stages of development approach skilled labor immigration, with developed economies tending to rely more on foreign talent to support high-tech and specialized industries.
 
-```{r echo=FALSE, warning=FALSE}
-plot_top_5_visas("Unskilled Labor Visas", scale_type = "log")
+```{r, echo=FALSE}
+plot_visa_per_capita_vs_gdp("Unskilled Labor Visas")
 ```
+Jamaica is positioned in a line on the left, suggesting that while it has low GDP per capita, it consistently issues a small but steady number of unskilled labor visas. South Africa and Guatemala, placed in the bottom-left area, show lower GDP per capita and similarly limited issuance of unskilled labor visas. Mexico, slightly higher and to the right of South Africa and Guatemala, shows a higher GDP per capita and a moderate issuance of unskilled labor visas, which may reflect a greater level of migration to neighboring countries for low-wage jobs. The UK is placed on the far-right side of the line, indicating that while its GDP per capita is high, it issues unskilled labor visas at a lower level, possibly due to issuance of skilled visas as shown in the previous visualization.
 
-```{r echo=FALSE, warning=FALSE}
-plot_top_5_visas("Student and Exchange Visitor Visas", scale_type = "log")
 
+```{r, echo=FALSE}
+plot_visa_per_capita_vs_gdp("Student and Exchange Visitor Visas")
 ```
+China and India, with their large populations and growing middle class, send large numbers of students abroad despite their relatively lower GDP per capita. This reflects the increasing demand for higher education and global opportunities. South Korea shows a varied pattern, with a significant number of students leaving for education, which may be attributed to a highly educated population and a strong focus on international exposure. Germany and Japan, despite having high GDP per capita, still show substantial student visa trends, indicating the international appeal of their education systems. Both countries have well-established research and academic institutions that attract students from around the world.
 
 ## How do population growth and migration patterns affect visa issuance?
 

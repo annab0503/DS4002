@@ -406,13 +406,13 @@ plot_visa_per_capita_vs_gdp <- function(visa_category) {
 plot_visa_per_capita_vs_gdp("Skilled Labor Visas")
 ```
 
-China, India, and Mexico are clustered in the bottom-left corner, indicating that they issue fewer skilled labor visas and have lower GDP per capita. This suggests that while these countries have large populations and growing economies, they may not rely on foreign skilled labor as much as others. This may be due to their emphasis on domestic workforce development and the availability of skilled professionals within their own economies. In contrast, the UK, positioned in the top-right corner, shows a high GDP per capita and a larger share of skilled labor visas, reflecting its more developed economy and reliance on attracting specialized talent for advanced industries. Japan, although its GDP per capita is high, is positioned in the bottom-right corner, suggesting that it issues fewer skilled labor visas, possibly due to more restrictive immigration policies or a preference for utilizing domestic labor. The data highlights important trends in how economies at different stages of development approach skilled labor immigration, with developed economies tending to rely more on foreign talent to support high-tech and specialized industries.
+Countries like China, India, and Mexico, which have lower GDP per capita, issue fewer skilled labor visas. This might mean they rely more on their own skilled workers instead of sending them to the U.S. On the other hand, the UK, with a high GDP per capita, issues more skilled labor visas, showing its economy depends on foreign talent for specialized industries. Japan, even though it has a high GDP, issues fewer skilled visas, possibly due to stricter immigration rules or a preference for local workers. This shows that skilled visa numbers may depend on a country’s workforce needs and policies more than just GDP
 
 ```{r fig.width=10, fig.height=6, echo=FALSE, warning=FALSE}
 plot_visa_per_capita_vs_gdp("Unskilled Labor Visas")
 ```
 
-Jamaica is positioned in a line on the left, suggesting that while it has low GDP per capita, it consistently issues a small but steady number of unskilled labor visas. South Africa and Guatemala, placed in the bottom-left area, show lower GDP per capita and similarly limited issuance of unskilled labor visas. Mexico, slightly higher and to the right of South Africa and Guatemala, shows a higher GDP per capita and a moderate issuance of unskilled labor visas, which may reflect a greater level of migration to neighboring countries for low-wage jobs. The UK is placed on the far-right side of the line, indicating that while its GDP per capita is high, it issues unskilled labor visas at a lower level, possibly due to issuance of skilled visas as shown in the previous visualization.
+Jamaica, which has a low GDP per capita, sends a small but steady number of unskilled workers to the U.S. Countries like South Africa and Guatemala are similar but issue even fewer visas, which could mean fewer opportunities or challenges in migrating. Mexico, with a slightly higher GDP, issues more unskilled labor visas, probably because of its close location to the U.S. The UK, with a high GDP, hardly issues any unskilled visas, focusing more on skilled workers instead. This shows unskilled visa numbers are often influenced by geography and job opportunities more than just GDP.
 
 
 ```{r fig.width=10, fig.height=6, echo=FALSE, warning=FALSE}
@@ -427,7 +427,7 @@ Ada's section
 plot_visa_per_capita_vs_gdp("Student and Exchange Visitor Visas")
 ```
 
-China and India, with their large populations and growing middle class, send large numbers of students abroad despite their relatively lower GDP per capita. This reflects the increasing demand for higher education and global opportunities. South Korea shows a varied pattern, with a significant number of students leaving for education, which may be attributed to a highly educated population and a strong focus on international exposure. Germany and Japan, despite having high GDP per capita, still show substantial student visa trends, indicating the international appeal of their education systems. Both countries have well-established research and academic institutions that attract students from around the world.
+China and India send a lot of students to the U.S. for education, even though their GDP per capita is lower. This reflects the growing middle class in these countries and the value they place on higher education abroad. South Korea also has strong student visa numbers, which might be due to its focus on international education. Germany and Japan, with high GDP per capita, also send many students, likely because of the appeal of international degrees and their ability to afford it. Student visa trends seem to depend more on education goals and opportunities more than just GDP.
 
 ## How do population growth and migration patterns affect visa issuance?
 
@@ -757,9 +757,6 @@ ggsave("us_population_vs_visas_rni_log_1997_2022.png", plot = p, width = 12, hei
   -Visa issuance drops sharply in 2020, likely due to the COVID-19 pandemic and travel restrictions.
   
   -By 2022, visa issuance rebounds, highlighting the ongoing need for foreign labor to offset the declining RNI and workforce shortages.
-
-# **Conclusion**
-
 
 # **Conclusion**
 

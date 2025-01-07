@@ -1,0 +1,59 @@
+---
+title: "Project 2"
+author: "Anna Brown, Rishika Deshmukh, and Ada Zhang"
+date: "`r format(Sys.Date(), '%B %d, %Y')`"
+output: 
+  html_document:
+    toc: true        # Enable the Table of Contents
+    toc_depth: 3     # Set the depth of headings included in the TOC
+    toc_float: true  # Enable floating TOC (keeps TOC fixed as you scroll)
+    code_folding: none
+    self_contained: false
+    css: "styles.css"  # Link to an external stylesheet
+---
+
+```{r echo=FALSE, warning=FALSE, message=FALSE, results="hide"}
+# Function to check and install missing packages
+install_if_missing <- function(package) {
+  if (!require(package, character.only = TRUE)) {
+    install.packages(package, dependencies = TRUE)
+    library(package, character.only = TRUE)
+  }
+}
+
+# List of required packages
+packages <- c(
+  "countrycode", "dplyr", "DT", "ggplot2", "gridExtra", "leaflet", 
+  "maps", "patchwork", "readr", "rworldmap", "showtext", 
+  "sp", "tidyverse"
+)
+
+# Ensure all packages are installed and loaded
+lapply(packages, install_if_missing)
+
+# Load libraries explicitly
+library(countrycode)
+library(dplyr)
+library(DT)
+library(ggplot2)
+library(gridExtra)
+library(leaflet)
+library(maps)
+library(patchwork)
+library(readr)
+library(rworldmap)
+library(showtext)
+library(sp)
+library(tidyverse)
+```
+
+
+# **Introduction**
+
+# **Background**
+
+# **Methodology**
+
+# **Exploratory Analysis**
+
+# **Conclusion**

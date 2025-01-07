@@ -68,13 +68,10 @@ font_add_google("Montserrat", "montserrat")     # Alias: montserrat
 
 The **H-1B visa** is the most prominent skilled labor visa, allowing U.S. employers to hire highly skilled foreign professionals for specialty occupations requiring advanced knowledge and at least a bachelor’s degree or its equivalent. Over the years, the H-1B program has been influenced by economic and political factors. For instance, in 1998, high-tech industry lobbying led to proposals to increase the H-1B visa cap, citing a significant unmet demand for skilled workers. In response, the **American Competitiveness in the 21st Century Act** temporarily raised the cap to 195,000 between 2001 and 2003, before reverting to 65,000 in 2004. The 2008 recession brought further scrutiny, with Congress targeting the program to protect domestic jobs, resulting in a decline in filed petitions. These fluctuations underscore the program’s sensitivity to broader economic conditions and labor market demands.  
 
-## Unskilled Labor Visas
-
-Unskilled labor visas, including the **H-2A** and **H-2B**, address the demand for temporary agricultural and non-agricultural labor, respectively. The H-2A visa supports agricultural operations during peak seasons, ensuring labor availability for tasks such as planting and harvesting, while the H-2B visa fills gaps in industries like hospitality, construction, and landscaping. These visas are crucial for industries reliant on seasonal or peak-period labor, reflecting the essential role of temporary workers in maintaining economic stability in key sectors.  
 
 ## Economic Perspectives on Foreign Workers
 
-Economic discussions about foreign workers revolve around their contributions to growth and innovation as well as concerns about their impact on the domestic labor market. Proponents argue that foreign workers fill critical labor shortages, enhance innovation, and sustain industries with fluctuating labor demands. For example, H-1B visa holders are often associated with technological advancements, patents, and entrepreneurial activities that drive competitiveness. Similarly, unskilled labor visas ensure the stability of sectors like agriculture and tourism, which are vital to the U.S. economy.  
+Economic discussions about foreign workers revolve around their contributions to growth and innovation as well as concerns about their impact on the domestic labor market. Proponents argue that foreign workers fill critical labor shortages, enhance innovation, and sustain industries with fluctuating labor demands. For example, H-1B visa holders are often associated with technological advancements, patents, and entrepreneurial activities that drive competitiveness. 
 
 Critics, however, caution against potential wage suppression and increased competition for domestic workers, emphasizing the need for careful policy design to ensure equitable benefits. This research delves into these dynamics, examining how U.S. visa policies reflect broader economic priorities and labor market realities while balancing domestic interests with international interdependence.
 
@@ -84,14 +81,14 @@ Critics, however, caution against potential wage suppression and increased compe
 
 **Data Source Introduction**
 
-Our project draws curated datasets of articles published by The New York Times between January 1, 1997, and December 31, 2022, focusing on U.S. work visa programs. These datasets highlights coverage of skilled work visas (H-1B) and unskilled work visas (H-2A, H-2B), providing valuable insights into labor market dynamics and immigration policies over the past 25 years.
+Our project draws curated datasets of articles published by The New York Times between January 1, 1997, and December 31, 2022, focusing on U.S. work visa programs. These datasets highlights coverage of skilled work visas (H-1B), providing valuable insights into labor market dynamics and immigration policies over the past 25 years.
 
 To construct the datasets, our team utilized **Nexis Uni** to filter and extract relevant articles.Our team applied the following parameters:
 
 
 | Parameter       | Description                                          |
 |-----------------|------------------------------------------------------|
-| Keywords        | "U.S visa", "H1-B", "H2-A", "H2-B"                   |
+| Keywords        | "U.S visa", "H1-B"                 |
 | Source Type     | Newspapers                                           |
 | Source Location | North America, United States                         |
 | Language        | English                                              |
@@ -100,7 +97,7 @@ To construct the datasets, our team utilized **Nexis Uni** to filter and extract
 
 
 
-The filtered articles were categorized by visa type and saved into two rich text files based on their date of publication—one file for articles related to skilled visas (H-1B) and the other for unskilled visas (H-2A, H-2B). This  approach allows for easier analysis of trends and policy discussions within each category over the years. 
+The filtered articles were categorized by the H-1B visa type and saved into a text file based on their date of publication. This  approach allows for easier analysis of trends and policy discussions within each category over the years. 
 
 # **Exploratory Analysis**
 

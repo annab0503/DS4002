@@ -91,7 +91,7 @@ The filtered articles were categorized by the H-1B visa type and saved into a te
 ```{r display-image, echo=FALSE}
 
 # Use knitr to include an external image
-knitr::include_graphics("code.png")
+#knitr::include_graphics("code.png")
 
 ```
 
@@ -166,6 +166,68 @@ doc_data$Year <- format(doc_data$Date, "%Y")
 
 # Display a preview of the dataset
 head(doc_data[, c("Document", "Date", "Year")])
+
+```
+
+```{r}
+library(tidyr)
+
+#president mentions
+presidents <- c("Biden", "Trump", "Obama", "Bush")
+
+
+count_presidents <- function(text, presidents) {
+  sapply(presidents, function(president) {
+    str_count(text, president)
+  })
+}
+
+president_counts <- t(sapply(doc_data$Text, count_presidents, presidents = presidents))
+
+president_data <- as.data.frame(president_counts)
+president_data$Year <- doc_data$Year
+
+president_data_long <- pivot_longer(president_data, 
+                                    cols = starts_with("Biden"):starts_with("Bush"),
+                                    names_to = "President", 
+                                    values_to = "Mentions")
+
+president_by_year <- president_data_long %>%
+  group_by(Year, President) %>%
+  summarise(TotalMentions = sum(Mentions, na.rm = TRUE))
+ggplot(president_by_year, aes(x = as.numeric(Year), y = TotalMentions, color = President)) +
+  geom_line() +
+  geom_point() +
+  labs(
+    title = "Presidents' Mentions Over Time",
+    x = "Year",
+    y = "Total Mentions",
+    color = "President"
+  ) +
+  theme_minimal() +
+  theme(legend.position = "bottom")
+```
+``` {r}
+# usage of H-1B
+doc_data$H1B_Count <- sapply(doc_data$Text, function(text) {
+  str_count(text, "H-1B")
+})
+
+
+h1b_by_year <- doc_data %>%
+  group_by(Year) %>%
+  summarise(TotalH1B = sum(H1B_Count, na.rm = TRUE))
+
+
+ggplot(h1b_by_year, aes(x = as.numeric(Year), y = TotalH1B)) +
+  geom_line() +
+  geom_point() +
+  labs(
+    title = "H-1B Usage Over Time",
+    x = "Year",
+    y = "Total H-1B Mentions"
+  ) +
+  theme_minimal()
 
 ```
 
@@ -261,5 +323,8 @@ head(doc_data[, c("Document", "Date", "Sentiment")])
 # Print average sentiment by year
 print(sentiment_by_year)
 ```
+# **Next Steps**
+- working analyzing text in newspapers from different years using the Term Frequency - Inverse Document Frequency (TF-IDF) method to identify trends and key terms that change over time.
+
 
 # **Conclusion**

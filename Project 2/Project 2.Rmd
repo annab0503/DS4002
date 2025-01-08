@@ -169,7 +169,7 @@ head(doc_data[, c("Document", "Date", "Year")])
 
 ```
 
-```{r}
+```{r echo=FALSE, warning=FALSE}
 library(tidyr)
 
 #president mentions
@@ -207,7 +207,7 @@ ggplot(president_by_year, aes(x = as.numeric(Year), y = TotalMentions, color = P
   theme_minimal() +
   theme(legend.position = "bottom")
 ```
-``` {r}
+```{r echo=FALSE, warning=FALSE}
 # usage of H-1B
 doc_data$H1B_Count <- sapply(doc_data$Text, function(text) {
   str_count(text, "H-1B")

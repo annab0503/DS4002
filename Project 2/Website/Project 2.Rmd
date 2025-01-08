@@ -41,6 +41,61 @@ showtext_auto()
 font_add_google("Bodoni Moda", "bodoni_moda")  # Alias: bodoni_moda
 font_add_google("Montserrat", "montserrat")     # Alias: montserrat
 ```
+```{r fig.width=10, fig.height=6, echo=FALSE, warning=FALSE}
+
+url <- "https://raw.githubusercontent.com/annab0503/DS4002/main/Project%201/Analysis%20Data/analysis_data.csv"
+
+# Read the CSV file from the URL
+analysis_data <- read_csv(url)
+
+# Define key transition years in U.S. presidential administrations
+transition_years <- c(2001, 2009, 2017, 2021)  # Years of presidential transitions
+key_events <- c(2001, 2008, 2015, 2020)  # Key historical events
+
+# Filter out unwanted Visa categories
+filtered_data <- analysis_data %>%
+  filter(!`Visa Category` %in% c("Unskilled Labor Visas", "Student and Exchange Visitor Visas"))
+
+# Aggregate data by Fiscal Year and Visa Category
+# The 'Quantity of U.S. Visas Granted' is summed and converted to thousands for clarity
+aggregated_data <- filtered_data %>%
+  group_by(`Fiscal Year`, `Visa Category`) %>%
+  summarise(Total_Visas = sum(`Quantity of U.S. Visas Granted`) / 1000, .groups = 'drop')  # Sum the visa quantities and convert to thousands
+
+# Custom color scheme for the different visa categories
+visa_colors <- c(
+  "Skilled Labor Visas" = "lightblue"  
+)
+
+# Create the stacked area chart, using the aggregated data and applying visual customization
+ggplot(aggregated_data, aes(x = `Fiscal Year`, y = Total_Visas, fill = `Visa Category`)) + 
+  geom_area() +  # Generate the stacked area chart to visualize the total visas over time
+  geom_vline(xintercept = transition_years, linetype = "dashed", color = "gray") +  # Add vertical dashed lines at the transition years
+  geom_vline(xintercept = key_events, linetype = "dashed", color = "darkred", size = 0.5) +  # Differently colored lines for key events
+  scale_y_continuous(limits = c(0, 700), breaks = seq(0, 700, 100), labels = scales::comma) +  # Adjust y-axis to show 0 to 700 thousands with custom breaks
+  scale_fill_manual(values = visa_colors) +  # Apply the custom color scheme for visa categories
+  labs(
+    title = "Shifting Borders: The Impact of U.S. Political Events on Skilled Labor Visa Issuance",  # Main title of the plot
+    x = "Fiscal Year",  # X-axis label
+    y = "Total Quantity of Visas (in thousands)",  # Y-axis label
+    fill = "Visa Category"  # Label for the legend
+  ) +
+  theme_minimal() +  # Apply a minimal theme for a clean, simple appearance
+  theme(
+    plot.title = element_text(hjust = 0.5, family = "bodoni_moda", size = 16, margin = margin(b = 15), face = "bold"),
+    legend.title = element_text(family = "bodoni_moda", size = 13, face = "bold"),
+    axis.title = element_text(family = "montserrat", size = 14),
+    axis.text = element_text(family = "montserrat", size = 12),
+    text = element_text(size = 12, family = "montserrat"),
+    legend.position = "right",
+    legend.title.align = 0.5
+  ) +
+  # Annotate key events and presidential transitions
+  annotate("text", x = key_events, y = 700, label = c("9/11 Attack", "Great Recession", "Rep. Control of Congress", "COVID Pandemic"),
+           angle = 90, vjust = -0.5, hjust = 2, color = "darkred", size = 3, family = "montserrat") +
+  annotate("text", x = transition_years, y = 700, label = c("Bush", "Obama", "Trump", "Biden"),
+           angle = 90, vjust = -0.5, hjust = 1, color = "black", size = 3, family = "montserrat")
+```
 
 # **Introduction**  
 

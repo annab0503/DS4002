@@ -163,7 +163,7 @@ load_and_process_data <- function(url, source_label) {
 }
 
 # Load data from New York Times
-load_and_process_data("https://github.com/annab0503/DS4002/blob/main/Project%202/Skilled%20Worker%20Visas.txt?raw=true", "NYT")
+load_and_process_data("https://github.com/annab0503/DS4002/blob/main/Project%202/.txt%20files/New%20York%20Times.txt?raw=true", "NYT")
 
 # Load data from San Diego Tribune
 load_and_process_data("https://github.com/annab0503/DS4002/blob/main/Project%202/.txt%20files/San%20Diego%20Tribune.txt?raw=true", "SDT")

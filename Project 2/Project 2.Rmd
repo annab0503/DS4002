@@ -171,13 +171,11 @@ print(paste("Total occurrences of 'not':", total_not_count))
 year_counts <- table(doc_data$Year)
 
 # Plot article count by year using base plotting
-plot(
-  year_counts,
-  type = "o",
-  main = "Articles per Year",
-  xlab = "Year",
-  ylab = "Number of Articles"
-)
+ plot(year_counts, type = "o", main = "Articles per Year 1997-2022", xlab = "Year", ylab = "Number of Articles",
+       col = "blue", pch = 19, lty = 1, lwd = 2)
+  text(x = as.numeric(names(year_counts)), y = year_counts, labels = year_counts, pos = 2, cex = 0.8, col = "black")
+
+
 ```
 
 ```{r}

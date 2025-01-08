@@ -77,6 +77,54 @@ Load-Date: July 20, 2007
 
 
 End of Document
+Tech firms cite need for skilled foreigners; Critics say lifting curbs would thwart U.S. efforts
+The San Diego Union-Tribune
+February 26, 1998 Thursday
+
+
+Copyright 1998 The San Diego Union-Tribune
+Section: NEWS; Pg. A-1
+Length: 1065 words
+Byline: Marcus Stern, COPLEY NEWS SERVICE
+Dateline: WASHINGTON 
+Body
+
+
+WASHINGTON -- Complaining of a lack of high-skilled Americans, many of the nation's technology firms yesterday launched a campaign to ease federal immigration laws that currently restrict the number of foreign technicians they may hire to work in the United States. The initiative immediately butted up against concerns by others, including the U.S. Labor Department, that such a move could undercut government efforts to improve the nation's public education system, devise better adult worker retraining programs and draw the hard-core unemployed off the economic sidelines. Executives of Microsoft, Texas Instruments, Sun Microsystems and Cypress Semiconductor asked Congress to substantially raise or remove altogether the existing limit of 65,000 new temporary workers allowed into the country each year to take jobs like computer programmer. They said there aren't enough skilled Americans to fill their job needs as their industries experience explosive growth. 
+"We simply must have access to foreign nationals," Stephen Leven, senior vice president for human resources at Texas Instruments, told the Senate immigration subcommittee yesterday. The industry's pitch came a day after results of an international math and science test showed American students falling behind their counterparts around the world in those subjects. The restrictions technology firms, including San Diego-based Qualcomm, hope to lift are known in the alphabet-soup of immigration law as the H-1B program.
+Others refer to it more colloquially as the white-collar guest-worker program. Whatever its name, technology firms are turning increasingly to the program to hire skilled workers from overseas and foreign students off U.S. campuses.
+The trend has accelerated over the past couple of years as numerous high-tech firms have sprung up and expanded. Dan Sullivan, head of human resources for the San Diego communications giant Qualcomm, said in a telephone interview that more than half of the 1,000 engineers the company hired last year were foreign nationals.
+The largest number came from India. "Increased immigration should be the last -- not the first -- public policy response to skills shortages," Raymond J. Uhalde, acting assistant secretary of Labor, told the subcommittee. "It always is the last resort for our company," Michael Murray, vice president for human relations for Microsoft Corp., told the panel. The H-1B program allows companies to bring in a worker for up to six years. Over time, the companies typically then sponsor the workers for permanent residence. Each year, up to 140,000 permanent business visas are granted.
+The H-1Bs and permanent visas, taken together, have become an increasingly active pipeline of foreign workers to U.S. technology companies.
+They also have emerged as an important steppingstone for foreign workers seeking permanent resident status in the United States. Representatives of the technology companies, appearing before the Senate immigration subcommittee yesterday, argued for elimination of limits on how many foreign workers they could hire.
+Privately, they are said to be pushing for doubling the number allowed in each year. After the program began in 1990, the visas were used mostly for health-care professionals like nurses and occupational therapists.
+But in the past couple of years, the high-tech industry has been taking over. A 1996 investigation by the Labor Department's inspector general concluded that the H-1B program largely "serves as a probationary try-out employment program for illegal aliens, foreign students and foreign visitors to determine if they will be sponsored for permanent status." The probe found that of the 24,150 workers for whom H-1B visas were obtained in 1993, 98.7 percent were already in the country, 74.1 percent were working for the employer when the application was filed and 16.4 percent were working illegally. Sen. Spencer Abraham, R-Mich., chairman of the subcommittee and a proponent of easing the H-1B restrictions for business, acknowledged past abuses and the need for fixes.
+But he called for stiffer penalties rather than additional safeguards, such as closer monitoring. "I advocate substantially increasing the fines for those engaged in willful violations and establishing long probationary periods for such egregious violators," Abraham said. When he asked representatives of the technology companies appearing before his subcommittee whether they would support reforms of the system, they decried any additional regulatory hurdles -- language that suggested they would not back reforms. The complaints about the lack of skilled workers comes amid growing concern about education in the United States. Results of a 1995 test, released Tuesday, showed that American high school seniors scored far below their peers from many other countries in math and science.
+In both subjects, their scores ranked close to last among the 21 countries that participated. Sen. Dianne Feinstein, D-Calif., who has been the target of heavy lobbying by California high-tech firms, said she would support raising but not eliminating the cap.
+But she called on the companies that would benefit to play a more active role in what she sees as the long-term solution to the problem -- revamping the education system to produce more native-born and permanent resident college graduates with technology degrees. "Universities do not appear to be producing engineers and scientists for digital wireless communications in numbers that come close to meeting our needs," said Qualcomm's Sullivan, adding that even 65 percent of the 174 engineers Qualcomm recruited off college campuses last year were foreign nationals. Earlier this month, UC San Diego announced a $15 million gift to its School of Engineering from Irwin M. Jacobs, founder and CEO of Qualcomm Inc., and his wife, Joan. The gift will be used as an endowment to hire additional faculty and support a major expansion of the school, among other purposes, university officials said. A survey of San Diego's 60 largest technology employers found they needed a total of 3,000 new engineers in the second half of 1997, but the three major universities in the area graduated only about 750 students with engineering degrees, said Erik Bruvold, executive director of the San Diego council of the American Electronics Association. "This is going to be a real problem," he added.
+Classification
+
+
+Language: ENGLISH
+
+Publication-Type: Newspaper
+
+Subject: IMMIGRATION (92%); HUMAN RESOURCES & PERSONNEL MANAGEMENT (90%); IMMIGRATION REFORM (90%); TECHNICIANS & TECHNOLOGICAL WORKERS (90%); EMPLOYMENT VISAS (89%); FOREIGN LABOR (89%); HUMAN RESOURCES (89%); LEGISLATIVE BODIES (89%); PASSPORTS & VISAS (89%); SOFTWARE DEVELOPERS (79%); CRAFT & TRADE WORKERS (78%); EDUCATION SYSTEMS & INSTITUTIONS (78%); EMPLOYEE RETRAINING (78%); FACTORY WORKERS (78%); LABOR DEPARTMENTS (78%); LABOR SHORTAGES (78%); PUBLIC POLICY (78%); RECRUITMENT & HIRING (78%); SHORTAGES (78%); WHITE COLLAR WORKERS (78%); FOREIGN STUDENTS (77%); NEGATIVE NEWS (77%); EDUCATION & TRAINING (76%); STUDENTS & STUDENT LIFE (76%); PROFESSIONAL WORKERS (75%); MATHEMATICS (74%); EMPLOYEE TRAINING (73%); TEMPORARY EMPLOYMENT (73%); PUBLIC SCHOOLS (71%); EXECUTIVES (70%); INTERVIEWS (67%); COMPUTERS (%); EMPLOYMENT (%); IMMIGRATION (%); PERMITS (%); TECHNOLOGY (%); USA (%)
+
+Company:  MICROSOFT CORP (83%);  ORACLE AMERICA INC (57%);  TEXAS INSTRUMENTS INC (57%);  QUALCOMM INC (55%)
+
+Organization: US DEPARTMENT OF LABOR (57%)
+
+Ticker: MSFT (NASDAQ) (83%); TXN (NASDAQ) (57%); QCOM (NASDAQ) (55%)
+
+Industry: NAICS511210 SOFTWARE PUBLISHERS (83%); SIC7372 PREPACKAGED SOFTWARE (83%); NAICS541512 COMPUTER SYSTEMS DESIGN SERVICES (57%); NAICS334111 ELECTRONIC COMPUTER MANUFACTURING (57%); SIC7373 COMPUTER INTEGRATED SYSTEMS DESIGN (57%); SIC5045 COMPUTERS & COMPUTER PERIPHERAL EQUIPMENT & SOFTWARE (57%); NAICS334413 SEMICONDUCTOR & RELATED DEVICE MANUFACTURING (57%); NAICS333318 OTHER COMMERCIAL & SERVICE INDUSTRY MACHINERY MANUFACTURING (57%); SIC3674 SEMICONDUCTORS & RELATED DEVICES (57%); SIC3578 CALCULATING & ACCOUNTING MACHINERY, EXCEPT ELECTRONIC COMPUTERS (57%); NAICS334220 RADIO & TELEVISION BROADCASTING & WIRELESS COMMUNICATIONS EQUIPMENT MANUFACTURING (55%); INFORMATION TECHNOLOGY INDUSTRY (90%); EMPLOYMENT VISAS (89%); PASSPORTS & VISAS (89%); SOFTWARE DEVELOPERS (79%); EDUCATION SYSTEMS & INSTITUTIONS (78%); FACTORY WORKERS (78%); SEMICONDUCTORS (74%); PUBLIC SCHOOLS (71%); SOFTWARE DEVELOPMENT & ENGINEERING (69%)
+
+Geographic: CALIFORNIA, USA (79%); UNITED STATES (98%); INDIA (79%)
+
+Load-Date: July 20, 2007
+
+
+End of Document
 Bill to hire foreigners runs into turbulence; White House dislikes compromise measure
 The San Diego Union-Tribune
 July 31, 1998 Friday
@@ -121,6 +169,45 @@ Industry: NAICS334413 SEMICONDUCTOR & RELATED DEVICE MANUFACTURING (50%); NAICS
 Person: BILL CLINTON (73%); ELTON GALLEGLY (59%); TED KENNEDY (59%)
 
 Geographic: UNITED STATES (94%)
+
+Load-Date: July 20, 2007
+
+
+End of Document
+Three in Cabinet back hiring of more foreign engineers; But Senate panel OKs broader bill
+The San Diego Union-Tribune
+April 3, 1998 Friday
+
+
+Copyright 1998 The San Diego Union-Tribune
+Section: NEWS; Pg. A-2
+Length: 716 words
+Byline: Marcus Stern, COPLEY NEWS SERVICE
+Dateline: WASHINGTON 
+Body
+
+
+WASHINGTON -- After a prolonged silence, the Clinton administration yesterday publicly backed one of the high-tech industry's top legislative priorities of the year -- authority to hire a greater number of foreign programmers and engineers. But the administration's long-awaited stance stopped short of embracing everything the industry is seeking. And the move failed to block a Senate committee's approval of a broader bill that would open the door to many more such engineers.
+The White House insisted that the increase be temporary, modest and offset by additional protections and retraining opportunities for displaced or underemployed American workers. Three key Cabinet officials said in a letter yesterday to the Senate Judiciary Committee that the administration essentially supports a more modest bill fashioned by Sens. Dianne Feinstein, D-Calif., and Edward M. Kennedy, D-Mass. Their bill would allow a three-year increase of H-1B visas from the current 65,000 foreign workers to 90,000 and include retraining and worker protection provisions. But the Republican-controlled Senate Judiciary Committee rejected the Kennedy-Feinstein proposal yesterday, despite its last-minute backing from the Clinton administration, on a 10-8 party-line vote. The panel then voted 12-6 to approve a more expansive bill pushed by industry and drafted by Sen. Spencer Abraham, R-Mich., chairman of the immigration subcommittee. The measure was supported by all of the committee's 10 Republicans and two of its eight Democrats -- Feinstein and Sen. Herbert H. Kohl of Wisconsin. The bill approved by the committee yesterday and sent to the floor for action in the coming weeks would allow increases in the number of foreign programmers and engineers for five years. The numbers of visas for these workers would jump from the current maximum of 65,000, to 95,000 this year, then four years at 115,000. High-tech executives, especially on the West Coast, have been arguing that a critical shortage of engineering and computer-science talent threatens the growth, vitality and dominance that the United States currently enjoys in the high-tech industry. A high-tech, industry-financed survey recently said some 300,000 high-tech jobs need to be filled nationwide.
+The General Accounting Office, however, criticized the methodology of the study. Some high-tech workers and their unions have argued that the companies are being too picky in recruiting and, in some cases, are simply looking for workers who will work long hours for less pay.
+They also argue that many unemployed American workers could be trained to do the work. Kennedy, followed by five of the eight Democrats on the subcommittee, voted against the Abraham bill because he felt it had too little in the way of safeguards and retraining initiatives for American workers. The administration, in its letter, charged that the Abraham bill "emphasizes providing opportunities for foreign workers rather than providing for and protecting American workers." It was signed by Commerce Secretary William Daley, Labor Secretary Alexis Herman and Attorney General Janet Reno. The bill had been softened through private negotiations the day before the vote in an effort to accommodate Democrats like Kennedy and Feinstein, as well as critics within the administration. But it wasn't enough to win over Kennedy, who remained concerned that the Abraham bill still did too little to retrain and protect American workers. The measure likely will face additional changes before it is considered on the Senate floor, as opponents like Kennedy can prevent the bill from coming to a vote unless their concerns are at least somewhat mollified. Feinstein surprised and delighted many of the high-tech lobbyists by voting for the Abraham bill after her and Kennedy's bill failed.
+But she said she will offer an amendment when it comes to the Senate floor to knock the five years down to three. "I'm committed to support the bill, but I'd like to see it be a better bill than it is," Feinstein said after the bill-drafting session.
+She added that she had been heavily lobbied by the chief operating officers of many big California high-tech firms.
+But she said she still has concerns. "Boeing, in my state, just announced a layoff of 6,000 workers in Long Beach," she said.
+Classification
+
+
+Language: ENGLISH
+
+Publication-Type: Newspaper
+
+Subject: APPROVALS (90%); FOREIGN LABOR (90%); TECHNICIANS & TECHNOLOGICAL WORKERS (90%); US DEMOCRATIC PARTY (90%); US REPUBLICAN PARTY (90%); EMPLOYEE RETRAINING (89%); EMPLOYMENT VISAS (89%); LEGISLATIVE BODIES (89%); POLITICAL PARTIES (89%); US FEDERAL GOVERNMENT (79%); US POLITICAL PARTIES (79%); CABINET OFFICES (78%); EMPLOYMENT GROWTH (78%); ENGINEERING (78%); IMMIGRATION (78%); NEGATIVE EMPLOYMENT NEWS (78%); PASSPORTS & VISAS (78%); UNEMPLOYED PERSONS (78%); POLITICS (77%); PUBLIC FINANCE (73%); COMPUTER SCIENCE (72%); CONGRESS (%); EMPLOYMENT (%); GOVERNMENT (%); IMMIGRATION (%); PROFESSIONS (%); TECHNOLOGY (%); USA (%)
+
+Industry: EMPLOYMENT VISAS (89%); INFORMATION TECHNOLOGY INDUSTRY (89%); ENGINEERING (78%); PASSPORTS & VISAS (78%); COMPUTER SCIENCE (72%)
+
+Person: DIANNE FEINSTEIN (79%); TED KENNEDY (79%); HERB KOHL (59%)
+
+Geographic: SAN DIEGO, CA, USA (93%); CALIFORNIA, USA (79%); UNITED STATES (96%)
 
 Load-Date: July 20, 2007
 
@@ -180,6 +267,65 @@ Subject: PASSPORTS & VISAS (92%); EMPLOYMENT VISAS (91%); FOREIGN LABOR (90%); 
 Industry: PASSPORTS & VISAS (92%); EMPLOYMENT VISAS (91%); ENGINEERING (89%); COMPUTING & INFORMATION TECHNOLOGY (78%); ELECTRONICS (78%); INFORMATION TECHNOLOGY INDUSTRY (78%); MANUFACTURING (78%); SOFTWARE DEVELOPERS (78%); C++ PROGRAMMING (77%); COMPUTER & ELECTRONICS MFG (77%); COMPUTER SCIENCE (77%); SOFTWARE DEVELOPMENT & ENGINEERING (77%); FARM LABOR (73%); VISUAL BASIC PROGRAMMING (72%); SPONSORSHIP (64%)
 
 Geographic: SILICON VALLEY, CA, USA (79%); UNITED STATES (93%)
+
+Load-Date: July 20, 2007
+
+
+End of Document
+India raises specter of arms race; Businesses here weigh impact of sanctions on their bottom line
+The San Diego Union-Tribune
+May 14, 1998 Thursday
+
+
+Copyright 1998 The San Diego Union-Tribune
+Section: NEWS; Pg. A-1
+Length: 1094 words
+Byline: Dean Calbreath, STAFF WRITER
+Body
+
+
+When Manoj Jhawar learned India had gone ahead with nuclear weapons tests, he was stunned. "I couldn't believe they actually did it," the Carlsbad businessman said. "I just about had a heart attack." Once the initial shock wore off, Jhawar began to worry about how the explosions -- and the U.S. sanctions that quickly followed -- would affect India's people, its economy and his company, a water-purification equipment manufacturing firm that rings up 20 percent to 25 percent of its sales in India. "This could be very bad for India and, of course, for my company," said Jhawar, who was born in the central Indian city of Nagpur but raised in the United States. "If India isn't able to get funding to buy products from the United States, they'll still be able to get them from Korea or some European countries. But the impact on my end of the business could be very substantial." Jhawar isn't alone in his concern.
+At least two dozen San Diego companies export goods to India, and as the Clinton administration begins to impose financial sanctions, executives are struggling to weigh what the impact will be. India stunned nations around the globe this week by detonating a series of underground nuclear tests, with three explosions Monday and two yesterday. In response, the Clinton administration -- acting under the 1994 Nuclear Proliferation Prevention Act -- imposed a variety of sanctions: cutting off virtually all U.S. aid to India, barring U.S. banks from making loans to its government and restricting exports of computers and other equipment that might have military uses.
+Clinton also is moving to block loans to India from the World Bank and International Monetary Fund. And that's not the end of it. "There will be more sanctions," said a White House official who declined to be named.
+"This will have a cascading effect.
+All (federal) agencies have been instructed to review all of their activities to see if there are others that might be covered by this." The United States is one of India's largest trading partners and its largest investor.
+State Department figures indicate that the United States imported goods totaling $7.3 billion from India in 1997 while exports reached $7.7 billion.
+World Bank loans to India totaled $14.5 billion last year.
+If those loans are cut, Indian companies would find it much more difficult to buy supplies from foreign locales -- including California. Last year, California shipped $462 million in goods to India, earning it a ranking among the state's top 30 export markets.
+San Diego's exports are relatively small, but they've inched up steadily in the last few years, rising from just $5.5 million in 1993 to $19.9 million in 1996, the last year in which detailed figures are available. Fred McClintock, who heads the RDS Global Ltd. trade-consulting firm in Old Town, says that those figures -- provided by the U.S. Department of Commerce -- might be understated.
+Besides physical exports, California also provides software consulting and other services in India.
+And current sales to India are far outweighed by the potential of future sales to a country with nearly 1 billion people -- the second-largest consumer market in the world after China. "India's buying a lot of computers, electronics and telecommunications products right here in San Diego," said McClintock, who travels on trade missions to India five or six times a year.
+"When you're talking about institutions like the World Bank and the IMF withholding funds, you're talking about a number of major companies being hurt." One big San Diego company maintaining a close eye on the situation in India is Solar Turbines Inc., which sells energy-generation equipment to India's oil and natural gas industry as well as to private businesses that want to build their own power supplies. John Porter, who heads Solar's sales and marketing efforts, said the U.S. sanctions shouldn't affect his firm's business, since most of its clients in that sector have deep reserves of cash.
+Last September, for instance, it inked a $25 million deal to sell six gas turbines for a pair of offshore oil-drilling platforms. But cutting off loans from the World Bank or other lenders could strangle the spending programs of India's private businesses, which typically have little spare capital.
+Solar's trade with such companies is small but growing.
+Just one of its current projects in the private sector is worth $15 million to $20 million. "India's been a target market of ours for many years.
+We look at it as potentially the biggest market in the world," said Foster.
+"We've developed some very good customer loyalty.
+It would be a shame if that was disrupted by any kind of all-out embargo." Telecommunications firms such as Qualcomm, General Instrument and TV/Comm have major operations in India.
+Next month, for instance, Qualcomm is scheduled to open an international corporate center in the Indian city of Chennai.
+It has been selling wireless phones in India since 1996, and last year it gained permission from the Indian Department of Telecommunications to begin commercial service for its wireless operations. "It's an important market for us," said Qualcomm spokeswoman Christine Trimble.
+She adds that it's too early to tell whether the company will be affected by the sanctions.
+"We're just starting to evaluate what impact these sanctions could have." A White House official said the State Department will be reviewing all of its activities regarding India, including the H-1B program, which grants visas to high-skilled foreign workers. Amy sanctions imposed on this program won't have any effect before Oct. 1 because the 65,000 H-1B visas allotted for this year already have been given out.
+About 40 percent of the visas have gone to high-tech workers from India. Smaller businesses say that sanctions could only exacerbate long-running trade problems with India. "Dealing with India has always been a very tough situation anyway," said Derek Loren, an engineer at International Thermal Instruments Inc.
+"They're 15 or 20 years behind in the way they order equipment.
+They do everything with letters of credit, which could be harder with the current sanctions." Jhawar, whose Indian clients count on World Bank funding, remains hopeful that the sanctions will blow over soon.
+"I think the purpose of these tests was just saber-rattling to make the world pay attention," he said. "There's an extreme amount of enthusiasm about this now in India.
+With time, that might die down.
+The only question is when -- and how many businesses are going to be hurt before it does."
+Classification
+
+
+Language: ENGLISH
+
+Document-Type: STATISTICS; 
+
+Publication-Type: Newspaper
+
+Subject: ARMS RACE (90%); MILITARY WEAPONS (90%); NUCLEAR WEAPONS (90%); WEAPONS & ARMS (90%); WEAPONS RESEARCH & DEVELOPMENT (90%); DEVELOPMENT BANKS (89%); EMBARGOES & SANCTIONS (89%); EXPORT TRADE (89%); NEGATIVE NEWS (89%); FOREIGN LENDING (86%); GOVERNMENT DEPARTMENTS & AUTHORITIES (78%); IMPORT TRADE (78%); INTERNATIONAL ASSISTANCE (78%); EXPORT CONTROLS (77%); INTERNATIONAL RELATIONS (77%); STATE DEPARTMENTS & FOREIGN SERVICES (77%); MANUFACTURING OUTPUT (75%); INTERNATIONAL MONETARY FUND (73%); ELECTRONICS EXPORTS & IMPORTS (66%); TECHNOLOGY EXPORTS & IMPORTS (66%); INTERNATIONAL ECONOMIC ORGANIZATIONS (64%); ATOMIC (%); BUSINESS (%); ECONOMY (%); GOVERNMENT (%); LEADERS (%); PENALTIES (%); SAN DIEGO (%); TESTS (%); TRADE (%); USA (%)
+
+Industry: MILITARY WEAPONS (90%); NUCLEAR WEAPONS (90%); WEAPONS RESEARCH & DEVELOPMENT (90%); DEVELOPMENT BANKS (89%); MANUFACTURING (78%); MANUFACTURING OUTPUT (75%); COMPUTING & IT TRADE (73%); INTERNATIONAL MONETARY FUND (73%); COMPUTER EQUIPMENT (70%); ELECTRONICS EXPORTS & IMPORTS (66%)
+
+Geographic: SAN DIEGO, CA, USA (94%); CALIFORNIA, USA (92%); INDIA (98%); UNITED STATES (96%); EUROPE (79%)
 
 Load-Date: July 20, 2007
 
@@ -289,6 +435,53 @@ Load-Date: March 13, 2000
 
 
 End of Document
+Don't let immigration restrictions blunt America's high-tech edge
+The San Diego Union-Tribune
+June 21, 1998 Sunday
+
+
+Copyright 1998 The San Diego Union-Tribune
+Section: OPINION; Pg. G-4
+Length: 938 words
+Byline: Bronwyn Lance, LANCE is a former congressional aide. She is presently a Senior Fellow at the Alexis de Tocqueville Institution in Arlington, Va.
+Body
+
+
+Imagine a scenario in which American high-tech industries, linchpins in the current economic boom, are having their cutting-edge advantage dulled due to European-type hiring restrictions put in place by Republicans and fueled by an undercurrent of xenophobia. Too far-fetched?
+Then take a look at H.R. 3736, the "Workforce Protection and Improvement Act," which is currently winding its way through the House. This bill, a very anti-business piece of legislation, would provide high-tech and other industries with something that they very much need: a lifting of the current cap on the number of highly skilled foreign-born professionals allowed to enter the United States.
+However, this legislation would also render these visas practically unusable by attaching new restrictions to them. American businesses, particularly those in the high-tech and research industries, need these visas to hire the skilled, foreign-born professionals who help them grow, innovate, and compete globally.
+H-1B workers help to propel our economy and create more jobs for Americans. only 65,000 H-lB visas are made available each year.
+This year, the cap was reached in May. The Clinton administration's opposition to lifting the H-1B cap and its insistence on broad labor protections have presented Republicans with a golden opportunity to bring more fast-growing, libertarian-leaning, high-tech companies into the Republican fold.
+Senate Republicans were quick to grasp this opportunity by recently passing four bills to help high-tech industries, including a bill by Sen. Spencer Abraham, R-Mich., to increase the H-1B cap, which passed 78 to 20. Unfortunately for the Republicans, Lamar Smith, known primarily for driving Hispanics away from the Republican party, now appears intent on doing the same with Silicon Valley.
+Instead of taking this opportunity to demonstrate to high-tech industries why their home should be with the Republicans, his House legislation is so riddled with obeisance to the Clinton Labor Department that it contains measures more liberal than those proposed by Sen. Edward Kennedy and the AFL-CIO, and which were rejected by a 60-38 margin on the Senate floor. The Kennedy-Smith provisions make employers jump through so many Department of Labor hoops and contain so many traps for innocent employers that the new visas would become unusable.
+To add insult to injury, the Smith bill only gives extra visas for two and a half years, while the new Labor Department bureaucrats employed by the act will be forever. Under Smith's bill, no private employer in America could hire an H-1B professional unless the Labor Department says it meets industry-wide standards for recruitment -- and has made sufficient efforts to retain current or past U.S. employees -- in ways defined as acceptable to Department of Labor bureaucrats.
+As Sen. Slade Gorton, R-Wash., stated on the floor, "The Clinton administration wants to act as an employment agency for all of the high-tech companies in America, to tell them who they can hire, when they can hire them, when they can fire them, and what the restrictions on them will be." Another pernicious component contained in the House bill is a layoff attestation, which, over a six- to nine-month window, forbids companies from laying off a U.S. professional (or even another H-1B worker) in the same occupation as a potential foreign-born hire. lt is already illegal to pay an H-lB visa holder less than a similarly-employed American, and Sen. Abraham's bill includes a two-year debarment for any company that willfully under-pays someone on an H-1B in order to replace a U.S. worker. Ironically, in Senate testimony, the Labor Department could only cite one specific case of a layoff that involved replacement by H-1B professionals. Rather than punish abusers, tbe Smith bill punishes everyone and "protects" workers by so hamstringing companies that there is a danger of facilities moving out of the United States altogether to avoid these rules.
+"If there are talented people . . . who can help us create technology and products that will put millions of our own people to work, why not ask them to come to America instead of inducing American companies to invest abroad?" asked Sen. Phil Gramm, R-Texas.
+"To force a company to guarantee that it will not, in the next six months, have to lay anyone off is to ask it to guarantee the success of its research. As we know from the experience of Europe, if a company does not have the right to lay people off when a project fails, it cannot take the risk to hire the very people who make it possible for it to succeed." Indeed, the Smith bill is much more in line with French socialism than American ingenuity and competitiveness.
+And this is legislation without a constituency: High-tech businesses do not support the bill because of unreasonable restrictions, and unions do not like it because it deals with foreign professionals.
+The only ones who like the bill seem to be politicians.
+Could it be that Lamar Smith is trying to kill this immigration bill altogether by so handicapping it with restrictions that no one will vote for it? As Paul Huard of the National Association of Manufacturers observed, "It is hard to believe that Republican members of the House would give to Sen. Kennedy what he could not come close to getting earlier in the week in the U.S. Senate." Whether the House Republicans will remember that their creed is to limit the scope of the federal government, rather than to vastly expand the authority of the Labor Department or help bureaucrats micro-manage the human resources of America's best companies remains to be seen.
+Classification
+
+
+Language: ENGLISH
+
+Document-Type: OP ED COLUMN; 
+
+Publication-Type: Newspaper
+
+Subject: EMPLOYMENT VISAS (90%); IMMIGRATION (90%); IMMIGRATION REGULATION & POLICY (90%); LEGISLATION (90%); POLITICAL PARTIES (90%); US REPUBLICAN PARTY (90%); LABOR DEPARTMENTS (89%); LEGISLATIVE BODIES (89%); EMPLOYMENT GROWTH (78%); JOB CREATION (78%); LABOR FORCE (78%); LABOR UNIONS (78%); NEGATIVE NEWS (77%); RACISM & XENOPHOBIA (72%); POLITICS (71%); STANDARDS & MEASUREMENTS (60%); EDITORIALS & OPINIONS (59%); REPORTS, REVIEWS & SECTIONS (59%); BUSINESS (%); CONGRESS (%); EMPLOYMENT (%); FIRINGS (%); IMMIGRATION (%); LABOR (%); TECHNOLOGY (%)
+
+Industry: EMPLOYMENT VISAS (90%)
+
+Person: LAMAR SMITH (79%); TED KENNEDY (58%)
+
+Geographic: SILICON VALLEY, CA, USA (79%); UNITED STATES (95%)
+
+Load-Date: July 20, 2007
+
+
+End of Document
 Study looks at foreigners in high-tech jobs; 420,000 here now; bills may hike total
 The San Diego Union-Tribune
 April 19, 2000, Wednesday
@@ -379,6 +572,49 @@ Person: LAMAR SMITH (59%)
 Geographic: TEXAS, USA (79%); UNITED STATES (94%)
 
 Load-Date: May 2, 2007
+
+
+End of Document
+Bill to let more high-tech workers into U.S. is delayed by GOP; Failure of negotiations with White House cited
+The San Diego Union-Tribune
+August 7, 1998 Friday
+
+
+Copyright 1998 The San Diego Union-Tribune
+Section: NEWS; Pg. A-9
+Length: 482 words
+Byline: Marcus Stern, COPLEY NEWS SERVICE
+Dateline: WASHINGTON 
+Body
+
+
+WASHINGTON -- House Republicans put off a planned vote yesterday on a bill to let the high-tech industry hire more foreign workers after the White House and congressional Republicans failed to reach agreement on the issue. The delay is at least a temporary defeat for the high-tech industry, which had hoped as recently as a week ago that a bill would be on President Clinton's desk by now and perhaps even signed. Their plans began unraveling eight days ago and all hope for a quick compromise ended yesterday when it became clear that congressional Republicans would not reach a timely agreement with the White House. 
+"We're as far apart today as we were a week ago," said Joe McMonigle, a spokesman for Sen. Spencer Abraham, R-Mich., who, as sponsor of the industry-backed bill, was overseeing negotiations with the White House. "We're disappointed," added Bill Bold, a lobbyist for Qualcomm, the San Diego telecommunications company, which relies on foreign professionals and is supporting the push to expand the program. Supporters of the bill shifted their strategy yesterday from one of reaching a quick deal with the White House to putting off the vote until after Congress returns from its break on Sept. 8. They hope during the recess to pick up enough Republican votes in the House to override a probable presidential veto.
+While, the Senate is likely to easily override a veto, it is less likely in the House. "We are going to be working during this recess really hard to get this issue on top of every member of Congress' agenda so that when they get back from recess we'll be ready to go," said Judy Golub, director of advocacy for the American Immigration Lawyers Association, which has lobbied heavily for the bill.
+"We can redouble our grass-roots effort and get more (high-tech) businesses to call their (congressional) representatives." Currently, the H-1B program, named after the section of law under which visas are issued to the high-skilled workers, provides for 65,000 a year. The high-tech industry and the immigration lawyers want to raise the annual cap to as many as 115,000 for the next six years.
+Lawyers fees for processing an H-1B application run around $1,000, according to immigration attorneys. This fiscal year's allotment of 65,000 H-1B visas were given out by May 8. Shortly after that, the Senate passed a bill expanding the program.
+The House Judiciary Committee approved one May 20, but industry lobbyists objected to provisions in it that were intended as safeguards for American workers. The White House is insisting on such provisions before Clinton would accept the bill. Republicans in the House and Senate negotiated among themselves for months and came up with a compromise last week.
+But the two sides have been talking without real progress since a White House official announced that President Clinton would veto the agreement if it reached his desk.
+Classification
+
+
+Language: ENGLISH
+
+Publication-Type: Newspaper
+
+Subject: AGREEMENTS (91%); DELAYS & POSTPONEMENTS (90%); LEGISLATION (90%); POLITICAL PARTIES (90%); TECHNICIANS & TECHNOLOGICAL WORKERS (90%); US REPUBLICAN PARTY (90%); VETO (90%); EMPLOYMENT VISAS (89%); FOREIGN LABOR (89%); IMMIGRATION (89%); LEGISLATIVE BODIES (89%); LOBBYING (89%); PASSPORTS & VISAS (89%); RECRUITMENT & HIRING (89%); LEGISLATIVE VOTING (79%); PRESIDENTIAL POWERS (79%); FACTORY WORKERS (78%); LAWYERS (68%); APPROVALS (63%); CONGRESS (%); EMPLOYMENT (%); IMMIGRATION (%); LEADERS (%); NEGOTIATIONS (%); TECHNOLOGY (%); USA (%)
+
+Company:  QUALCOMM INC (55%)
+
+Ticker: QCOM (NASDAQ) (55%)
+
+Industry: NAICS334413 SEMICONDUCTOR & RELATED DEVICE MANUFACTURING (55%); NAICS334220 RADIO & TELEVISION BROADCASTING & WIRELESS COMMUNICATIONS EQUIPMENT MANUFACTURING (55%); INFORMATION TECHNOLOGY INDUSTRY (90%); EMPLOYMENT VISAS (89%); PASSPORTS & VISAS (89%); FACTORY WORKERS (78%); MEDIA & TELECOMMUNICATIONS (73%); LAWYERS (68%); TELECOMMUNICATIONS (67%)
+
+Person: BILL CLINTON (73%)
+
+Geographic: UNITED STATES (94%)
+
+Load-Date: July 20, 2007
 
 
 End of Document
@@ -497,6 +733,60 @@ Load-Date: May 2, 2007
 
 
 End of Document
+House approves of more foreign high-tech talent; Clinton and Senate expected to OK bill
+The San Diego Union-Tribune
+September 25, 1998 Friday
+
+
+Copyright 1998 The San Diego Union-Tribune
+Section: NEWS; Pg. A-1:1,2,3,4,5,6,7; A-19:8
+Length: 952 words
+Byline: Marcus Stern, COPLEY NEWS SERVICE
+Dateline: WASHINGTON 
+Body
+
+
+WASHINGTON -- In a major victory for the high-tech industry, the House yesterday approved compromise legislation allowing the hiring of up to 142,500 additional foreign computer programmers and engineers over the next three years. The Senate, which had passed a more pro-industry version of the bill, is expected to quickly accept the legislation as passed by the House.
+The measure then will go to President Clinton for his signature. The president previously had threatened to veto an increase in temporary visas for foreign professionals but now plans to sign the compromise approved by the House on a 288-133 vote. A spirited three-hour debate followed by the bill's final passage provided a long-awaited climax to what had been a relentless campaign waged by the high-tech industry over the past eight months.
+The effort had appeared moribund recently because of White House opposition. But Sen. Spencer Abraham, R-Mich., representing Republican leaders and the high-tech industry in negotiations with White House officials, finally won them over Wednesday night with a series of modest concessions.
+The arduously negotiated compromise paved the way for the House vote yesterday afternoon. The breakthrough came just as Clinton was preparing to leave for San Jose and a Silicon Valley fund-raiser scheduled for tonight.
+A continued impasse over the legislation could have clouded the event.
+White House officials, however, denied that the fund-raiser was a factor in the breakthrough. "The notion that this was done at the last second because we have a fund-raiser out there is absurd on its face," said White House spokesman Jake Siewert.
+"In August, when we threatened to veto the bill, the vice president was out in Silicon Valley." (The president will attend another fund-raiser tomorrow at the Rancho Santa Fe home of attorney Bill Lerach.) Regardless of the White House motives, industry representatives expressed joy over yesterday's House vote. "It's about time," said Mark Fackler, president and CEO of Stellcom Technologies, which provides temporary workers for high-tech companies in San Diego but doesn't employ H-1B workers.
+"This will be good for the economy and good for business.
+It will not displace any American engineers." "This is very good for San Diego high-tech companies across the board," said Julie Ross, human resources manager at Accel Technologies Inc.
+"This will help these companies hire quickly and remain competitive." The San Diego County congressional delegation was split over the bill. Republican Reps. Brian Bilbray of Imperial Beach, Randy "Duke" Cunningham of Escondido and Ron Packard of Oceanside voted for the measure.
+Reps. Bob Filner, D-San Diego, and Duncan Hunter, R-El Cajon, voted against it. Industry leaders have argued that they need more foreign high-tech workers because of a skills shortage in the United States.
+But some unemployed American high-tech workers have complained that they can't get interviews with the companies complaining about a worker shortage. During the debate on the House floor, Democratic and Republican dissenters viewed the legislation skeptically, arguing that the high-tech companies were trying to undermine wages and working conditions by swamping the labor market with temporary foreign workers. "This is not a about a lack of workers," said Rep. Ron Klink, D-Pa., the bill's most ardent opponent.
+"It's about a lack of workers who are the cheapest you can find.
+It's about a lack of indentured servants who we can bring in from other nations who can't complain because there's virtually no enforcement by the Department of Labor. "This is not about building up a high-tech industry," he added.
+"This is about catering to the high-tech industry, a formidable political voice right before we have an election." The bill would increase the number of temporary visas for foreign professionals from 65,000 a year to 115,000 in fiscal years 1999 and 2000. In 2001, the limit would drop to 107,500 before returning the following year to 65,000. If all the visas were used, the extra 142,500 workers over the next three years would represent a 58 percent increase in the number granted under the H-1B program.
+The 8-year-old program is named after the visa given to foreign workers.
+Each worker may stay in the country for up to six years. The White House said important safeguards for American workers had been added to the bill during the negotiations.
+Administration officials also said a $500 fee to be paid by companies for each H-1B application would raise $75 million to $100 million annually to fund math and science scholarships for young students and training programs for workers. "I am pleased that the House of Representatives has moved quickly to pass a bipartisan compromise to address a shortage of skilled workers, while providing new training and protections for U.S. workers," Clinton said in a written statement released by the White House shortly after the vote. The H-1B program has been heavily criticized by the Labor Department, and government studies have found flaws in the program.
+The compromise reached between Abraham and the White House would subject companies that rely heavily on H-1B workers to greater Labor Department scrutiny. A company deemed to be "H-1B dependent" would have to promise that it would not lay off an American employee 90 days before or after it applied for an H-1B visa.
+H-1B-dependent companies also would have to take steps to recruit American workers before turning to a temporary foreign worker. "From everything I know in San Diego, I don't think there's a single dependent company," said Erik Bruvold, executive director of the San Diego Council of the American Electronics Association.
+Classification
+
+
+Language: ENGLISH
+
+Publication-Type: Newspaper
+
+Subject: APPROVALS (92%); TECHNICIANS & TECHNOLOGICAL WORKERS (91%); LEGISLATION (90%); LEGISLATIVE BODIES (90%); SOFTWARE DEVELOPERS (90%); US REPUBLICAN PARTY (90%); LEGISLATIVE VOTING (89%); NEGATIVE PERSONAL NEWS (89%); VETO (89%); FUNDRAISING (88%); EMPLOYMENT VISAS (78%); FOREIGN LABOR (78%); HUMAN RESOURCES (78%); HUMAN RESOURCES & PERSONNEL MANAGEMENT (78%); EXECUTIVES (76%); MANAGERS & SUPERVISORS (73%); PASSPORTS & VISAS (73%); TEMPORARY EMPLOYMENT (73%); BUSINESS (%); COMPUTERS (%); CONGRESS (%); IMMIGRATION (%); PROFESSIONS (%); SAN DIEGO (%); SCHEDULES (%); TECHNOLOGY (%); USA (%)
+
+Company:  ACCEL TECHNOLOGIES INC (61%)
+
+Industry: SIC7372 PREPACKAGED SOFTWARE (61%); INFORMATION TECHNOLOGY INDUSTRY (90%); SOFTWARE DEVELOPERS (90%); EMPLOYMENT VISAS (78%); SOFTWARE DEVELOPMENT & ENGINEERING (77%); PASSPORTS & VISAS (73%)
+
+Person: DUNCAN D HUNTER (79%); DUNCAN L HUNTER (79%); BILL CLINTON (78%); BOB FILNER (58%)
+
+Geographic: SAN DIEGO, CA, USA (94%); SILICON VALLEY, CA, USA (92%); SAN FRANCISCO BAY AREA, CA, USA (87%); SAN JOSE, CA, USA (74%); CALIFORNIA, USA (79%); UNITED STATES (95%)
+
+Load-Date: July 20, 2007
+
+
+End of Document
 A need for foreign-born professionals
 The San Diego Union-Tribune
 September 24, 2000 Sunday
@@ -546,6 +836,54 @@ Industry: PASSPORTS & VISAS (94%); EMPLOYMENT VISAS (92%); PHARMACEUTICALS & BI
 Geographic: UNITED STATES (98%)
 
 Load-Date: May 2, 2007
+
+
+End of Document
+High-tech firms ask Congress to up foreign worker limits
+The San Diego Union-Tribune
+July 4, 1999 Sunday
+
+
+Copyright 1999 The San Diego Union-Tribune
+Section: BUSINESS; Pg. I-1
+Length: 937 words
+Byline: Finlay Lewis, COPLEY NEWS SERVICE
+Dateline: WASHINGTON  
+Body
+
+
+WASHINGTON -- Qualcomm and other high-tech firms across the nation again are urging Congress to increase the number of foreign computer programmers allowed into the United States. The industry effort was prompted by the announcement several weeks ago by the Immigration and Naturalization Service that the industry had reached the program's annual legal ceiling of 115,000 visas. It was the third consecutive year that the annual quota of so-called H-1B visas has been exhausted months in advance, and some industry sources say that next year the limit could be reached as early as December -- just three months into the fiscal year. Legislation is being prepared by Sen. 
+Phil Gramm, R-Texas, that would allow 200,000 foreign computer scientists and engineers to enter the country next year, easing what the high-tech firms say is an acute shortage of U.S. workers qualified to hold down jobs in certain specialty occupations. Congress raised the cap on H-1B visas last year for the current and upcoming fiscal years from 65,000 to 115,000. Opponents, meanwhile, accuse the industry of seeking to tap into a worldwide supply of cheaper foreign labor. Complicating the issue is the contention by Rep. Lamar Smith, R-Texas, chairman of the House immigration subcommittee, that the H-1B program suffers from what he describes as "pervasive fraud." And another critic, Norman Matloff, a computer scientist at the University of California Davis, has made available an extensive critique of the program on the Internet. He says that the "only shortage is one of cheap labor, especially in the form of foreign nationals who make on average 15 to 30 percent less than comparable natives." Matloff contends the industry's highly selective hiring practices, relatively flat wages and 17 percent unemployment rate for programmers over 50 all belie the existence of a shortage. He says that age discrimination is rampant in an industry that prizes employees willing to work long days and weekends without complaint. In a study of information-technology workers in the United States, the Computing Research Association recently concluded there is no clear resolution to the debate because of the absence of "adequate data to directly count either supply or demand." "It is likely that there are spot shortages, both in specific geographic regions and in specific occupations," the association said.
+"In a field experiencing rapid growth and rapid technological change, it would be surprising if there were not such shortages." The nonprofit association represents more than 180 academic high-tech departments, government research labs and technology companies. The association's research also suggests that help might be on the way.
+A survey conducted in 1998 notes that undergraduate enrollments in computer sciences and computer engineering increased about 40 percent in both 1996 and 1997. William A. Bold, director of government affairs at Qualcomm, sees that trend appearing in the University of California system. Bold says Qualcomm supports a raising of the H-1B ceiling.
+He also says the company would like Congress to devise a more lasting solution to the worker-supply problem by focusing on education and training. "We need to ensure that universities have the resources to bring students into engineering programs and (that we) don't turn promising students away because of a lack of classroom space," Bold says. Each H-1B visa is good for up to six years, and U.S. high-tech firms frequently consider that when hiring foreign students graduating from U.S. colleges and when recruiting workers in foreign countries. Jennifer McCarthy, a government affairs specialist at Qualcomm, says there is "a shortage of skilled workers, and we need to have access to workers wherever they are coming from." Many workers who obtain the visas stay the full six years and then apply for a permanent green card, which entitles them to work in the United States.
+That also puts them on the road to citizenship. Smith recently wrote to Doris Meissner, head of the INS, and demanded that the administration crack down on fraud in the H-1B program.
+A spokeswoman for the INS says Smith's letter is under review. At a hearing of Smith's subcommittee last spring, William R. Yates, director of immigration services for the INS, said that the American consulate in Chennai, India, and the INS jointly examined 3,247 visa applications for possible fraud. Yates said that about 21 percent of the visa petitions involved outright fraud.
+In 45 percent of some other petitions, investigators were unable to verify the authenticity of the education and work-experience credentials of the workers seeking the visas. India sends the most computer scientists and engineers to the United States under the program, and the American consulate in Chennai processed 20,000 visas last year, more than any other post in that country. In his letter, Smith declared that his hearings "clearly established that pervasive fraud in the H-1B program has had a major impact on the availability of the numerically limited visas." However, some industry sources dismissed Smith's evidence as largely anecdotal. "I can't categorically say there is no validity to these things, but it seems to me that these assertions raise more questions than they answer," says Cornelius Scully, who retired two years ago as director of legislation, regulations and advisory assistance in the State Department's visa office. Foreign workers admitted under the program supplement an industry staffed by an estimated 2 million U.S. information-technology workers, according to government statistics.
+Classification
+
+
+Language: ENGLISH
+
+Document-Type: STATISTICS; 
+
+Publication-Type: Newspaper
+
+Subject: TECHNICIANS & TECHNOLOGICAL WORKERS (92%); FOREIGN LABOR (91%); COMPUTER SCIENCE (90%); EMPLOYMENT VISAS (90%); IMMIGRATION (90%); PASSPORTS & VISAS (90%); SOFTWARE DEVELOPERS (90%); US REPUBLICAN PARTY (90%); ASSOCIATIONS & ORGANIZATIONS (89%); NEGATIVE NEWS (88%); COMPUTER ENGINEERING (79%); CITIZENSHIP (78%); ENGINEERING (78%); LABOR SHORTAGES (78%); NEGATIVE EMPLOYMENT NEWS (78%); UNEMPLOYMENT RATES (78%); US FEDERAL GOVERNMENT (78%); SHORTAGES (77%); NEGATIVE PERSONAL NEWS (75%); POPULATION CHARACTERISTICS (73%); RECRUITMENT & HIRING (73%); NONPROFIT ORGANIZATIONS (72%); AGE DISCRIMINATION (69%); COLLEGES & UNIVERSITIES (69%); POLLS & SURVEYS (65%); GOVERNMENT RESEARCH FUNDING (64%); COMPUTATIONAL RESEARCH (60%); COMPUTERS (%); CONGRESS (%); EMPLOYMENT (%); IMMIGRATION (%); SALARIES (%); TECHNOLOGY (%); USA (%)
+
+Company:  QUALCOMM INC (58%)
+
+Organization: UNIVERSITY OF CALIFORNIA (54%)
+
+Ticker: QCOM (NASDAQ) (58%)
+
+Industry: NAICS334413 SEMICONDUCTOR & RELATED DEVICE MANUFACTURING (58%); NAICS334220 RADIO & TELEVISION BROADCASTING & WIRELESS COMMUNICATIONS EQUIPMENT MANUFACTURING (58%); COMPUTER SCIENCE (90%); EMPLOYMENT VISAS (90%); INFORMATION TECHNOLOGY INDUSTRY (90%); PASSPORTS & VISAS (90%); SOFTWARE DEVELOPERS (90%); COMPUTER ENGINEERING (79%); COMPUTING & INFORMATION TECHNOLOGY (79%); ENGINEERING (78%); SOFTWARE DEVELOPMENT & ENGINEERING (78%); COLLEGES & UNIVERSITIES (69%); COMPUTATIONAL RESEARCH (60%)
+
+Person: LAMAR SMITH (58%); PHIL GRAMM (58%)
+
+Geographic: SAN DIEGO, CA, USA (93%); TEXAS, USA (92%); CALIFORNIA, USA (79%); UNITED STATES (94%)
+
+Load-Date: July 20, 2007
 
 
 End of Document

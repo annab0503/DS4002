@@ -14,44 +14,26 @@ output:
 
 ```{r echo=FALSE, warning=FALSE, message=FALSE, results="hide"}
 # Function to check and install missing packages
-install_if_missing <- function(package) {
-  if (!require(package, character.only = TRUE)) {
-    install.packages(package, dependencies = TRUE)
-    library(package, character.only = TRUE)
+install_if_missing <- function(packages) {
+  missing_packages <- packages[!packages %in% installed.packages()[, "Package"]]
+  if (length(missing_packages) > 0) {
+    install.packages(missing_packages, dependencies = TRUE)
   }
+  invisible(lapply(packages, library, character.only = TRUE))
 }
 
 # List of required packages
 packages <- c(
-  "countrycode", "dplyr", "DT", "ggplot2", "gridExtra", "leaflet", 
-  "maps", "patchwork", "readr", "rworldmap", "showtext", 
-  "sp", "tidyverse"
+  "countrycode", "dplyr", "DT", "ggplot2", "gridExtra", "leaflet",
+  "maps", "patchwork", "readr", "rworldmap", "showtext",
+  "sp", "tidyverse", "stringr", "syuzhet"
 )
 
 # Ensure all packages are installed and loaded
-lapply(packages, install_if_missing)
+install_if_missing(packages)
+```
 
-# Load libraries explicitly
-library(countrycode)
-library(dplyr)
-library(DT)
-library(ggplot2)
-library(gridExtra)
-library(leaflet)
-library(maps)
-library(patchwork)
-library(readr)
-library(rworldmap)
-library(showtext)
-library(sp)
-library(tidyverse)
-
-# Set the file path
-url <- "https://raw.githubusercontent.com/annab0503/DS4002/main/Project%201/Analysis%20Data/analysis_data.csv"
-
-# Read the CSV file from the URL
-analysis_data <- read_csv(url)
-
+```{r}
 # Enable the showtext package
 showtext_auto()
 
@@ -103,56 +85,154 @@ To construct the datasets, our team utilized **Nexis Uni** to filter and extract
 The filtered articles were categorized by the H-1B visa type and saved into a text file based on their date of publication. This  approach allows for easier analysis of trends and policy discussions within each category over the years. 
 
 # **Exploratory Analysis**
-```{r echo=FALSE}
-if (!require(tidyverse)) install.packages("tidyverse")
-if (!require(stringr)) install.packages("stringr")
-library(tidyverse)
-library(stringr)
+```{r}
+# Step 1: Import and Split Data
+# Specify the GitHub raw URL
+github_url <- "https://github.com/annab0503/DS4002/blob/main/Project%202/Skilled%20Worker%20Visas.txt?raw=true"
 
-main <- function() {
-  # Reading the entire text file
-  text <- readLines("Skilled Worker Visas.txt", warn = FALSE)
+# Read the content of the file from GitHub
+content <- readLines(github_url, warn = FALSE)
+
+# Combine all lines into a single text string
+text <- paste(content, collapse = "\n")
+
+# Split the text by "End of Document"
+documents <- str_split(text, "End of Document", simplify = FALSE)[[1]]
+
+# Write each document to a separate file
+for (i in seq_along(documents)) {
+  doc_path <- paste0("Document_", i, ".txt")
+  writeLines(str_trim(documents[i]), con = doc_path)
+  cat("Document saved:", doc_path, "\n")
+}
+```
+
+```{r}
+# Step 2: Load Split Documents
+# List all document files in the working directory
+doc_files <- list.files(pattern = "Document_\\d+\\.txt")
+
+# Read all documents into a list
+documents <- lapply(doc_files, readLines)
+
+# Combine each document's content into a single text string
+documents <- lapply(documents, paste, collapse = " ")
+
+# Create a data frame for analysis
+doc_data <- data.frame(
+  Document = doc_files,
+  Text = unlist(documents),
+  stringsAsFactors = FALSE
+)
+```
+
+```{r}
+# Step 3: Extract Dates from the Text
+extract_date <- function(text) {
+  # Define a regex pattern for "Month Day, Year" format
+  date_pattern <- "\\b(January|February|March|April|May|June|July|August|September|October|November|December) \\d{1,2}, \\d{4}\\b"
   
-  # Combining lines back into a single string for proper regex handling
-  text_combined <- paste(text, collapse="\n")
+  # Search for the date using the regex
+  date <- str_extract(text, date_pattern)
   
-  # Using regex to split articles on Load-Date; ensure Load-Date is kept with the article
-  articles <- str_split(text_combined, "(?=Load-Date:)", n = Inf, simplify = FALSE)[[1]]
+  # If no match, log a message
+  if (is.na(date)) { 
+    cat("Date extraction failed for document:", substr(text, 1, 100), "...\n") 
+  }
   
-  # Extract dates and contents by filtering lines containing 'Load-Date'
-  dates <- str_extract(articles, "Load-Date:\\s+[A-Za-z]+\\s+\\d{1,2},\\s+\\d{4}")
-  contents <- str_replace(articles, "Load-Date:\\s+[A-Za-z]+\\s+\\d{1,2},\\s+\\d{4}", "")
-  
-  # Count all articles
-  total_article_count <- length(contents)
-  print(paste("Total number of articles:", total_article_count))
-  
-  # Count occurrences of "not"
-  total_not_count <- sum(str_count(contents, regex("\\bnot\\b", ignore_case = TRUE)))
-  print(paste("Total occurrences of 'not':", total_not_count))
-  
-  # Extract years from dates for further analysis
-  years <- str_extract(dates, "\\d{4}")
-  
-  # Count articles per year
-  year_counts <- table(years)
-  
-  # Plot article count by year using base plotting
-  plot(year_counts, type = "o", main = "Articles per Year", xlab = "Year", ylab = "Number of Articles")
-  
-  # Analyze occurrences of 'not' by year
-  not_counts_by_year <- map2(contents, years, ~ str_count(.x, "\\bnot\\b")) %>% unlist() %>% tibble(year = years, count = .) %>%
-    group_by(year) %>% summarise(total_count = sum(count))
-  
-  # Plot occurrences of 'not' by year using ggplot2
-  ggplot(not_counts_by_year, aes(x = year, y = total_count)) +
-    geom_col() +
-    labs(title = "'not' occurrences per year", x = "Year", y = "Occurrences") +
-    theme(axis.text.x = element_text(size = 8))  # Adjusting x-axis label size
+  return(date)
 }
 
-# Call the main function
-main()
+# Apply the function to extract dates for all documents
+doc_data$Date <- sapply(doc_data$Text, extract_date)
+
+# Convert the dates to Date type
+doc_data$Date <- as.Date(doc_data$Date, format = "%B %d, %Y")
+
+# Extract the year from the Date
+doc_data$Year <- format(doc_data$Date, "%Y")
+
+# Display a preview of the dataset
+head(doc_data[, c("Document", "Date", "Year")])
+```
+
+```{r}
+# Step 4: Analyze Data
+
+# Count total articles
+total_article_count <- nrow(doc_data)
+print(paste("Total number of articles:", total_article_count))
+
+# Count occurrences of "not" in all documents
+total_not_count <- sum(str_count(doc_data$Text, regex("\\bnot\\b", ignore_case = TRUE)))
+print(paste("Total occurrences of 'not':", total_not_count))
+
+# Count articles per year
+year_counts <- table(doc_data$Year)
+
+# Plot article count by year using base plotting
+plot(
+  year_counts,
+  type = "o",
+  main = "Articles per Year",
+  xlab = "Year",
+  ylab = "Number of Articles"
+)
+```
+
+```{r}
+# Analyze occurrences of 'not' by year
+not_counts_by_year <- doc_data %>%
+  mutate(Year = as.numeric(Year), NotCount = str_count(Text, "\\bnot\\b")) %>%
+  group_by(Year) %>%
+  summarise(TotalNotCount = sum(NotCount, na.rm = TRUE))
+
+# Plot occurrences of 'not' by year using ggplot2
+ggplot(not_counts_by_year, aes(x = Year, y = TotalNotCount)) +
+  geom_col(fill = "steelblue") +
+  labs(
+    title = "'not' Occurrences per Year",
+    x = "Year",
+    y = "Occurrences"
+  ) +
+  theme(axis.text.x = element_text(size = 8)) # Adjust x-axis label size
+```
+```{r}
+# Step 5: Perform Sentiment Analysis
+# Calculate sentiment scores for each document
+doc_data$Sentiment <- sapply(doc_data$Text, function(text) {
+  sentiment <- get_sentiment(text, method = "bing")
+  mean(sentiment)  # Average sentiment score for the document
+})
+```
+
+```{r}
+# Step 6: Group by Year and Analyze
+# Group by year and calculate average sentiment per year
+sentiment_by_year <- doc_data %>%
+  group_by(Year) %>%
+  summarise(AverageSentiment = mean(Sentiment, na.rm = TRUE))
+```
+
+```{r}
+# Step 7: Visualize Sentiment Over Time
+ggplot(sentiment_by_year, aes(x = as.numeric(Year), y = AverageSentiment)) +
+  geom_line() +
+  geom_point() +
+  labs(
+    title = "Sentiment Toward Visas Over Time",
+    x = "Year",
+    y = "Average Sentiment Score"
+  ) +
+  theme_minimal()
+```
+```{r}
+# Step 8: Validate Results
+# View extracted dates, sentiment scores, and text snippets
+head(doc_data[, c("Document", "Date", "Sentiment")])
+
+# Print average sentiment by year
+print(sentiment_by_year)
 ```
 
 # **Conclusion**

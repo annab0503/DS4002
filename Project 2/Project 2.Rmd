@@ -33,7 +33,7 @@ packages <- c(
 install_if_missing(packages)
 ```
 
-```{r}
+```{r include=FALSE}
 # Enable the showtext package
 showtext_auto()
 
@@ -85,32 +85,50 @@ To construct the datasets, our team utilized **Nexis Uni** to filter and extract
 The filtered articles were categorized by the H-1B visa type and saved into a text file based on their date of publication. This  approach allows for easier analysis of trends and policy discussions within each category over the years. 
 
 # **Exploratory Analysis**
-```{r}
-# Step 1: Import and Split Data
-# Specify the GitHub raw URL
-github_url <- "https://github.com/annab0503/DS4002/blob/main/Project%202/Skilled%20Worker%20Visas.txt?raw=true"
 
-# Read the content of the file from GitHub
-content <- readLines(github_url, warn = FALSE)
 
-# Combine all lines into a single text string
-text <- paste(content, collapse = "\n")
 
-# Split the text by "End of Document"
-documents <- str_split(text, "End of Document", simplify = FALSE)[[1]]
+```{r display-image, echo=FALSE}
 
-# Write each document to a separate file
-for (i in seq_along(documents)) {
-  doc_path <- paste0("Document_", i, ".txt")
-  writeLines(str_trim(documents[i]), con = doc_path)
-  cat("Document saved:", doc_path, "\n")
-}
+# Use knitr to include an external image
+knitr::include_graphics("code.png")
+
 ```
 
-```{r}
+```{r include=FALSE}
+
+# Function to load, process, and write documents to separate files
+load_and_process_data <- function(url, source_label) {
+  content <- readLines(url, warn = FALSE)
+  text <- paste(content, collapse = "\n")
+  documents <- str_split(text, "End of Document", simplify = FALSE)[[1]]
+
+  # Write each document to a separate file
+  for (i in seq_along(documents)) {
+    doc_path <- paste0(source_label, "_Document_", i, ".txt")
+    writeLines(str_trim(documents[i]), con = doc_path)
+    cat("Document saved:", doc_path, "\n")
+  }
+}
+
+# Load data from New York Times
+load_and_process_data("https://github.com/annab0503/DS4002/blob/main/Project%202/Skilled%20Worker%20Visas.txt?raw=true", "NYT")
+
+# Load data from San Diego Tribune
+load_and_process_data("https://github.com/annab0503/DS4002/blob/main/Project%202/.txt%20files/San%20Diego%20Tribune.txt?raw=true", "SDT")
+
+# Load data from USA Today
+load_and_process_data("https://github.com/annab0503/DS4002/blob/main/Project%202/.txt%20files/USA%20Today.txt?raw=true", "USA")
+
+
+```
+
+
+
+```{r include=FALSE}
+
 # Step 2: Load Split Documents
-# List all document files in the working directory
-doc_files <- list.files(pattern = "Document_\\d+\\.txt")
+doc_files <- list.files(pattern = "^(NYT_|SDT_|USA_)Document_\\d+\\.txt")
 
 # Read all documents into a list
 documents <- lapply(doc_files, readLines)
@@ -124,61 +142,70 @@ doc_data <- data.frame(
   Text = unlist(documents),
   stringsAsFactors = FALSE
 )
+
+
 ```
 
-```{r}
+```{r include=FALSE}
+
+
 # Step 3: Extract Dates from the Text
 extract_date <- function(text) {
-  # Define a regex pattern for "Month Day, Year" format
   date_pattern <- "\\b(January|February|March|April|May|June|July|August|September|October|November|December) \\d{1,2}, \\d{4}\\b"
-  
-  # Search for the date using the regex
   date <- str_extract(text, date_pattern)
-  
-  # If no match, log a message
-  if (is.na(date)) { 
-    cat("Date extraction failed for document:", substr(text, 1, 100), "...\n") 
+  if (is.na(date)) {
+    cat("Date extraction failed for document:", substr(text, 1, 100), "...\n")
   }
-  
   return(date)
 }
 
 # Apply the function to extract dates for all documents
 doc_data$Date <- sapply(doc_data$Text, extract_date)
-
-# Convert the dates to Date type
 doc_data$Date <- as.Date(doc_data$Date, format = "%B %d, %Y")
-
-# Extract the year from the Date
 doc_data$Year <- format(doc_data$Date, "%Y")
 
 # Display a preview of the dataset
 head(doc_data[, c("Document", "Date", "Year")])
-```
-
-```{r}
-# Step 4: Analyze Data
-
-# Count total articles
-total_article_count <- nrow(doc_data)
-print(paste("Total number of articles:", total_article_count))
-
-# Count occurrences of "not" in all documents
-total_not_count <- sum(str_count(doc_data$Text, regex("\\bnot\\b", ignore_case = TRUE)))
-print(paste("Total occurrences of 'not':", total_not_count))
-
-# Count articles per year
-year_counts <- table(doc_data$Year)
-
-# Plot article count by year using base plotting
- plot(year_counts, type = "o", main = "Articles per Year 1997-2022", xlab = "Year", ylab = "Number of Articles",
-       col = "blue", pch = 19, lty = 1, lwd = 2)
-  text(x = as.numeric(names(year_counts)), y = year_counts, labels = year_counts, pos = 2, cex = 0.8, col = "black")
-
 
 ```
 
-```{r}
+
+```{r stacked-bar-plot-with-regression-line, echo=FALSE, warning=FALSE}
+
+# Count articles per year for each source
+year_counts <- doc_data %>%
+  group_by(Year, Source = gsub("^(NYT_|SDT_|USA_).*", "\\1", Document)) %>%
+  summarise(ArticleCount = n(), .groups = 'drop')
+
+# Convert 'Source' to a more readable format
+year_counts$Source <- gsub("NYT_", "New York Times", year_counts$Source)
+year_counts$Source <- gsub("SDT_", "San Diego Tribune", year_counts$Source)
+year_counts$Source <- gsub("USA_", "USA Today", year_counts$Source)
+
+# Calculate the total articles per year across all sources for the regression analysis
+total_articles_per_year <- year_counts %>%
+  group_by(Year) %>%
+  summarise(TotalArticles = sum(ArticleCount), .groups = 'drop')
+
+# Plot a stacked bar plot using ggplot2
+ggplot() +
+  geom_bar(data = year_counts, aes(x = as.numeric(Year), y = ArticleCount, fill = Source), stat = "identity", position = "stack") +
+  geom_text(data = total_articles_per_year, aes(x = as.numeric(Year), y = TotalArticles, label = TotalArticles), vjust = -0.5, color = "black", size = 3) +
+  geom_smooth(data = total_articles_per_year, aes(x = as.numeric(Year), y = TotalArticles), method = "lm", color = "red", se = FALSE, size = 1) +
+  scale_fill_brewer(palette = "Pastel1") + # using a gentle color palette
+  labs(title = "Article Count per Year from 1997-2022",
+       x = "Year",
+       y = "Number of Articles",
+       fill = "Source") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) # Improve x-axis label readability
+
+```
+
+
+
+```{r echo=FALSE, warning=FALSE}
+
 # Analyze occurrences of 'not' by year
 not_counts_by_year <- doc_data %>%
   mutate(Year = as.numeric(Year), NotCount = str_count(Text, "\\bnot\\b")) %>%
@@ -195,7 +222,7 @@ ggplot(not_counts_by_year, aes(x = Year, y = TotalNotCount)) +
   ) +
   theme(axis.text.x = element_text(size = 8)) # Adjust x-axis label size
 ```
-```{r}
+```{r echo=FALSE, warning=FALSE}
 # Step 5: Perform Sentiment Analysis
 # Calculate sentiment scores for each document
 doc_data$Sentiment <- sapply(doc_data$Text, function(text) {
@@ -204,7 +231,8 @@ doc_data$Sentiment <- sapply(doc_data$Text, function(text) {
 })
 ```
 
-```{r}
+```{r echo=FALSE, warning=FALSE}
+
 # Step 6: Group by Year and Analyze
 # Group by year and calculate average sentiment per year
 sentiment_by_year <- doc_data %>%
@@ -212,7 +240,8 @@ sentiment_by_year <- doc_data %>%
   summarise(AverageSentiment = mean(Sentiment, na.rm = TRUE))
 ```
 
-```{r}
+```{r echo=FALSE, warning=FALSE}
+
 # Step 7: Visualize Sentiment Over Time
 ggplot(sentiment_by_year, aes(x = as.numeric(Year), y = AverageSentiment)) +
   geom_line() +

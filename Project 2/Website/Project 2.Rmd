@@ -461,7 +461,9 @@ all_data_combined <- do.call(rbind, all_data)
 library(tidytext)
 library(dplyr)
 library(stringr)
+library(tidyr)
 
+                 
 # List of unwanted phrases or buzzwords to remove (add more as needed)
 unwanted_phrases <- c("New York Times", "San Diego", "usa today", "tribune", "magazine", "press")
 
@@ -491,22 +493,20 @@ get_top_bigrams_overall <- function(df) {
     top_n(50, n) %>%  # Get the top 50 bigrams by count
     arrange(desc(n))   # Arrange in descending order
   
-  # View the top 50 bigrams
-  View(top_bigrams_overall)
-  
+
   return(top_bigrams_overall)  # Return the top bigrams data frame
 }
 
 # Get top bigrams used in all articles (after removing stop words, numbers, blank spaces, and unwanted phrases)
 top_bigrams_all_articles <- get_top_bigrams_overall(all_data_combined)
 
-# View the result
-View(top_bigrams_all_articles)
+
 
 ```
 
 
 ```{r echo=FALSE, warning=FALSE}
+library(tidyr)
 library(tidytext)
 library(dplyr)
 library(stringr)
@@ -572,8 +572,7 @@ calculate_tfidf <- function(df) {
 # Example: Apply the TF-IDF calculation to all data
 tfidf_df <- calculate_tfidf(all_data_combined)
 
-# View the result
-View(tfidf_df)
+
 
 
 

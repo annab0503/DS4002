@@ -33,7 +33,7 @@ packages <- c(
 install_if_missing(packages)
 ```
 
-```{r include=FALSE}
+```{r message=FALSE, include=FALSE}
 # Enable the showtext package
 showtext_auto()
 
@@ -218,7 +218,10 @@ head(doc_data[, c("Document", "Date", "Year")])
 
 ```
 
-```{r echo=FALSE, warning=FALSE}
+## How Has the Volume of Media Coverage on H-1B Visas Changed Over Time? What trends exist when analyzing specific keywords?
+
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
 library(tidyr)
 
 #president mentions
@@ -256,7 +259,7 @@ ggplot(president_by_year, aes(x = as.numeric(Year), y = TotalMentions, color = P
   theme_minimal() +
   theme(legend.position = "bottom")
 ```
-```{r echo=FALSE, warning=FALSE}
+```{r echo=FALSE, warning=FALSE, message=FALSE}
 # usage of H-1B
 doc_data$H1B_Count <- sapply(doc_data$Text, function(text) {
   str_count(text, "H-1B")
@@ -280,7 +283,7 @@ ggplot(h1b_by_year, aes(x = as.numeric(Year), y = TotalH1B)) +
 
 ```
 
-```{r stacked-bar-plot-with-regression-line, echo=FALSE, warning=FALSE}
+```{r stacked-bar-plot-with-regression-line, echo=FALSE, warning=FALSE, message=FALSE}
 
 # Count articles per year for each source
 year_counts <- doc_data %>%
@@ -312,25 +315,9 @@ ggplot() +
 
 ```
 
-```{r echo=FALSE, warning=FALSE}
+## How Has the Sentiment Towards H-1B Visas in Media Coverage Evolved Presidential Administrations ?
 
-# Analyze occurrences of 'not' by year
-not_counts_by_year <- doc_data %>%
-  mutate(Year = as.numeric(Year), NotCount = str_count(Text, "\\bnot\\b")) %>%
-  group_by(Year) %>%
-  summarise(TotalNotCount = sum(NotCount, na.rm = TRUE))
-
-# Plot occurrences of 'not' by year using ggplot2
-ggplot(not_counts_by_year, aes(x = Year, y = TotalNotCount)) +
-  geom_col(fill = "steelblue") +
-  labs(
-    title = "'not' Occurrences per Year",
-    x = "Year",
-    y = "Occurrences"
-  ) +
-  theme(axis.text.x = element_text(size = 8)) # Adjust x-axis label size
-```
-```{r echo=FALSE, warning=FALSE}
+```{r echo=FALSE, warning=FALSE, message=FALSE}
 # Step 5: Perform Sentiment Analysis
 # Calculate sentiment scores for each document
 doc_data$Sentiment <- sapply(doc_data$Text, function(text) {
@@ -339,7 +326,7 @@ doc_data$Sentiment <- sapply(doc_data$Text, function(text) {
 })
 ```
 
-```{r echo=FALSE, warning=FALSE}
+```{r echo=FALSE, warning=FALSE, message=FALSE}
 
 # Step 6: Group by Year and Analyze
 # Group by year and calculate average sentiment per year
@@ -348,7 +335,7 @@ sentiment_by_year <- doc_data %>%
   summarise(AverageSentiment = mean(Sentiment, na.rm = TRUE))
 ```
 
-```{r echo=FALSE, warning=FALSE}
+```{r echo=FALSE, warning=FALSE, message=FALSE}
 
 # Step 7: Visualize Sentiment Over Time
 ggplot(sentiment_by_year, aes(x = as.numeric(Year), y = AverageSentiment)) +
@@ -361,7 +348,7 @@ ggplot(sentiment_by_year, aes(x = as.numeric(Year), y = AverageSentiment)) +
   ) +
   theme_minimal()
 ```
-```{r}
+```{r message=FALSE, warning=FALSE, include=FALSE}
 # Step 8: Validate Results
 # View extracted dates, sentiment scores, and text snippets
 head(doc_data[, c("Document", "Date", "Sentiment")])
@@ -370,7 +357,9 @@ head(doc_data[, c("Document", "Date", "Sentiment")])
 print(sentiment_by_year)
 ```
 
-```{r echo=FALSE, warning=FALSE}
+## What Key Bigrams Dominate the Media Coverage of H-1B Visas?
+
+```{r message=FALSE, warning=FALSE, include=FALSE}
 # Load necessary libraries
 library(stringr)
 library(dplyr)
@@ -379,7 +368,7 @@ library(syuzhet)
 ```
 
 
-```{r echo=FALSE, warning=FALSE}
+```{r message=FALSE, warning=FALSE, include=FALSE}
 
 
 # List of news outlets to remove (adjusted for possible variations and common suffixes like "Press")
@@ -457,7 +446,7 @@ all_data_combined <- do.call(rbind, all_data)
 
 
 
-```{r echo=FALSE, warning=FALSE}
+```{r message=FALSE, warning=FALSE, include=FALSE}
 library(tidytext)
 library(dplyr)
 library(stringr)
@@ -505,7 +494,7 @@ top_bigrams_all_articles <- get_top_bigrams_overall(all_data_combined)
 ```
 
 
-```{r echo=FALSE, warning=FALSE}
+```{r message=FALSE, warning=FALSE, include=FALSE}
 library(tidyr)
 library(tidytext)
 library(dplyr)
@@ -579,7 +568,7 @@ tfidf_df <- calculate_tfidf(all_data_combined)
 ```
 
 
-```{r echo=FALSE, warning=FALSE}
+```{r echo=FALSE, warning=FALSE, message=FALSE}
 library(tidytext)
 library(dplyr)
 library(stringr)
@@ -659,7 +648,7 @@ ggplot(avg_tfidf_per_year, aes(x = Year, y = Avg_TFIDF)) +
 
 ```
 
-```{r echo=FALSE, warning=FALSE}
+```{r message=FALSE, warning=FALSE, include=FALSE}
 
 library(dplyr)
 library(stringr)
@@ -675,7 +664,6 @@ top_bigrams_per_year <- tfidf_df %>%
 
 top_bigrams_per_year
 ```
-```{r echo=FALSE, warning=FALSE}
 library(shiny)
 library(dplyr)
 library(DT)

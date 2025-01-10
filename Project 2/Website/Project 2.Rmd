@@ -227,7 +227,132 @@ doc_data$Year <- format(doc_data$Date, "%Y")
 head(doc_data[, c("Document", "Date", "Year")])
 ```
 
-## How has the volume of media coverage on H-1B visas changed over time?
+## **How has the volume of media coverage on H-1B visas changed over time?**
+
+```{r stacked-bar-plot-with-regression-line, echo=FALSE, warning=FALSE, message=FALSE}
+# Count articles per year for each source
+year_counts <- doc_data %>% 
+  group_by(Year, Source = gsub("^(NYT_|SDT_|USA_).*", "\\1", Document)) %>% 
+  summarise(ArticleCount = n(), .groups = 'drop')
+
+# Convert 'Source' to a more readable format
+year_counts$Source <- gsub("NYT_", "New York Times", year_counts$Source)
+year_counts$Source <- gsub("SDT_", "San Diego Tribune", year_counts$Source)
+year_counts$Source <- gsub("USA_", "USA Today", year_counts$Source)
+
+# Calculate the total articles per year for the regression analysis
+total_articles_per_year <- year_counts %>%
+  group_by(Year) %>%
+  summarise(TotalArticles = sum(ArticleCount), .groups = 'drop')
+
+# Plot a stacked bar plot with custom aesthetics
+ggplot() +
+  geom_bar(data = year_counts, aes(x = as.numeric(Year), y = ArticleCount, fill = Source), 
+           stat = "identity", position = "stack") +
+  geom_text(data = total_articles_per_year, aes(x = as.numeric(Year), y = TotalArticles, 
+            label = TotalArticles), vjust = -0.5, color = "black", size = 3) +
+  geom_smooth(data = total_articles_per_year, aes(x = as.numeric(Year), y = TotalArticles), 
+              method = "lm", color = "#A93226", se = FALSE, size = 1) +
+  scale_fill_manual(values = c(
+    "New York Times" = "#5794D4",   # Red for New York Times
+    "San Diego Tribune" = "#F1C40F",  # Yellow for San Diego Tribune
+    "USA Today" = "#F84947"   # Blue for USA Today
+  )) +
+  labs(
+    title = "Article Count per Year from 1997-2022",
+    x = "Year",
+    y = "Number of Articles",
+    fill = "Source"
+  ) +
+  theme_minimal() +
+  theme(
+    # Title customization
+    plot.title = element_text(hjust = 0.5, family = "bodoni_moda", size = 16, margin = margin(b = 15), face = "bold"),
+    
+    # Legend customization
+    legend.title = element_text(family = "bodoni_moda", size = 13, face = "bold"),
+    legend.position = "right",  # Place legend on the right
+    legend.title.align = 0.5,   # Center the legend title
+    
+    # Axis title and text customization
+    axis.title = element_text(family = "montserrat", size = 12),
+    axis.text = element_text(family = "montserrat", size = 10),
+    
+    # General text customization
+    text = element_text(size = 12, family = "montserrat"),
+    
+    # Improve x-axis label readability
+    axis.text.x = element_text(angle = 45, hjust = 1)
+  )
+
+```
+
+The graph illustrating the "Article Count per Year from 1997-2022"
+reveals a notable spike in media coverage around 2015, with a
+significant increase in articles from The New York Times. This surge
+likely corresponds to high-profile discussions on immigration reforms
+during the Obama administration. Although the European migration crisis
+of 2015 primarily involved refugees and not H-1B visa issues, its
+widespread media coverage could have influenced broader immigration
+policy debates in the U.S., indirectly affecting H-1B discourse.
+Additionally, this peak may align with major technological and economic
+developments, particularly in regions like Silicon Valley, which saw
+heightened demand for H-1B visa holders due to rapid growth in tech
+industries. There is also a minor spike at 2020 likely because the
+Covid-19 pandemic affected H1B issuance. The overall upward trend in
+later years suggests a growing media focus on H-1B visas, reflecting an
+increasing public and political interest in the nuances of skilled labor
+migration, with The New York Times showing a consistently higher volume
+of articles, indicating its editorial focus on these issues.
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+# Count mentions of "H-1B" in each text
+doc_data$H1B_Count <- sapply(doc_data$Text, function(text) { 
+  str_count(text, "H-1B") 
+})
+
+# Summarize the total mentions by year
+h1b_by_year <- doc_data %>%
+  group_by(Year) %>%
+  summarise(TotalH1B = sum(H1B_Count, na.rm = TRUE))
+
+# Create the plot with customized aesthetics
+ggplot(h1b_by_year, aes(x = as.numeric(Year), y = TotalH1B)) +
+  geom_line(color = "#5794D4") +   
+  geom_point(color = "#5794D4") +  
+  labs(
+    title = "H-1B Usage Over Time",
+    x = "Fiscal Year",
+    y = "Total H-1B Mentions"
+  ) +
+  theme_minimal() +
+  theme(
+    # Title customization
+    plot.title = element_text(hjust = 0.5, family = "bodoni_moda", size = 16, margin = margin(b = 15), face = "bold"),
+    
+    # Axis title and text customization
+    axis.title = element_text(family = "montserrat", size = 12),
+    axis.text = element_text(family = "montserrat", size = 10),
+    
+    # General text customization
+    text = element_text(size = 12, family = "montserrat")
+  )
+```
+
+Both the "H-1B Usage Over Time" and the first graph exhibit a
+significant peak around 2015, which indicates a period of heightened
+media coverage and discussion around H-1B visas. The "H-1B Usage Over
+Time" graph shows other notable spikes, such as around 2001 and again
+sharply in 2020.The first peak might relate to the dot-com bubble burst
+and subsequent regulatory changes affecting tech employment. The sharp
+spike in 2020 might be tied to discussions or changes in policies during
+the Trump administration, which aggressively pushed for H-1B visa
+restrictions as part of broader immigration reforms.Both graphs suggest
+an increasing trend in the attention given to H-1B visas towards the
+late 2010s, followed by a minor decline. This suggests a growing
+importance placed on the issue in national and economic discourse,
+especially relevant to tech and specialized industries relying on
+skilled foreign labor.
 
 ```{r echo=FALSE, warning=FALSE, message=FALSE}
 library(tidyr)
@@ -293,99 +418,27 @@ ggplot(president_by_year, aes(x = as.numeric(Year), y = TotalMentions, color = P
   )
 ```
 
-```{r echo=FALSE, warning=FALSE, message=FALSE}
-# Count mentions of "H-1B" in each text
-doc_data$H1B_Count <- sapply(doc_data$Text, function(text) { 
-  str_count(text, "H-1B") 
-})
+Mentions of Bush and Obama show relatively moderate and steady lines,
+with no significant spikes throughout their terms. This suggests a
+consistent level of media focus during their administrations, possibly
+reflecting a period of stable policies or fewer controversial changes
+affecting the issues being tracked.
 
-# Summarize the total mentions by year
-h1b_by_year <- doc_data %>%
-  group_by(Year) %>%
-  summarise(TotalH1B = sum(H1B_Count, na.rm = TRUE))
+The sharp spikes in mentions of Trump, particularly around 2017 and
+again in 2020, are striking. These could correlate with major policy
+announcements or controversial decisions during his administration,
+which was marked by significant shifts in U.S. immigration policy,
+including changes to H-1B visa regulations.
 
-# Create the plot with customized aesthetics
-ggplot(h1b_by_year, aes(x = as.numeric(Year), y = TotalH1B)) +
-  geom_line(color = "#5794D4") +   
-  geom_point(color = "#5794D4") +  
-  labs(
-    title = "H-1B Usage Over Time",
-    x = "Fiscal Year",
-    y = "Total H-1B Mentions"
-  ) +
-  theme_minimal() +
-  theme(
-    # Title customization
-    plot.title = element_text(hjust = 0.5, family = "bodoni_moda", size = 16, margin = margin(b = 15), face = "bold"),
-    
-    # Axis title and text customization
-    axis.title = element_text(family = "montserrat", size = 12),
-    axis.text = element_text(family = "montserrat", size = 10),
-    
-    # General text customization
-    text = element_text(size = 12, family = "montserrat")
-  )
-```
-Do we need the H-1B usage over time graph? Given that we selected our documents by filtering for "H-1B" (which we explain in the methodology section), I think it may be somewhat redundant to the overall articles per year graph below. There is no distinct difference in the trend between the two, so I think we should remove one of them (and since the one contains more information than the one above, I think it makes sense to keep the second one.) - Anna
+There is a notable increase in mentions of Biden starting from 2020,
+which likely corresponds to the election period and his subsequent
+policy changes. This uptick might be associated with expectations and
+reactions to his administration's approach to reversing some of Trump's
+policies, indicating a renewed focus on how new policies would impact
+immigration and other pertinent issues.
 
-```{r stacked-bar-plot-with-regression-line, echo=FALSE, warning=FALSE, message=FALSE}
-# Count articles per year for each source
-year_counts <- doc_data %>% 
-  group_by(Year, Source = gsub("^(NYT_|SDT_|USA_).*", "\\1", Document)) %>% 
-  summarise(ArticleCount = n(), .groups = 'drop')
+## **How has the sentiment towards H-1B visas in media coverage evolved across presidential administrations?**
 
-# Convert 'Source' to a more readable format
-year_counts$Source <- gsub("NYT_", "New York Times", year_counts$Source)
-year_counts$Source <- gsub("SDT_", "San Diego Tribune", year_counts$Source)
-year_counts$Source <- gsub("USA_", "USA Today", year_counts$Source)
-
-# Calculate the total articles per year for the regression analysis
-total_articles_per_year <- year_counts %>%
-  group_by(Year) %>%
-  summarise(TotalArticles = sum(ArticleCount), .groups = 'drop')
-
-# Plot a stacked bar plot with custom aesthetics
-ggplot() +
-  geom_bar(data = year_counts, aes(x = as.numeric(Year), y = ArticleCount, fill = Source), 
-           stat = "identity", position = "stack") +
-  geom_text(data = total_articles_per_year, aes(x = as.numeric(Year), y = TotalArticles, 
-            label = TotalArticles), vjust = -0.5, color = "black", size = 3) +
-  geom_smooth(data = total_articles_per_year, aes(x = as.numeric(Year), y = TotalArticles), 
-              method = "lm", color = "#A93226", se = FALSE, size = 1) +
-  scale_fill_manual(values = c(
-    "New York Times" = "#5794D4",   # Red for New York Times
-    "San Diego Tribune" = "#F1C40F",  # Yellow for San Diego Tribune
-    "USA Today" = "#F84947"   # Blue for USA Today
-  )) +
-  labs(
-    title = "Article Count per Year from 1997-2022",
-    x = "Year",
-    y = "Number of Articles",
-    fill = "Source"
-  ) +
-  theme_minimal() +
-  theme(
-    # Title customization
-    plot.title = element_text(hjust = 0.5, family = "bodoni_moda", size = 16, margin = margin(b = 15), face = "bold"),
-    
-    # Legend customization
-    legend.title = element_text(family = "bodoni_moda", size = 13, face = "bold"),
-    legend.position = "right",  # Place legend on the right
-    legend.title.align = 0.5,   # Center the legend title
-    
-    # Axis title and text customization
-    axis.title = element_text(family = "montserrat", size = 12),
-    axis.text = element_text(family = "montserrat", size = 10),
-    
-    # General text customization
-    text = element_text(size = 12, family = "montserrat"),
-    
-    # Improve x-axis label readability
-    axis.text.x = element_text(angle = 45, hjust = 1)
-  )
-```
-
-## How has the sentiment towards H-1B visas in media coverage evolved across presidential administrations?
 To understand how sentiment towards H-1B visas has evolved across presidential administrations, we conducted a comprehensive sentiment analysis of media coverage using two well-established lexicon libraries: the Bing Liu sentiment lexicon and the National Research Council (NRC) Emotion Lexicon. The Bing lexicon categorizes words into positive or negative sentiments, offering a straightforward way to measure the general tone of the coverage. In contrast, the NRC Emotion Lexicon provides a more nuanced perspective by associating words with eight primary emotions (such as joy, anger, and fear) in addition to positive and negative sentiments. By leveraging these tools, we analyzed the sentiment trends over time, capturing both overarching positivity or negativity and the emotional undertones of the media narrative during different presidential administrations. 
 
 ```{r echo=FALSE, warning=FALSE, message=FALSE}

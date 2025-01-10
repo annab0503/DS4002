@@ -13,24 +13,24 @@ output:
 ---
 
 ```{r echo=FALSE, warning=FALSE, message=FALSE, results="hide"}
-# Function to check and install missing packages
-install_if_missing <- function(packages) {
-  missing_packages <- packages[!packages %in% installed.packages()[, "Package"]]
-  if (length(missing_packages) > 0) {
-    install.packages(missing_packages, dependencies = TRUE)
-  }
-  invisible(lapply(packages, library, character.only = TRUE))
-}
+# Function to check and install missing packages 
+install_if_missing <- function(packages) { 
+  missing_packages <- packages[!packages %in% installed.packages()[, "Package"]] 
+  if (length(missing_packages) > 0) { 
+    install.packages(missing_packages, dependencies = TRUE) 
+  } 
+  invisible(lapply(packages, library, character.only = TRUE)) 
+} 
 
-# List of required packages
-packages <- c(
-  "countrycode", "dplyr", "DT", "ggplot2", "gridExtra", "leaflet",
-  "maps", "patchwork", "readr", "rworldmap", "showtext",
-  "sp", "tidyverse", "stringr", "syuzhet"
-)
+# List of required packages 
+packages <- c( 
+  "countrycode", "dplyr", "DT", "ggplot2", "gridExtra", "leaflet", 
+  "maps", "pbapply", "patchwork", "readr", "rworldmap", "showtext", 
+  "sp", "stringr", "syuzhet", "tidyverse", "tidytext", "tidyr" 
+) 
 
-# Ensure all packages are installed and loaded
-install_if_missing(packages)
+# Ensure all packages are installed and loaded 
+install_if_missing(packages) 
 ```
 
 ```{r message=FALSE, include=FALSE}
@@ -41,7 +41,23 @@ showtext_auto()
 font_add_google("Bodoni Moda", "bodoni_moda")  # Alias: bodoni_moda
 font_add_google("Montserrat", "montserrat")     # Alias: montserrat
 ```
-```{r fig.width=10, fig.height=6, echo=FALSE, warning=FALSE}
+
+# **Introduction**  
+
+**"Thousands of Indian Women Find Their American Dreams in Jeopardy."** Headlines like this one, from a [2018 *New York Times* article](https://www.nytimes.com/2018/04/06/us/indians-h1b-visas-trump-immigration-wives.html), reflect not only the human stakes of skilled labor visa programs but also the effect of media narratives on public perceptions of immigration. Over time, the portrayal of skilled labor migration in the media has evolved, mirroring changes in political priorities, economic conditions, and societal attitudes. While there are many types of skilled labor and other employment-based visas, the H-1B program specifically offers a valuable lens to explore how media narratives respond to—and influence—policy decisions and public discourse, as it is the most heavily discussed.
+
+[Our previous research](https://rpubs.com/annab0503/1261253) revealed that U.S. visa issuance for skilled workers has steadily increased over time, even amid political and economic fluctuations. This finding raised the following new questions about the role of media in framing public understanding of this trend and its implications:
+
+1. **How has the volume of media coverage on H-1B visas changed over time?** By examining the quantity of articles published over the years, we aim to identify patterns in media attention and how these fluctuations correspond to significant political events, legislative changes, and economic conditions.
+
+2. **How has the sentiment towards H-1B visas in media coverage evolved across presidential administrations?** Understanding shifts in sentiment provides a window into how different administrations’ policies and rhetoric influenced public discourse on skilled labor migration.  
+3. **How has the specific language used in media coverage to discuss H-1B visas shifted over time?** By investigating the most frequently occurring word pairs (key bigrams) in these articles, this question uncovers dominant themes and recurring narratives, offering deeper insights into the framing of H-1B visa discussions.  
+
+To explore these questions, this study uses three influential outlets — *The New York Times*, *The San Diego Union-Tribune*, and *USA Today* — to examine how media narratives surrounding H-1B visas have evolved from 1997 to 2022. By analyzing trends in coverage, sentiment, and language, we aim go beyond quantitative analysis to explore the nuances of how journalism has both reflected and influenced the broader discourse on skilled labor migration. Through this lens, we seek to understand how media coverage has served as a barometer for societal attitudes and political priorities during pivotal moments in U.S. immigration history.
+
+# **Background**
+
+```{r fig.width=10, fig.height=6, echo=FALSE, warning=FALSE, message=FALSE}
 
 url <- "https://raw.githubusercontent.com/annab0503/DS4002/main/Project%201/Analysis%20Data/analysis_data.csv"
 
@@ -64,56 +80,57 @@ aggregated_data <- filtered_data %>%
 
 # Custom color scheme for the different visa categories
 visa_colors <- c(
-  "Skilled Labor Visas" = "lightblue"  
+  "Skilled Labor Visas" = "#5794D4" 
 )
 
 # Create the stacked area chart, using the aggregated data and applying visual customization
 ggplot(aggregated_data, aes(x = `Fiscal Year`, y = Total_Visas, fill = `Visa Category`)) + 
-  geom_area() +  # Generate the stacked area chart to visualize the total visas over time
+  geom_area() +  # Generate the stacked area chart to visualize the total visas over time 
   geom_vline(xintercept = transition_years, linetype = "dashed", color = "gray") +  # Add vertical dashed lines at the transition years
-  geom_vline(xintercept = key_events, linetype = "dashed", color = "darkred", size = 0.5) +  # Differently colored lines for key events
-  scale_y_continuous(limits = c(0, 700), breaks = seq(0, 700, 100), labels = scales::comma) +  # Adjust y-axis to show 0 to 700 thousands with custom breaks
+  scale_y_continuous(limits = c(0, 400), breaks = seq(0, 400, 100), labels = scales::comma) +  # Adjust y-axis to show 0 to 400 thousands with custom breaks
   scale_fill_manual(values = visa_colors) +  # Apply the custom color scheme for visa categories
   labs(
-    title = "Shifting Borders: The Impact of U.S. Political Events on Skilled Labor Visa Issuance",  # Main title of the plot
+    title = "Skilled Labor Visa Issuance is Rising in the United States",  # Main title of the plot
+    subtitle = "Total Quantity U.S. Visas Issued to Skilled Laborers and their Dependents, 1997-2022",  # Subtitle of the plot
     x = "Fiscal Year",  # X-axis label
-    y = "Total Quantity of Visas (in thousands)",  # Y-axis label
-    fill = "Visa Category"  # Label for the legend
-  ) +
+    y = "Total Quantity of Visas Issued (in thousands)"  # Y-axis label
+  ) + 
   theme_minimal() +  # Apply a minimal theme for a clean, simple appearance
   theme(
-    plot.title = element_text(hjust = 0.5, family = "bodoni_moda", size = 16, margin = margin(b = 15), face = "bold"),
-    legend.title = element_text(family = "bodoni_moda", size = 13, face = "bold"),
+    plot.title = element_text(
+        hjust = 0.5, family = "bodoni_moda", size = 18,
+        margin = margin(b = 15), face = "bold"
+    ),
+    plot.subtitle = element_text(
+        hjust = 0.5, family = "montserrat", size = 10,
+        margin = margin(b = 10)
+    ),
+    legend.position = "none",  # Remove the legend
     axis.title = element_text(family = "montserrat", size = 14),
     axis.text = element_text(family = "montserrat", size = 12),
     text = element_text(size = 12, family = "montserrat"),
-    legend.position = "right",
     legend.title.align = 0.5
-  ) +
-  # Annotate key events and presidential transitions
-  annotate("text", x = key_events, y = 700, label = c("9/11 Attack", "Great Recession", "Rep. Control of Congress", "COVID Pandemic"),
-           angle = 90, vjust = -0.5, hjust = 2, color = "darkred", size = 3, family = "montserrat") +
-  annotate("text", x = transition_years, y = 700, label = c("Bush", "Obama", "Trump", "Biden"),
+  ) + 
+  # Add labeled points for key events
+  geom_point(data = aggregated_data %>% filter(`Fiscal Year` %in% key_events & `Visa Category` == "Skilled Labor Visas"),
+             aes(x = `Fiscal Year`, y = Total_Visas), color = "#F84947", size = 3) +  # Make points smaller
+  geom_text(data = aggregated_data %>% filter(`Fiscal Year` %in% key_events & `Visa Category` == "Skilled Labor Visas"),
+            aes(x = `Fiscal Year`, y = Total_Visas, label = c("9/11 Attack", "Great Recession", "Rep. Control of Congress", "COVID Pandemic")),
+            vjust = -1, hjust = 1, color = "black", size = 3, family = "montserrat") +  # Shift labels up
+  annotate("text", x = transition_years, y = 400, label = c("Bush", "Obama", "Trump", "Biden"),
            angle = 90, vjust = -0.5, hjust = 1, color = "black", size = 3, family = "montserrat")
 ```
 
-# **Introduction**  
+Created by the [Immigration Act of 1990](https://www.congress.gov/bill/101st-congress/senate-bill/358), the H-1B visa program allows U.S. employers to hire highly skilled foreign professionals for specialty occupations that require advanced knowledge and at least a bachelor’s degree. Visas are awarded to employers on a first-come, first-served basis, with applications accepted each year beginning in April. If the number of applications exceeds an annual cap set by Congress during the first five business days of April, visas are awarded through a lottery system.
 
-**How does the media shape our understanding of skilled labor migration, and what do its narratives reveal about broader societal and political shifts?** The H-1B visa program has long been a cornerstone of U.S. immigration policy, sparking debates about its impact on economic growth, domestic employment, and global competitiveness. As the most heavily discussed skilled labor visa in the media, the H-1B program offers a unique lens through which to analyze the interplay between public discourse, policy decisions, and political events.  
-
-This project examines how media coverage of H-1B visas has evolved from 1997 to 2022, focusing on the quantity and sentiment of articles from *The New York Times*, *The San Diego Union-Tribune*, and *USA Today*. We explore whether fluctuations in coverage and sentiment correlate with the number of H-1B visas issued, and how these patterns align with key political events, legislative changes, and shifts in presidential administrations. By investigating these trends, this study aims to uncover the media’s role in shaping public perceptions of skilled labor migration during pivotal moments in U.S. immigration history.  
-
-# **Background**
-The H-1B visa program allows U.S. employers to hire highly skilled foreign professionals for specialty occupations that require advanced knowledge and at least a bachelor’s degree. As the most prominent skilled labor visa, the H-1B program has played a central role in public and political discussions surrounding immigration. Its visibility in the media makes it a valuable lens through which to examine how public narratives about immigration evolve over time.
-
-The program’s trajectory has been shaped by a combination of economic forces and political considerations. For instance, lobbying by the high-tech industry in the late 1990s led to a temporary increase in the visa cap, with the American Competitiveness in the 21st Century Act raising the annual limit to 195,000 between 2001 and 2003. However, following the 2008 recession, when protecting domestic jobs became a key legislative priority, the cap reverted to 65,000. These fluctuations underscore the program’s sensitivity to labor market conditions and broader economic trends.
+As displayed by the area graph above the program’s trajectory has been shaped by a combination of economic forces and political considerations. For instance, lobbying by the high-tech industry in the late 1990s led to a temporary increase in the visa cap, with the American Competitiveness in the 21st Century Act raising the annual limit to 195,000 between 2001 and 2003. However, following the 2008 recession, when protecting domestic jobs became a key legislative priority, the cap reverted to 65,000. These fluctuations underscore the program’s sensitivity to labor market conditions and broader economic trends.
 
 Supporters of the H-1B visa highlight its role in fostering innovation, economic growth, and global competitiveness. H-1B workers are often linked to technological advancements, patents, and entrepreneurial activities that drive critical sectors such as technology, healthcare, and academia. Proponents argue that these workers help address labor shortages in high-demand fields, allowing the U.S. to remain a global leader in innovation.
 
 Conversely, critics raise concerns about potential wage suppression and increased competition for domestic workers. They argue that poorly designed policies could disproportionately benefit corporations, potentially undermining equitable labor market outcomes. These contrasting viewpoints highlight the ongoing debate over balancing the need for international talent with the protection of domestic labor interests.
 
-By focusing on H-1B visas, this research examines how media coverage reflects and shapes these economic debates. Understanding the narratives surrounding this program offers insights into how immigration policies balance the dual imperatives of fostering innovation and protecting domestic labor interests in an increasingly globalized economy.
-
+[One previous study](https://www.pnas.org/doi/10.1073/pnas.2120510119) published by The Proceedings of the National Academy of Sciences (PNAS) used Artificial Intelligence to analyze 200,000 US congressional speeches and 5,000 presidential communications related to immigration over the past 140 years. It identified both a trend toward more positive attitudes since World War II and an increase in political polarization, with Democrats maintaining support and Republicans adopting more hostile rhetoric. While this study offers valuable context on broader immigration discourse, we aim to to provide a more narrowed analysis on the legal immigration of skilled labor through the H-1B visa program, exploring how this issue is framed and debated in political and media narratives. This distinct approach examines the broader economic narratives tied to immigration policy and its impact on innovation.
+ 
 # **Methodology**
 
 ## Data Sources  
@@ -130,14 +147,7 @@ To construct our dataset, we used [Nexis Uni](https://advance-lexis-com.proxy1.l
 | Timeline        | January 1, 1997 – December 31, 2022                              |
 | Source Names    | *The New York Times*, *The San Diego Union-Tribune*, *USA Today* |
 
-The filtered articles were categorized by news source and saved into text files based on their publication date. These three text files were then read into R, where they were separated into individual documents and categorized by the year they were published for further analysis. This organization allows us to track trends and sentiment shifts over time, facilitating the examination of the relationship between media coverage, policy changes, and political events.
-
-## Limitations
-A key limitation of this methodology is that Nexis Uni lacks an API for automated data extraction, requiring all articles to be manually searched, selected, and downloaded. With over 650 articles across the three datasets, human error could have led to some relevant documents being overlooked or irrelevant ones included.
-
-To address this, we carefully defined our search parameters and conducted multiple rounds of manual checks to ensure the dataset was as accurate and relevant as possible. While this process helped minimize errors, the possibility of some inconsistencies remains. Nevertheless, we believe the dataset effectively captures the essential trends in H-1B visa coverage.
-
-# **Exploratory Analysis**
+The filtered articles were categorized by news source and saved into text files. These three text files were then read into R, where we were separated into individual documents and categorized by the year they were published for further analysis. 
 
 ```{r display-image, echo=FALSE}
 
@@ -146,8 +156,15 @@ To address this, we carefully defined our search parameters and conducted multip
 
 ```
 
-```{r include=FALSE}
+This organization allows us to track trends and sentiment shifts over time, facilitating the examination of the relationship between media coverage, policy changes, and political events.
 
+## Limitations
+A key limitation of this methodology is that Nexis Uni lacks an API for automated data extraction, requiring all articles to be manually searched, selected, and downloaded. With over 650 articles across the three data sets, human error could have led to some relevant documents being overlooked or irrelevant ones included. To address this, we carefully defined our search parameters and conducted multiple rounds of manual checks to ensure the dataset was as accurate and relevant as possible. While this process helped minimize errors, the possibility of some inconsistencies remains. Nevertheless, we believe the dataset effectively captures the essential trends in H-1B visa coverage.
+
+Additionally, Lexis Uni imposes a daily download limit and does not include all major U.S. news sources, such as *The Washington Post* and *The Wall Street Journal*. Given these restrictions and the project's time constraints, we were unable to select every available source. To minimize bias, we chose a publication from each coast and a national outlet to ensure a diverse representation of coverage.
+
+# **Exploratory Analysis**
+```{r include=FALSE}
 # Function to load, process, and write documents to separate files
 load_and_process_data <- function(url, source_label) {
   content <- readLines(url, warn = FALSE)
@@ -170,12 +187,9 @@ load_and_process_data("https://github.com/annab0503/DS4002/blob/main/Project%202
 
 # Load data from USA Today
 load_and_process_data("https://github.com/annab0503/DS4002/blob/main/Project%202/.txt%20files/USA%20Today.txt?raw=true", "USA")
-
-
 ```
 
 ```{r include=FALSE}
-
 # Step 2: Load Split Documents
 doc_files <- list.files(pattern = "^(NYT_|SDT_|USA_)Document_\\d+\\.txt")
 
@@ -191,13 +205,9 @@ doc_data <- data.frame(
   Text = unlist(documents),
   stringsAsFactors = FALSE
 )
-
-
 ```
 
 ```{r include=FALSE}
-
-
 # Step 3: Extract Dates from the Text
 extract_date <- function(text) {
   date_pattern <- "\\b(January|February|March|April|May|June|July|August|September|October|November|December) \\d{1,2}, \\d{4}\\b"
@@ -215,79 +225,113 @@ doc_data$Year <- format(doc_data$Date, "%Y")
 
 # Display a preview of the dataset
 head(doc_data[, c("Document", "Date", "Year")])
-
 ```
 
-## How Has the Volume of Media Coverage on H-1B Visas Changed Over Time? What trends exist when analyzing specific keywords?
-
+## How has the volume of media coverage on H-1B visas changed over time?
 
 ```{r echo=FALSE, warning=FALSE, message=FALSE}
 library(tidyr)
 
-#president mentions
-presidents <- c("Biden", "Trump", "Obama", "Bush")
+# Presidents list
+presidents <- c("Bush", "Obama", "Trump", "Biden")
 
-
+# Count mentions of each president
 count_presidents <- function(text, presidents) {
   sapply(presidents, function(president) {
     str_count(text, president)
   })
 }
 
+# Count mentions of each president in the documents
 president_counts <- t(sapply(doc_data$Text, count_presidents, presidents = presidents))
 
+# Prepare data
 president_data <- as.data.frame(president_counts)
 president_data$Year <- doc_data$Year
-
 president_data_long <- pivot_longer(president_data, 
                                     cols = starts_with("Biden"):starts_with("Bush"),
-                                    names_to = "President", 
+                                    names_to = "President",
                                     values_to = "Mentions")
 
+# Summarize the data by year and president
 president_by_year <- president_data_long %>%
   group_by(Year, President) %>%
   summarise(TotalMentions = sum(Mentions, na.rm = TRUE))
+
+# Create the plot with customized aesthetics
 ggplot(president_by_year, aes(x = as.numeric(Year), y = TotalMentions, color = President)) +
   geom_line() +
   geom_point() +
   labs(
     title = "Presidents' Mentions Over Time",
-    x = "Year",
+    x = "Fiscal Year",
     y = "Total Mentions",
     color = "President"
   ) +
+  scale_color_manual(values = c(
+    "Bush" = "#A93226",  # Dark Red for Bush
+    "Obama" = "#F1C40F",  # Golden yellow for Obama
+    "Trump" = "#F84947",  # Red for Trump
+    "Biden" = "#5794D4"    # Blue for Biden
+  )) +
   theme_minimal() +
-  theme(legend.position = "bottom")
+  theme(
+    # Title customization
+    plot.title = element_text(hjust = 0.5, family = "bodoni_moda", size = 16, margin = margin(b = 15), face = "bold"),
+    
+    # Legend customization
+    legend.title = element_text(family = "bodoni_moda", size = 13, face = "bold"),
+    legend.position = "right",  # Place legend on the right
+    legend.title.align = 0.5,   # Center the legend title
+    
+    # Axis title and text customization
+    axis.title = element_text(family = "montserrat", size = 12),
+    axis.text = element_text(family = "montserrat", size = 10),
+    
+    # General text customization
+    text = element_text(size = 12, family = "montserrat")
+  )
 ```
+
 ```{r echo=FALSE, warning=FALSE, message=FALSE}
-# usage of H-1B
-doc_data$H1B_Count <- sapply(doc_data$Text, function(text) {
-  str_count(text, "H-1B")
+# Count mentions of "H-1B" in each text
+doc_data$H1B_Count <- sapply(doc_data$Text, function(text) { 
+  str_count(text, "H-1B") 
 })
 
-
+# Summarize the total mentions by year
 h1b_by_year <- doc_data %>%
   group_by(Year) %>%
   summarise(TotalH1B = sum(H1B_Count, na.rm = TRUE))
 
-
+# Create the plot with customized aesthetics
 ggplot(h1b_by_year, aes(x = as.numeric(Year), y = TotalH1B)) +
-  geom_line() +
-  geom_point() +
+  geom_line(color = "#5794D4") +   
+  geom_point(color = "#5794D4") +  
   labs(
     title = "H-1B Usage Over Time",
-    x = "Year",
+    x = "Fiscal Year",
     y = "Total H-1B Mentions"
   ) +
-  theme_minimal()
-
+  theme_minimal() +
+  theme(
+    # Title customization
+    plot.title = element_text(hjust = 0.5, family = "bodoni_moda", size = 16, margin = margin(b = 15), face = "bold"),
+    
+    # Axis title and text customization
+    axis.title = element_text(family = "montserrat", size = 12),
+    axis.text = element_text(family = "montserrat", size = 10),
+    
+    # General text customization
+    text = element_text(size = 12, family = "montserrat")
+  )
 ```
+Do we need the H-1B usage over time graph? Given that we selected our documents by filtering for "H-1B" (which we explain in the methodology section), I think it may be somewhat redundant to the overall articles per year graph below. There is no distinct difference in the trend between the two, so I think we should remove one of them (and since the one contains more information than the one above, I think it makes sense to keep the second one.) - Anna
 
 ```{r stacked-bar-plot-with-regression-line, echo=FALSE, warning=FALSE, message=FALSE}
-
 # Count articles per year for each source
-year_counts <- doc_data %>%
-  group_by(Year, Source = gsub("^(NYT_|SDT_|USA_).*", "\\1", Document)) %>%
+year_counts <- doc_data %>% 
+  group_by(Year, Source = gsub("^(NYT_|SDT_|USA_).*", "\\1", Document)) %>% 
   summarise(ArticleCount = n(), .groups = 'drop')
 
 # Convert 'Source' to a more readable format
@@ -295,27 +339,53 @@ year_counts$Source <- gsub("NYT_", "New York Times", year_counts$Source)
 year_counts$Source <- gsub("SDT_", "San Diego Tribune", year_counts$Source)
 year_counts$Source <- gsub("USA_", "USA Today", year_counts$Source)
 
-# Calculate the total articles per year across all sources for the regression analysis
+# Calculate the total articles per year for the regression analysis
 total_articles_per_year <- year_counts %>%
   group_by(Year) %>%
   summarise(TotalArticles = sum(ArticleCount), .groups = 'drop')
 
-# Plot a stacked bar plot using ggplot2
+# Plot a stacked bar plot with custom aesthetics
 ggplot() +
-  geom_bar(data = year_counts, aes(x = as.numeric(Year), y = ArticleCount, fill = Source), stat = "identity", position = "stack") +
-  geom_text(data = total_articles_per_year, aes(x = as.numeric(Year), y = TotalArticles, label = TotalArticles), vjust = -0.5, color = "black", size = 3) +
-  geom_smooth(data = total_articles_per_year, aes(x = as.numeric(Year), y = TotalArticles), method = "lm", color = "red", se = FALSE, size = 1) +
-  scale_fill_brewer(palette = "Pastel1") + # using a gentle color palette
-  labs(title = "Article Count per Year from 1997-2022",
-       x = "Year",
-       y = "Number of Articles",
-       fill = "Source") +
+  geom_bar(data = year_counts, aes(x = as.numeric(Year), y = ArticleCount, fill = Source), 
+           stat = "identity", position = "stack") +
+  geom_text(data = total_articles_per_year, aes(x = as.numeric(Year), y = TotalArticles, 
+            label = TotalArticles), vjust = -0.5, color = "black", size = 3) +
+  geom_smooth(data = total_articles_per_year, aes(x = as.numeric(Year), y = TotalArticles), 
+              method = "lm", color = "#A93226", se = FALSE, size = 1) +
+  scale_fill_manual(values = c(
+    "New York Times" = "#5794D4",   # Red for New York Times
+    "San Diego Tribune" = "#F1C40F",  # Yellow for San Diego Tribune
+    "USA Today" = "#F84947"   # Blue for USA Today
+  )) +
+  labs(
+    title = "Article Count per Year from 1997-2022",
+    x = "Year",
+    y = "Number of Articles",
+    fill = "Source"
+  ) +
   theme_minimal() +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1)) # Improve x-axis label readability
-
+  theme(
+    # Title customization
+    plot.title = element_text(hjust = 0.5, family = "bodoni_moda", size = 16, margin = margin(b = 15), face = "bold"),
+    
+    # Legend customization
+    legend.title = element_text(family = "bodoni_moda", size = 13, face = "bold"),
+    legend.position = "right",  # Place legend on the right
+    legend.title.align = 0.5,   # Center the legend title
+    
+    # Axis title and text customization
+    axis.title = element_text(family = "montserrat", size = 12),
+    axis.text = element_text(family = "montserrat", size = 10),
+    
+    # General text customization
+    text = element_text(size = 12, family = "montserrat"),
+    
+    # Improve x-axis label readability
+    axis.text.x = element_text(angle = 45, hjust = 1)
+  )
 ```
 
-## How Has the Sentiment Towards H-1B Visas in Media Coverage Evolved Presidential Administrations ?
+## How has the sentiment towards H-1B visas in media coverage evolved across presidential administrations?
 
 ```{r echo=FALSE, warning=FALSE, message=FALSE}
 # Step 5: Perform Sentiment Analysis
@@ -327,7 +397,6 @@ doc_data$Sentiment <- sapply(doc_data$Text, function(text) {
 ```
 
 ```{r echo=FALSE, warning=FALSE, message=FALSE}
-
 # Step 6: Group by Year and Analyze
 # Group by year and calculate average sentiment per year
 sentiment_by_year <- doc_data %>%
@@ -336,40 +405,175 @@ sentiment_by_year <- doc_data %>%
 ```
 
 ```{r echo=FALSE, warning=FALSE, message=FALSE}
+# Step 7: Multiply Sentiment by the Number of Articles per Year
+sentiment_with_articles <- doc_data %>%
+  group_by(Year) %>%
+  summarise(
+    AverageSentiment = mean(Sentiment, na.rm = TRUE),
+    TotalArticles = n()
+  ) %>%
+  mutate(
+    AdjustedSentiment = AverageSentiment * TotalArticles  # Multiply sentiment by article count
+  )
 
-# Step 7: Visualize Sentiment Over Time
-ggplot(sentiment_by_year, aes(x = as.numeric(Year), y = AverageSentiment)) +
-  geom_line() +
-  geom_point() +
+```
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+# Step 8: Add dashed lines for presidential administrations
+# Define key transition years for administrations
+admin_years <- c(2001, 2008, 2015, 2020)  # Adjust these years based on administrations
+admin_labels <- c("Bush", "Obama", "Trump", "Biden")
+```
+
+```{r fig.width=10, fig.height=6, echo=FALSE, warning=FALSE, message=FALSE}
+# Step 9: Visualize Adjusted Sentiment Over Time with Presidential Administration Lines
+ggplot(sentiment_with_articles, aes(x = as.numeric(Year), y = AdjustedSentiment)) + 
+  geom_line(color = "#5794D4") + 
+  geom_point(color = "#5794D4") + 
+  geom_vline(xintercept = admin_years, linetype = "dashed", color = "gray") +  # Add dashed lines for admin transitions
+  annotate("text", x = admin_years, y = Inf, label = admin_labels, angle = 90, vjust = 1.5, hjust = 1, color = "black", size = 3, family = "montserrat") +  # Annotate with admin labels
+  geom_hline(yintercept = 0, color = "darkgray", size = 0.5) +  # Add a dark gray horizontal line at y = 0
   labs(
-    title = "Sentiment Toward Visas Over Time",
-    x = "Year",
-    y = "Average Sentiment Score"
-  ) +
-  theme_minimal()
-```
-```{r message=FALSE, warning=FALSE, include=FALSE}
-# Step 8: Validate Results
-# View extracted dates, sentiment scores, and text snippets
-head(doc_data[, c("Document", "Date", "Sentiment")])
+    title = "Attitudes Are Historically Volatile, But Becoming More Extreme", 
+    subtitle = "Average Adjusted Sentiment Score (Bing), 1997-2022",
+    x = "Year", 
+    y = "Adjusted Sentiment Score"
+  ) + 
+  theme_minimal() + 
+  theme(
+    # Title customization
+    plot.title = element_text(hjust = 0.5, family = "bodoni_moda", size = 16, margin = margin(b = 15), face = "bold"),
+    plot.subtitle = element_text(hjust = 0.5, family = "montserrat", size = 12, margin = margin(b = 10)),  # Customize subtitle
+    # Axis title and text customization
+    axis.title = element_text(family = "montserrat", size = 14),
+    axis.text = element_text(family = "montserrat", size = 10, color = "black"),
+    # General text customization
+    text = element_text(size = 12, family = "montserrat")
+  )
 
-# Print average sentiment by year
-print(sentiment_by_year)
-```
-
-## What Key Bigrams Dominate the Media Coverage of H-1B Visas?
-
-```{r message=FALSE, warning=FALSE, include=FALSE}
-# Load necessary libraries
-library(stringr)
-library(dplyr)
-library(ggplot2)
-library(syuzhet)
 ```
 
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+# Step 1: Perform Sentiment Analysis with NRC Lexicon and Progress Bar
+doc_data$Emotion_Frequency <- pblapply(doc_data$Text, function(text) {
+  # Unnest tokens (words) from the text
+  words <- tibble(text = text) %>%
+    unnest_tokens(word, text)
+  
+  # Get NRC emotions for the words
+  emotions <- get_sentiments("nrc")
+  
+  # Match words from the document with the NRC emotions
+  matched_emotions <- emotions %>%
+    filter(word %in% words$word)
+  
+  # Create a count of each emotion
+  emotion_counts <- matched_emotions %>%
+    count(sentiment, name = "count")
+  
+  # Return a data frame with emotions and their counts
+  return(emotion_counts)
+})
+
+# Step 2: Unnest the Emotion Frequency List
+# Unnest the list of emotion frequencies (this will give each emotion's count per document)
+doc_data_unnested <- doc_data %>%
+  unnest(cols = c(Emotion_Frequency))
+
+# Step 3: Create the Year-to-Administration Mapping
+# Adjust this according to your range of years (1997 - 2022)
+year_to_admin <- tibble(
+  Year = 1997:2022,
+  Administration = c(
+    rep("Clinton", 4),
+    rep("Bush", 8),
+    rep("Obama", 8),
+    rep("Trump", 4),
+    rep("Biden", 2)
+  )
+)
+
+# Step 4: Merge the year-to-administration mapping with the existing data
+# Convert Year to integer in doc_data_unnested before joining
+doc_data_unnested_with_admin <- doc_data_unnested %>%
+  mutate(Year = as.integer(Year)) %>%  # Convert Year to integer
+  left_join(year_to_admin, by = "Year")  # Perform the join
+
+# Step 5: Adjust Negative Sentiments to Negative Values
+# Define a vector of negative sentiments
+negative_sentiments <- c("anger", "disgust", "fear", "sadness", "negative")
+
+# Adjust the sentiment counts: if the sentiment is negative, multiply the count by -1
+doc_data_unnested_with_admin <- doc_data_unnested_with_admin %>%
+  mutate(count = ifelse(sentiment %in% negative_sentiments, -count, count))  # Multiply by -1 for negative sentiments
+
+# Step 6: Summarize by Administration and Emotion (Adjusted Counts)
+average_emotion_by_admin <- doc_data_unnested_with_admin %>%
+  group_by(Administration, sentiment) %>%
+  summarize(average_emotion_count = mean(count, na.rm = TRUE))
+
+# Step 7: Pivot the data to have emotions as columns
+average_emotion_by_admin_wide <- average_emotion_by_admin %>%
+  pivot_wider(names_from = sentiment, values_from = average_emotion_count, values_fill = list(average_emotion_count = 0))
+```
+```{r fig.width=10, fig.height=8, echo=FALSE, warning=FALSE, message=FALSE}
+# Step 8: Reorder administrations and create a line graph
+average_emotion_by_admin <- average_emotion_by_admin %>% 
+  mutate(Administration = factor(Administration, levels = c("Clinton", "Bush", "Obama", "Trump", "Biden")))
+
+# Find the last data point for each emotion (assuming it's the last administration in the dataset)
+last_points <- average_emotion_by_admin %>%
+  filter(Administration == "Biden") %>%
+  select(sentiment, average_emotion_count)
+
+# Create the plot
+ggplot(average_emotion_by_admin, aes(x = Administration, y = average_emotion_count, color = sentiment, group = sentiment)) + 
+  geom_line(size = 1) + 
+  geom_point(size = 2) + 
+  geom_hline(yintercept = 0, color = "darkgray", size = 0.5) +  # Add a dark gray horizontal line at y = 0
+  labs(
+    title = "Emotions Are Becoming More Positive, But More Polarized",
+    subtitle = "Emotion Scores (NPC), Clinton - Biden",
+    x = "Presidential Administration",
+    y = "Average Emotion Count"
+  ) + 
+  theme_minimal() + 
+  theme(
+    plot.title = element_text(hjust = 0.5, family = "bodoni_moda", size = 16, margin = margin(b = 15), face = "bold"),
+    plot.subtitle = element_text(hjust = 0.5, family = "montserrat", size = 14),
+    axis.title = element_text(family = "montserrat", size = 14),
+    axis.text = element_text(family = "montserrat", size = 12),
+    text = element_text(size = 12, family = "montserrat"),
+    legend.position = "none",  # Remove legend
+    axis.text.x = element_text(angle = 45, hjust = 1)
+  ) + 
+  scale_color_manual(
+    values = c(
+      "anger" = "#092E86", 
+      "anticipation" = "#A93226", 
+      "disgust" = "#A93226", 
+      "fear" = "#F84947", 
+      "joy" = "#F1C40F", 
+      "sadness" = "#F1C40F", 
+      "surprise" = "#092E86", 
+      "trust" = "#F84947",
+      "positive" = "#5794D4", 
+      "negative" = "#5794D4"
+    )
+  ) + 
+  geom_vline(xintercept = c(2001, 2008, 2015, 2020), linetype = "dashed", color = "gray") + 
+  geom_text(data = last_points, 
+            aes(x = 5,  # Place the label just left of Biden's point (5th position)
+                y = average_emotion_count, 
+                label = sentiment), 
+            color = "black", 
+            size = 4, 
+            hjust = -.1)  # Position the text to the right
+```
+
+## **How has the specific language used in media coverage to discuss H-1B visas shifted over time?**
 
 ```{r message=FALSE, warning=FALSE, include=FALSE}
-
 
 # List of news outlets to remove (adjusted for possible variations and common suffixes like "Press")
 news_outlets <- c("New York Times", "San Diego Tribune", "USA Today", "Tribune", "Press", "Magazine", "New York", "San Diego")
@@ -440,19 +644,9 @@ load_and_process_data("https://github.com/annab0503/DS4002/blob/main/Project%202
 
 # Combine all data into a single data frame (if needed)
 all_data_combined <- do.call(rbind, all_data)
-
-
 ```
 
-
-
-```{r message=FALSE, warning=FALSE, include=FALSE}
-library(tidytext)
-library(dplyr)
-library(stringr)
-library(tidyr)
-
-                 
+```{r message=FALSE, warning=FALSE, include=FALSE}       
 # List of unwanted phrases or buzzwords to remove (add more as needed)
 unwanted_phrases <- c("New York Times", "San Diego", "usa today", "tribune", "magazine", "press")
 
@@ -488,18 +682,10 @@ get_top_bigrams_overall <- function(df) {
 
 # Get top bigrams used in all articles (after removing stop words, numbers, blank spaces, and unwanted phrases)
 top_bigrams_all_articles <- get_top_bigrams_overall(all_data_combined)
-
-
-
 ```
 
 
 ```{r message=FALSE, warning=FALSE, include=FALSE}
-library(tidyr)
-library(tidytext)
-library(dplyr)
-library(stringr)
-
 # List of unwanted phrases or buzzwords to remove (add more as needed)
 unwanted_phrases <- c("New York Times", "San Diego", "usa today", "tribune", "magazine", "press")
 
@@ -560,20 +746,10 @@ calculate_tfidf <- function(df) {
 
 # Example: Apply the TF-IDF calculation to all data
 tfidf_df <- calculate_tfidf(all_data_combined)
-
-
-
-
-
 ```
 
 
 ```{r echo=FALSE, warning=FALSE, message=FALSE}
-library(tidytext)
-library(dplyr)
-library(stringr)
-library(ggplot2)
-
 # List of unwanted phrases or buzzwords to remove (add more as needed)
 unwanted_phrases <- c("New York Times", "San Diego", "usa today", "tribune", "magazine", "press")
 
@@ -649,11 +825,6 @@ ggplot(avg_tfidf_per_year, aes(x = Year, y = Avg_TFIDF)) +
 ```
 
 ```{r message=FALSE, warning=FALSE, include=FALSE}
-
-library(dplyr)
-library(stringr)
-
-
 top_bigrams_per_year <- tfidf_df %>%
   filter(Year != 1965) %>%  # Remove year 1965
   group_by(Year) %>%
@@ -669,14 +840,14 @@ library(dplyr)
 library(DT)
 library(shinydashboard)
 
-# Get the top bigrams
+### Get the top bigrams
 top_bigrams_per_year <- tfidf_df %>%
   filter(Year != 1965) %>%  # Remove year 1965
   group_by(Year) %>%
   slice_max(order_by = TFIDF, n = 5) %>%  # Select top 5 bigrams for each year based on TFIDF
   ungroup()
 
-# UI for the shiny app
+### UI for the shiny app
 ui <- dashboardPage(
   dashboardHeader(title = "Top Bigrams by Year"),
   dashboardSidebar(
@@ -702,7 +873,7 @@ ui <- dashboardPage(
   )
 )
 
-# Server logic for the shiny app
+### Server logic for the shiny app
 server <- function(input, output) {
   output$top_bigrams <- renderDataTable({
     # Filter data based on the selected year and show top 5 bigrams for that year
@@ -716,11 +887,9 @@ server <- function(input, output) {
   ))
 }
 
-# Run the shiny app
+### Run the shiny app
 shinyApp(ui = ui, server = server)
 
-```
-# **Next Steps**
-- working analyzing text in newspapers from different years using the Term Frequency - Inverse Document Frequency (TF-IDF) method to identify trends and key terms that change over time.
-
 # **Conclusion**
+
+# **Works Cited**

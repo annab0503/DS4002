@@ -51,7 +51,7 @@ font_add_google("Montserrat", "montserrat")     # Alias: montserrat
 1. **How has the volume of media coverage on H-1B visas changed over time?** By examining the quantity of articles published over the years, we aim to identify patterns in media attention and how these fluctuations correspond to significant political events, legislative changes, and economic conditions.
 
 2. **How has the sentiment towards H-1B visas in media coverage evolved across presidential administrations?** Understanding shifts in sentiment provides a window into how different administrations’ policies and rhetoric influenced public discourse on skilled labor migration.  
-3. **Which topics (as represented by bigrams) are the most consistent and widespread across years?** By investigating the most frequently occurring word pairs (key bigrams) in these articles, this question uncovers dominant themes and recurring narratives, offering deeper insights into the framing of H-1B visa discussions.  
+3. **Which bigrams are the most consistent and widespread across years, and how have they changed over time** By investigating the most frequently occurring word pairs (key bigrams) in these articles, this question uncovers dominant themes and recurring narratives, offering deeper insights into the framing of H-1B visa discussions.  
 
 To explore these questions, this study uses three influential outlets — *The New York Times*, *The San Diego Union-Tribune*, and *USA Today* — to examine how media narratives surrounding H-1B visas have evolved from 1997 to 2022. By analyzing trends in coverage, sentiment, and language, we aim go beyond quantitative analysis to explore the nuances of how journalism has both reflected and influenced the broader discourse on skilled labor migration. Through this lens, we seek to understand how media coverage has served as a barometer for societal attitudes and political priorities during pivotal moments in U.S. immigration history.
 
@@ -598,7 +598,7 @@ ggplot(average_emotion_by_admin, aes(x = Administration, y = average_emotion_cou
 
 Similar to the Bing sentiment analysis, this secondary analysis reveals a consistent trend of emotions becoming more extreme over time, with the usage of emotional language increasing across media coverage. Interestingly, however, there is a noticeable shift toward more positive emotions overall, as the values of positive emotions consistently outweigh those of negative emotions. This suggests that while the emotional intensity of media coverage has escalated, the overall tone has shifted toward a more optimistic or favorable portrayal, even as discourse surrounding H-1B visas remains charged and fluctuating.
 
-## Which topics (as represented by bigrams) are the most consistent and widespread across years?
+## Which bigrams are the most consistent and widespread across years, and how have they changed over time
 
 ```{r message=FALSE, include=FALSE}
 
@@ -763,7 +763,6 @@ total_bigrams_per_year <- top_bigrams_count_by_year %>%
 total_bigrams_per_year
 ```
 
-The analysis of Term Frequency (TF) and Document Frequency (DF) provides insight into the most frequently occurring bigrams (word pairs) and their consistency across years in articles discussing H-1B visas. TF (Term Frequency) measures how often a particular bigram appears in each article across years, revealing the dominant terms within the text. In this case, bigrams like "foreign worker" and "American workers" emerge as central to the conversation about H-1B visas, consistently appearing across the articles. On the other hand, DF (Document Frequency) traditionally counts how many distinct documents or years a specific bigram appears in, offering a broader view of how widespread a term is. By dividing the frequency by the number of years in which at least one occurrence of a bigram appears, this approach normalizes the data and helps track trends in terms of their prevalence across time, rather than just their occurrence in a few documents. The resulting TF/DF ratio gives a clearer understanding of how consistently certain bigrams appear over the years, showing which themes remain prevalent and which ones are more transient or sporadic. This method helps answer key questions about the dominant topics and the recurring narratives in H-1B visa discussions, identifying consistent themes like "foreign labor" that persist over time and highlighting spikes or shifts that may indicate significant events or changes in discourse.
 
 ```{r echo=FALSE, warning=FALSE}
 # Create a bar plot showing the top bigrams with the desired style
@@ -786,28 +785,53 @@ ggplot(top_bigrams_all_articles, aes(x = reorder(bigram, n), y = n)) +
 The bar plot showing the top bigrams by frequency presents the most commonly used bigrams across the entire dataset. Phrases such as "passport visa," "foreign worker," and "American workers" appear prominently, which further supports the notion that these are key topics consistently discussed in relation to H-1B visas. The frequency of these bigrams emphasizes their central role in framing the discourse on visa issues, labor markets, and immigration policies. This could reflect the recurring narrative in articles, where these terms represent the main themes of the ongoing debates about the visa system and its effects on both the foreign and domestic workforce. However, some unrelated bigrams or outliers show up in the data, which may be because of errors in processing the text or changes in the context of the articles. These outliers may not be as relevant to the H-1B visa topic, but focusing on the main bigrams helps get rid of the noise
 
 ```{r echo=FALSE, warning=FALSE}
-# Filter out the year 1965
-total_bigrams_per_year_filtered <- total_bigrams_per_year %>%
-  filter(Year != 1965)
+library(dplyr)
+library(tidyr)
+library(tidytext)
 
-# Plotting Year vs TF/DF as a bar graph with the new styling
-ggplot(total_bigrams_per_year_filtered, aes(x = Year, y = TF_DF)) +
-  geom_bar(stat = "identity", fill = "#5794D4") +  # Bar graph with a color fill
-  labs(title = "Year vs TF/DF of Top Bigrams",
-       x = "Year",
-       y = "TF/DF") +
-  theme_minimal() +  # Use a minimal theme for the plot
-  theme(
-    plot.title = element_text(hjust = 0.5, family = "bodoni_moda", size = 16, margin = margin(b = 15), face = "bold"),
-    plot.subtitle = element_text(hjust = 0.5, family = "montserrat", size = 14),
-    axis.title = element_text(family = "montserrat", size = 12),
-    axis.text = element_text(family = "montserrat", size = 10),
-    text = element_text(size = 12, family = "montserrat"),
-    axis.text.x = element_text(angle = 45, hjust = 1)
-  )
+# Function to get top bigrams for each year
+get_top_bigrams_by_year <- function(df) {
+  df %>%
+    unnest_tokens(bigram, Concatenated_Articles, token = "ngrams", n = 2) %>%  # Extract bigrams
+    separate(bigram, c("word1", "word2"), sep = " ") %>%  # Separate the bigram into words
+    filter(!word1 %in% stop_words$word & !word2 %in% stop_words$word) %>%  # Remove stop words
+    filter(word1 != "" & word2 != "") %>%  # Remove blank spaces
+    unite(bigram, word1, word2, sep = " ") %>%  # Recombine the words into bigrams
+    count(Year, bigram, sort = TRUE)  # Count bigrams by year
+}
+
+# Apply the function to grouped_data to get bigrams per year
+top_bigrams_by_year <- grouped_data %>%
+  group_by(Year) %>%
+  do(get_top_bigrams_by_year(.))
+
+# View the top bigrams by year
+print(top_bigrams_by_year)
+
+# Optionally, get the top 5 bigrams for each year
+top_bigrams_by_year_top5 <- top_bigrams_by_year %>%
+  group_by(Year) %>%
+  top_n(3, n)  # Get top 5 bigrams for each year
+
+
 ```
 
-The graph of total bigrams per year shows how the frequency of top bigrams changes over the years, calculated by the TF/DF score. The spike in 2017 could indicate that there was a significant event, such as a policy change or increase in media coverage related to H-1B visas, that led to a surge in discussions around these terms during that time. The gradual upward trend suggests that over time, these bigrams have gained more attention in the articles, signaling an increasing focus on topics like foreign labor, employment visas, and the impact of these policies on American workers. This may reflect the growing relevance of H-1B visa discussions in the broader context of U.S. immigration and labor markets.
+```{r echo=FALSE, warning=FALSE}
+library(ggplot2)
+
+# Plotting the top bigrams by year
+ggplot(top_bigrams_by_year_top5, aes(x = reorder(bigram, n), y = n, fill = as.factor(Year))) +
+  geom_bar(stat = "identity", show.legend = FALSE) +
+  facet_wrap(~ Year, scales = "free_y") +  # Create a separate plot for each year
+  coord_flip() +  # Flip the axes for better readability
+  labs(title = "Top Bigrams by Year", x = "Bigram", y = "Frequency") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+
+```
+
+The plot visualizes the top bigrams (pairs of consecutive words) for each year in our dataset, allowing for the identification of trends in language and topic evolution over time. By comparing the frequency of specific bigrams across years, we can observe shifts in terminology and emerging trends, reflecting societal or topical changes. For instance, a growing frequency of certain bigrams could indicate rising interest in specific issues, while others might show long-standing relevance. The analysis reveals both consistent and changing language usage, with certain bigrams remaining prominent over time, while new phrases emerge in recent years. Additionally, variations in bigram frequency may reflect shifts in focus, such as surges in coverage of particular events or declines in certain topics. Overall, the plot provides insights into the main themes and language changes within the articles, highlighting the evolving discourse and offering a basis for further research into emerging trends or underrepresented areas.
 
 # **Conclusion**
 

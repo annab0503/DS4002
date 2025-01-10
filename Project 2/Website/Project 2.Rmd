@@ -1,5 +1,5 @@
 ---
-title: "Project 2"
+title: "Shaping Perceptions: Media, Policy, and the Shifting Narrative of H-1B Immigration (1997–2022)"
 author: "Anna Brown, Rishika Deshmukh, and Ada Zhang"
 date: "`r format(Sys.Date(), '%B %d, %Y')`"
 output: 
@@ -150,15 +150,14 @@ To construct our dataset, we used [Nexis Uni](https://advance-lexis-com.proxy1.l
 The filtered articles were categorized by news source and saved into text files. These three text files were then read into R, where we were separated into individual documents and categorized by the year they were published for further analysis. 
 
 ```{r display-image, echo=FALSE}
-
 # Use knitr to include an external image
-#knitr::include_graphics("code.png")
-
+knitr::include_graphics("code.png")
 ```
 
 This organization allows us to track trends and sentiment shifts over time, facilitating the examination of the relationship between media coverage, policy changes, and political events.
 
 ## Limitations
+
 A key limitation of this methodology is that Nexis Uni lacks an API for automated data extraction, requiring all articles to be manually searched, selected, and downloaded. With over 650 articles across the three data sets, human error could have led to some relevant documents being overlooked or irrelevant ones included. To address this, we carefully defined our search parameters and conducted multiple rounds of manual checks to ensure the dataset was as accurate and relevant as possible. While this process helped minimize errors, the possibility of some inconsistencies remains. Nevertheless, we believe the dataset effectively captures the essential trends in H-1B visa coverage.
 
 Additionally, Lexis Uni imposes a daily download limit and does not include all major U.S. news sources, such as *The Washington Post* and *The Wall Street Journal*. Given these restrictions and the project's time constraints, we were unable to select every available source. To minimize bias, we chose a publication from each coast and a national outlet to ensure a diverse representation of coverage.
@@ -229,7 +228,7 @@ head(doc_data[, c("Document", "Date", "Year")])
 
 ## **How has the volume of media coverage on H-1B visas changed over time?**
 
-```{r stacked-bar-plot-with-regression-line, echo=FALSE, warning=FALSE, message=FALSE}
+```{r stacked-bar-plot-with-regression-line, echo=FALSE, warning=FALSE, message=FALSE, fig.width=10, fig.height=6}
 # Count articles per year for each source
 year_counts <- doc_data %>% 
   group_by(Year, Source = gsub("^(NYT_|SDT_|USA_).*", "\\1", Document)) %>% 
@@ -287,25 +286,9 @@ ggplot() +
 
 ```
 
-The graph illustrating the "Article Count per Year from 1997-2022"
-reveals a notable spike in media coverage around 2015, with a
-significant increase in articles from The New York Times. This surge
-likely corresponds to high-profile discussions on immigration reforms
-during the Obama administration. Although the European migration crisis
-of 2015 primarily involved refugees and not H-1B visa issues, its
-widespread media coverage could have influenced broader immigration
-policy debates in the U.S., indirectly affecting H-1B discourse.
-Additionally, this peak may align with major technological and economic
-developments, particularly in regions like Silicon Valley, which saw
-heightened demand for H-1B visa holders due to rapid growth in tech
-industries. There is also a minor spike at 2020 likely because the
-Covid-19 pandemic affected H1B issuance. The overall upward trend in
-later years suggests a growing media focus on H-1B visas, reflecting an
-increasing public and political interest in the nuances of skilled labor
-migration, with The New York Times showing a consistently higher volume
-of articles, indicating its editorial focus on these issues.
+The graph illustrating the "Article Count per Year from 1997-2022" reveals a notable spike in media coverage around 2015, with a significant increase in articles from The New York Times. This surge likely corresponds to high-profile discussions on immigration reforms during the Obama administration. Although the European migration crisis of 2015 primarily involved refugees and not H-1B visa issues, its widespread media coverage could have influenced broader immigration policy debates in the U.S., indirectly affecting H-1B discourse. Additionally, this peak may align with major technological and economic developments, particularly in regions like Silicon Valley, which saw heightened demand for H-1B visa holders due to rapid growth in tech industries. There is also a minor spike at 2020 likely because the Covid-19 pandemic affected H1B issuance. The overall upward trend in later years suggests a growing media focus on H-1B visas, reflecting an increasing public and political interest in the nuances of skilled labor migration, with The New York Times showing a consistently higher volume of articles, indicating its editorial focus on these issues.
 
-```{r echo=FALSE, warning=FALSE, message=FALSE}
+```{r fig.width=10, fig.height=6, echo=FALSE, warning=FALSE, message=FALSE}
 # Count mentions of "H-1B" in each text
 doc_data$H1B_Count <- sapply(doc_data$Text, function(text) { 
   str_count(text, "H-1B") 
@@ -339,24 +322,10 @@ ggplot(h1b_by_year, aes(x = as.numeric(Year), y = TotalH1B)) +
   )
 ```
 
-Both the "H-1B Usage Over Time" and the first graph exhibit a
-significant peak around 2015, which indicates a period of heightened
-media coverage and discussion around H-1B visas. The "H-1B Usage Over
-Time" graph shows other notable spikes, such as around 2001 and again
-sharply in 2020.The first peak might relate to the dot-com bubble burst
-and subsequent regulatory changes affecting tech employment. The sharp
-spike in 2020 might be tied to discussions or changes in policies during
-the Trump administration, which aggressively pushed for H-1B visa
-restrictions as part of broader immigration reforms.Both graphs suggest
-an increasing trend in the attention given to H-1B visas towards the
-late 2010s, followed by a minor decline. This suggests a growing
-importance placed on the issue in national and economic discourse,
-especially relevant to tech and specialized industries relying on
-skilled foreign labor.
+Both the "H-1B Usage Over Time" and the first graph exhibit a significant peak around 2015, which indicates a period of heightened media coverage and discussion around H-1B visas. The "H-1B Usage Over Time" graph shows other notable spikes, such as around 2001 and again sharply in 2020.The first peak might relate to the dot-com bubble burst
+and subsequent regulatory changes affecting tech employment. The sharp spike in 2020 might be tied to discussions or changes in policies during the Trump administration, which aggressively pushed for H-1B visa restrictions as part of broader immigration reforms.Both graphs suggest an increasing trend in the attention given to H-1B visas towards the late 2010s, followed by a minor decline. This suggests a growing importance placed on the issue in national and economic discourse, especially relevant to tech and specialized industries relying on skilled foreign labor.
 
 ```{r echo=FALSE, warning=FALSE, message=FALSE}
-library(tidyr)
-
 # Presidents list
 presidents <- c("Bush", "Obama", "Trump", "Biden")
 
@@ -418,30 +387,17 @@ ggplot(president_by_year, aes(x = as.numeric(Year), y = TotalMentions, color = P
   )
 ```
 
-Mentions of Bush and Obama show relatively moderate and steady lines,
-with no significant spikes throughout their terms. This suggests a
-consistent level of media focus during their administrations, possibly
-reflecting a period of stable policies or fewer controversial changes
-affecting the issues being tracked.
+Mentions of Bush and Obama show relatively moderate and steady lines, with no significant spikes throughout their terms. This suggests a consistent level of media focus during their administrations, possibly reflecting a period of stable policies or fewer controversial changes affecting the issues being tracked.
 
-The sharp spikes in mentions of Trump, particularly around 2017 and
-again in 2020, are striking. These could correlate with major policy
-announcements or controversial decisions during his administration,
-which was marked by significant shifts in U.S. immigration policy,
-including changes to H-1B visa regulations.
+The sharp spikes in mentions of Trump, particularly around 2017 and again in 2020, are striking. These could correlate with major policy announcements or controversial decisions during his administration, which was marked by significant shifts in U.S. immigration policy, including changes to H-1B visa regulations.
 
-There is a notable increase in mentions of Biden starting from 2020,
-which likely corresponds to the election period and his subsequent
-policy changes. This uptick might be associated with expectations and
-reactions to his administration's approach to reversing some of Trump's
-policies, indicating a renewed focus on how new policies would impact
-immigration and other pertinent issues.
+There is a notable increase in mentions of Biden starting from 2020, which likely corresponds to the election period and his subsequent policy changes. This uptick might be associated with expectations and reactions to his administration's approach to reversing some of Trump's policies, indicating a renewed focus on how new policies would impact immigration and other pertinent issues.
 
-## **How has the sentiment towards H-1B visas in media coverage evolved across presidential administrations?**
+## How has the sentiment towards H-1B visas in media coverage evolved across presidential administrations?
 
-To understand how sentiment towards H-1B visas has evolved across presidential administrations, we conducted a comprehensive sentiment analysis of media coverage using two well-established lexicon libraries: the Bing Liu sentiment lexicon and the National Research Council (NRC) Emotion Lexicon. The Bing lexicon categorizes words into positive or negative sentiments, offering a straightforward way to measure the general tone of the coverage. In contrast, the NRC Emotion Lexicon provides a more nuanced perspective by associating words with eight primary emotions (such as joy, anger, and fear) in addition to positive and negative sentiments. By leveraging these tools, we analyzed the sentiment trends over time, capturing both overarching positivity or negativity and the emotional undertones of the media narrative during different presidential administrations. 
+To understand how sentiment towards H-1B visas has evolved across presidential administrations, we conducted a comprehensive sentiment analysis of media coverage using two well-established lexicon libraries: the Bing Liu sentiment lexicon and the National Research Council (NRC) Emotion Lexicon. The Bing lexicon categorizes words into positive or negative sentiments, offering a straightforward way to measure the general tone of the coverage. In contrast, the NRC Emotion Lexicon provides a more nuanced perspective by associating words with eight primary emotions (such as joy, anger, and fear) in addition to positive and negative sentiments. By leveraging these tools, we analyzed the sentiment trends over time, capturing both overarching positivity or negativity and the emotional undertones of the media narrative during different presidential administrations.
 
-```{r echo=FALSE, warning=FALSE, message=FALSE}
+```{r include=FALSE}
 # Step 1: Perform Sentiment Analysis
 # Calculate sentiment scores for each document
 doc_data$Sentiment <- sapply(doc_data$Text, function(text) {
@@ -450,7 +406,7 @@ doc_data$Sentiment <- sapply(doc_data$Text, function(text) {
 })
 ```
 
-```{r echo=FALSE, warning=FALSE, message=FALSE}
+```{r include=FALSE}
 # Step 2: Group by Year and Analyze
 # Group by year and calculate average sentiment per year
 sentiment_by_year <- doc_data %>%
@@ -458,7 +414,7 @@ sentiment_by_year <- doc_data %>%
   summarise(AverageSentiment = mean(Sentiment, na.rm = TRUE))
 ```
 
-```{r echo=FALSE, warning=FALSE, message=FALSE}
+```{r include=FALSE}
 # Step 3: Multiply Sentiment by the Number of Articles per Year
 sentiment_with_articles <- doc_data %>%
   group_by(Year) %>%
@@ -469,10 +425,9 @@ sentiment_with_articles <- doc_data %>%
   mutate(
     AdjustedSentiment = AverageSentiment * TotalArticles  # Multiply sentiment by article count
   )
-
 ```
 
-```{r echo=FALSE, warning=FALSE, message=FALSE}
+```{r include=FALSE}
 # Step 4: Add labels
 # Define key transition years for administrations
 admin_years <- c(2001, 2009, 2017, 2021)  # Adjust these years based on administrations
@@ -483,10 +438,12 @@ key_events <- c(2001, 2007, 2015, 2020)
 event_labels <- c("9/11 Attack", "Great Recession", "Rep. Control of Congress", "COVID Pandemic")
 ```
 
-Beginning with the Bing Library, we calculated an overall annual sentiment score by aggregating the sentiment scores of individual documents for each year. To ensure the results accurately reflected yearly sentiment trends, we accounted for variations in the number of documents per year by weighting each year's aggregated score by the total number of documents analyzed in that year. This approach also helped mitigate the influence of outliers, providing a more reliable measure of the prevailing sentiment in media coverage for each year. 
+Beginning with the Bing Library, we calculated an overall annual sentiment score by aggregating the sentiment scores of individual documents for each year. To ensure the results accurately reflected yearly sentiment trends, we accounted for variations in the number of documents per year by weighting each year's aggregated score by the total number of documents analyzed in that year. This approach also helped mitigate the influence of outliers, providing a more reliable measure of the prevailing sentiment in media coverage for each year.
 
 ```{r fig.width=10, fig.height=6, echo=FALSE, warning=FALSE, message=FALSE}
 # Step 5: Visualize Adjusted Sentiment Over Time with Presidential Administration Lines
+sentiment_with_articles$Year <- as.numeric(sentiment_with_articles$Year)
+
 ggplot(sentiment_with_articles, aes(x = Year, y = AdjustedSentiment)) + 
   geom_line(color = "#5794D4") + 
   geom_point(color = "#5794D4") + 
@@ -583,6 +540,7 @@ average_emotion_by_admin <- doc_data_unnested_with_admin %>%
 average_emotion_by_admin_wide <- average_emotion_by_admin %>%
   pivot_wider(names_from = sentiment, values_from = average_emotion_count, values_fill = list(average_emotion_count = 0))
 ```
+
 ```{r fig.width=10, fig.height=8, echo=FALSE, warning=FALSE, message=FALSE}
 # Step 8: Reorder administrations and create a line graph
 average_emotion_by_admin <- average_emotion_by_admin %>% 
@@ -642,7 +600,7 @@ Similar to the Bing sentiment analysis, this secondary analysis reveals a consis
 
 ## **Which topics (as represented by bigrams) are the most consistent and widespread across years?**
 
-```{r echo=FALSE, warning=FALSE}
+```{r message=FALSE, include=FALSE}
 
 # List of news outlets to remove (adjusted for possible variations and common suffixes like "Press")
 news_outlets <- c("New York Times", "San Diego Tribune", "USA Today", "Tribune", "Press", "Magazine", "New York", "San Diego")
@@ -723,18 +681,9 @@ grouped_data <- all_data_combined %>%
 # Save the concatenated data to a CSV file
 write.csv(grouped_data, "Articles_Concatenated_By_Year.csv", row.names = FALSE)
 cat("Grouped data saved to CSV: Articles_Concatenated_By_Year.csv\n")
-
-
 ```
 
-
-```{r echo=FALSE, warning=FALSE}
-library(tidytext)
-library(dplyr)
-library(stringr)
-library(tidyr)
-
-                 
+```{r message=FALSE, include=FALSE}
 # List of unwanted phrases or buzzwords to remove (add more as needed)
 unwanted_phrases <- c("New York Times", "San Diego", "usa today", "tribune", "magazine", "press")
 
@@ -770,18 +719,9 @@ get_top_bigrams_overall <- function(df) {
 
 # Get top bigrams used in all articles (after removing stop words, numbers, blank spaces, and unwanted phrases)
 top_bigrams_all_articles <- get_top_bigrams_overall(all_data_combined)
-
-
-
 ```
 
-
-
-```{r echo=FALSE, warning=FALSE}
-
-library(dplyr)
-library(tidyr)
-
+```{r message=FALSE, include=FALSE}
 # Get the list of top bigrams
 top_bigrams_list <- top_bigrams_all_articles$bigram
 
@@ -821,36 +761,29 @@ total_bigrams_per_year <- top_bigrams_count_by_year %>%
 
 # View the total bigrams per year with TF/DF column
 total_bigrams_per_year
-
-
-
-
 ```
 
 The analysis of Term Frequency (TF) and Document Frequency (DF) provides insight into the most frequently occurring bigrams (word pairs) and their consistency across years in articles discussing H-1B visas. TF (Term Frequency) measures how often a particular bigram appears in each article across years, revealing the dominant terms within the text. In this case, bigrams like "foreign worker" and "American workers" emerge as central to the conversation about H-1B visas, consistently appearing across the articles. On the other hand, DF (Document Frequency) traditionally counts how many distinct documents or years a specific bigram appears in, offering a broader view of how widespread a term is. By dividing the frequency by the number of years in which at least one occurrence of a bigram appears, this approach normalizes the data and helps track trends in terms of their prevalence across time, rather than just their occurrence in a few documents. The resulting TF/DF ratio gives a clearer understanding of how consistently certain bigrams appear over the years, showing which themes remain prevalent and which ones are more transient or sporadic. This method helps answer key questions about the dominant topics and the recurring narratives in H-1B visa discussions, identifying consistent themes like "foreign labor" that persist over time and highlighting spikes or shifts that may indicate significant events or changes in discourse.
 
-
 ```{r echo=FALSE, warning=FALSE}
 # Create a bar plot showing the top bigrams with the desired style
 ggplot(top_bigrams_all_articles, aes(x = reorder(bigram, n), y = n)) +
-  geom_bar(stat = "identity", fill = "skyblue") +
+  geom_bar(stat = "identity", fill = "#5794D4") +
   coord_flip() +  # Flip coordinates to make the labels readable
   labs(title = "Top Bigrams by Frequency", x = "Bigram", y = "Frequency") +
   theme_minimal() +
   theme(
     plot.title = element_text(hjust = 0.5, family = "bodoni_moda", size = 16, margin = margin(b = 15), face = "bold"),
     plot.subtitle = element_text(hjust = 0.5, family = "montserrat", size = 14),
-    axis.title = element_text(family = "montserrat", size = 14),
-    axis.text = element_text(family = "montserrat", size = 12),
+    axis.title = element_text(family = "montserrat", size = 12),
+    axis.text = element_text(family = "montserrat", size = 10),
     text = element_text(size = 12, family = "montserrat"),
     axis.text.x = element_text(angle = 45, hjust = 1),
     axis.text.y = element_text(size = 10)
   )
 ```
 
-
 The bar plot showing the top bigrams by frequency presents the most commonly used bigrams across the entire dataset. Phrases such as "passport visa," "foreign worker," and "American workers" appear prominently, which further supports the notion that these are key topics consistently discussed in relation to H-1B visas. The frequency of these bigrams emphasizes their central role in framing the discourse on visa issues, labor markets, and immigration policies. This could reflect the recurring narrative in articles, where these terms represent the main themes of the ongoing debates about the visa system and its effects on both the foreign and domestic workforce. However, some unrelated bigrams or outliers show up in the data, which may be because of errors in processing the text or changes in the context of the articles. These outliers may not be as relevant to the H-1B visa topic, but focusing on the main bigrams helps get rid of the noise
-
 
 ```{r echo=FALSE, warning=FALSE}
 # Filter out the year 1965
@@ -859,7 +792,7 @@ total_bigrams_per_year_filtered <- total_bigrams_per_year %>%
 
 # Plotting Year vs TF/DF as a bar graph with the new styling
 ggplot(total_bigrams_per_year_filtered, aes(x = Year, y = TF_DF)) +
-  geom_bar(stat = "identity", fill = "skyblue") +  # Bar graph with a color fill
+  geom_bar(stat = "identity", fill = "#5794D4") +  # Bar graph with a color fill
   labs(title = "Year vs TF/DF of Top Bigrams",
        x = "Year",
        y = "TF/DF") +
@@ -867,14 +800,11 @@ ggplot(total_bigrams_per_year_filtered, aes(x = Year, y = TF_DF)) +
   theme(
     plot.title = element_text(hjust = 0.5, family = "bodoni_moda", size = 16, margin = margin(b = 15), face = "bold"),
     plot.subtitle = element_text(hjust = 0.5, family = "montserrat", size = 14),
-    axis.title = element_text(family = "montserrat", size = 14),
-    axis.text = element_text(family = "montserrat", size = 12),
+    axis.title = element_text(family = "montserrat", size = 12),
+    axis.text = element_text(family = "montserrat", size = 10),
     text = element_text(size = 12, family = "montserrat"),
     axis.text.x = element_text(angle = 45, hjust = 1)
   )
-
- 
-
 ```
 
 The graph of total bigrams per year shows how the frequency of top bigrams changes over the years, calculated by the TF/DF score. The spike in 2017 could indicate that there was a significant event, such as a policy change or increase in media coverage related to H-1B visas, that led to a surge in discussions around these terms during that time. The gradual upward trend suggests that over time, these bigrams have gained more attention in the articles, signaling an increasing focus on topics like foreign labor, employment visas, and the impact of these policies on American workers. This may reflect the growing relevance of H-1B visa discussions in the broader context of U.S. immigration and labor markets.
@@ -882,3 +812,8 @@ The graph of total bigrams per year shows how the frequency of top bigrams chang
 # **Conclusion**
 
 # **Works Cited**
+- Card, D., et al. (2022). Computational analysis of 140 years of US political speeches reveals more positive but increasingly polarized framing of immigration. *Proceedings of the National Academy of Sciences, 119*(31). https://doi.org/10.1073/pnas.2120510119
+
+- S.358 - 101st Congress (1989-1990): Immigration Act of 1990. (2019). Congress.gov. Retrieved from [https://www.congress.gov/bill/101st-congress/senate-bill/358](https://www.congress.gov/bill/101st-congress/senate-bill/358)
+
+- Jordan, M. (2018, April 6). Thousands of Indian women find their American dreams in jeopardy. *The New York Times*. Retrieved from [https://www.nytimes.com/2018/04/06/us/indians-h1b-visas-trump-immigration-wives.html](https://www.nytimes.com/2018/04/06/us/indians-h1b-visas-trump-immigration-wives.html)

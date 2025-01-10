@@ -51,7 +51,7 @@ font_add_google("Montserrat", "montserrat")     # Alias: montserrat
 1. **How has the volume of media coverage on H-1B visas changed over time?** By examining the quantity of articles published over the years, we aim to identify patterns in media attention and how these fluctuations correspond to significant political events, legislative changes, and economic conditions.
 
 2. **How has the sentiment towards H-1B visas in media coverage evolved across presidential administrations?** Understanding shifts in sentiment provides a window into how different administrations’ policies and rhetoric influenced public discourse on skilled labor migration.  
-3. **How has the specific language used in media coverage to discuss H-1B visas shifted over time?** By investigating the most frequently occurring word pairs (key bigrams) in these articles, this question uncovers dominant themes and recurring narratives, offering deeper insights into the framing of H-1B visa discussions.  
+3. **Which topics (as represented by bigrams) are the most consistent and widespread across years?* By investigating the most frequently occurring word pairs (key bigrams) in these articles, this question uncovers dominant themes and recurring narratives, offering deeper insights into the framing of H-1B visa discussions.  
 
 To explore these questions, this study uses three influential outlets — *The New York Times*, *The San Diego Union-Tribune*, and *USA Today* — to examine how media narratives surrounding H-1B visas have evolved from 1997 to 2022. By analyzing trends in coverage, sentiment, and language, we aim go beyond quantitative analysis to explore the nuances of how journalism has both reflected and influenced the broader discourse on skilled labor migration. Through this lens, we seek to understand how media coverage has served as a barometer for societal attitudes and political priorities during pivotal moments in U.S. immigration history.
 
@@ -571,9 +571,9 @@ ggplot(average_emotion_by_admin, aes(x = Administration, y = average_emotion_cou
             hjust = -.1)  # Position the text to the right
 ```
 
-## **How has the specific language used in media coverage to discuss H-1B visas shifted over time?**
+## **Which topics (as represented by bigrams) are the most consistent and widespread across years?**
 
-```{r message=FALSE, warning=FALSE, include=FALSE}
+```{r echo=FALSE, warning=FALSE}
 
 # List of news outlets to remove (adjusted for possible variations and common suffixes like "Press")
 news_outlets <- c("New York Times", "San Diego Tribune", "USA Today", "Tribune", "Press", "Magazine", "New York", "San Diego")
@@ -642,11 +642,30 @@ load_and_process_data("https://github.com/annab0503/DS4002/blob/main/Project%202
 # Load data from USA Today
 load_and_process_data("https://github.com/annab0503/DS4002/blob/main/Project%202/.txt%20files/USA%20Today.txt?raw=true", "USA")
 
-# Combine all data into a single data frame (if needed)
+# Combine all data into a single data frame
 all_data_combined <- do.call(rbind, all_data)
+
+# Concatenate articles for each year
+grouped_data <- all_data_combined %>%
+  group_by(Year) %>%
+  summarise(Concatenated_Articles = paste(Article, collapse = " ")) %>%
+  filter(Year != "Unknown"& Year != "1965")  # Exclude entries with unknown years
+
+# Save the concatenated data to a CSV file
+write.csv(grouped_data, "Articles_Concatenated_By_Year.csv", row.names = FALSE)
+cat("Grouped data saved to CSV: Articles_Concatenated_By_Year.csv\n")
+
+
 ```
 
-```{r message=FALSE, warning=FALSE, include=FALSE}       
+
+```{r echo=FALSE, warning=FALSE}
+library(tidytext)
+library(dplyr)
+library(stringr)
+library(tidyr)
+
+                 
 # List of unwanted phrases or buzzwords to remove (add more as needed)
 unwanted_phrases <- c("New York Times", "San Diego", "usa today", "tribune", "magazine", "press")
 
@@ -673,7 +692,7 @@ get_top_bigrams_overall <- function(df) {
   
   # View the top bigrams by frequency (top 50)
   top_bigrams_overall <- bigram_count %>%
-    top_n(50, n) %>%  # Get the top 50 bigrams by count
+    top_n(20, n) %>%  # Get the top 50 bigrams by count
     arrange(desc(n))   # Arrange in descending order
   
 
@@ -682,213 +701,110 @@ get_top_bigrams_overall <- function(df) {
 
 # Get top bigrams used in all articles (after removing stop words, numbers, blank spaces, and unwanted phrases)
 top_bigrams_all_articles <- get_top_bigrams_overall(all_data_combined)
+
+
+
 ```
 
 
-```{r message=FALSE, warning=FALSE, include=FALSE}
-# List of unwanted phrases or buzzwords to remove (add more as needed)
-unwanted_phrases <- c("New York Times", "San Diego", "usa today", "tribune", "magazine", "press")
 
-# Function to clean and filter out unwanted phrases
-remove_unwanted_phrases <- function(text) {
-  for (phrase in unwanted_phrases) {
-    text <- str_replace_all(text, fixed(phrase), "")
-  }
-  return(text)
-}
 
-# Function to calculate TF-IDF for bigrams in each year
-calculate_tfidf <- function(df) {
-  # Tokenize the text into bigrams (pairs of consecutive words) per year
-  bigram_count <- df %>%
-    mutate(Article = sapply(Article, remove_unwanted_phrases)) %>%  # Remove unwanted phrases from articles
+```{r echo=FALSE, warning=FALSE}
+
+library(dplyr)
+library(tidyr)
+
+# Get the list of top bigrams
+top_bigrams_list <- top_bigrams_all_articles$bigram
+
+# Function to count the occurrences of top bigrams in each year
+count_top_bigrams_by_year <- function(df, top_bigrams) {
+  # Tokenize the articles into bigrams and filter for top bigrams
+  bigram_count_year <- df %>%
+    mutate(Article = sapply(Article, remove_unwanted_phrases)) %>%  # Clean articles
     unnest_tokens(bigram, Article, token = "ngrams", n = 2) %>%      # Extract bigrams
     mutate(bigram = str_replace_all(bigram, "\\d+", "")) %>%          # Remove numbers
-    separate(bigram, c("word1", "word2"), sep = " ") %>%             # Separate the bigram into two words
+    separate(bigram, c("word1", "word2"), sep = " ") %>%             # Separate the bigram into words
     filter(!word1 %in% stop_words$word & !word2 %in% stop_words$word) %>%  # Remove stop words
     filter(word1 != "" & word2 != "") %>%                            # Remove blank spaces
-    unite(bigram, word1, word2, sep = " ")                           # Recombine the words into bigrams
+    unite(bigram, word1, word2, sep = " ") %>%                       # Recombine the words into bigrams
+    filter(bigram %in% top_bigrams) %>%                              # Filter for top bigrams
+    group_by(Year, bigram) %>%                                       # Group by year and bigram
+    count(bigram, sort = TRUE)                                       # Count the occurrences of bigrams
   
-  # Calculate Term Frequency (TF)
-  tf <- bigram_count %>%
-    count(Year, bigram) %>%
-    group_by(Year) %>%
-    mutate(TF = n / sum(n)) %>%  # Divide by total number of bigrams in the document (sum of counts)
-    ungroup()
-
-  # Calculate Document Frequency (DF)
-  df_count <- bigram_count %>%
-    group_by(bigram) %>%
-    summarise(DF = n_distinct(Year)) %>%  # Count how many distinct years (documents) contain the bigram
-    ungroup()
-
-  # Calculate IDF
-  total_docs <- n_distinct(df$Year)
-  df_count <- df_count %>%
-    mutate(IDF = log(total_docs / (DF + 1)))  # Log of total documents divided by the DF, added 1 to avoid division by 0
-
-  # Filter out rows with DF = 1 or NA values
-  df_count <- df_count %>%
-    filter(DF > 1 & !is.na(DF))  # Remove rows with DF equal to 1 or NA values
-
-  # Merge TF and IDF to calculate TF-IDF
-  tfidf <- tf %>%
-    left_join(df_count, by = "bigram") %>%
-    mutate(TFIDF = TF * IDF)  # Calculate TF-IDF
-  
-  # Order by DF from highest to lowest
-  tfidf <- tfidf %>%
-    arrange(desc(DF))  # Order by DF in descending order
-  
-  # Return the result
-  return(tfidf)
+  return(bigram_count_year)  # Return the count of top bigrams by year
 }
 
-# Example: Apply the TF-IDF calculation to all data
-tfidf_df <- calculate_tfidf(all_data_combined)
+# Get the count of top bigrams used in each year
+top_bigrams_count_by_year <- count_top_bigrams_by_year(all_data_combined, top_bigrams_list)
+
+# Summing the occurrences of top bigrams by year
+total_bigrams_per_year <- top_bigrams_count_by_year %>%
+  group_by(Year) %>%         # Group by Year
+  summarise(Total_Bigrams = sum(n)) %>%  # Sum the counts of bigrams for each year
+  arrange(Year)             # Optionally, arrange by year
+
+# Summing the occurrences of top bigrams by year
+total_bigrams_per_year <- top_bigrams_count_by_year %>%
+  group_by(Year) %>%         # Group by Year
+  summarise(Total_Bigrams = sum(n)) %>%  # Sum the counts of bigrams for each year
+  mutate(TF_DF = Total_Bigrams / 25) %>%  # Add the TF/DF column by dividing by 25 (number of yeats top bigrams appear)
+  arrange(Year)             # Optionally, arrange by year
+
+# View the total bigrams per year with TF/DF column
+total_bigrams_per_year
+
+
+
+
 ```
-
-
-```{r echo=FALSE, warning=FALSE, message=FALSE}
-# List of unwanted phrases or buzzwords to remove (add more as needed)
-unwanted_phrases <- c("New York Times", "San Diego", "usa today", "tribune", "magazine", "press")
-
-# Function to clean and filter out unwanted phrases
-remove_unwanted_phrases <- function(text) {
-  for (phrase in unwanted_phrases) {
-    text <- str_replace_all(text, fixed(phrase), "")
-  }
-  return(text)
-}
-
-# Function to calculate TF-IDF for bigrams in each year
-calculate_tfidf <- function(df) {
-  # Tokenize the text into bigrams (pairs of consecutive words) per year
-  bigram_count <- df %>%
-    mutate(Article = sapply(Article, remove_unwanted_phrases)) %>%  # Remove unwanted phrases from articles
-    unnest_tokens(bigram, Article, token = "ngrams", n = 2) %>%      # Extract bigrams
-    mutate(bigram = str_replace_all(bigram, "\\d+", "")) %>%          # Remove numbers
-    mutate(bigram = str_replace_all(bigram, "[[:punct:]]", "")) %>%   # Remove punctuation
-    separate(bigram, c("word1", "word2"), sep = " ") %>%             # Separate the bigram into two words
-    filter(!word1 %in% stop_words$word & !word2 %in% stop_words$word) %>%  # Remove stop words
-    filter(word1 != "" & word2 != "") %>%                            # Remove blank spaces
-    unite(bigram, word1, word2, sep = " ")   
-  
-  # Calculate Term Frequency (TF)
-  tf <- bigram_count %>%
-    count(Year, bigram) %>%
-    group_by(Year) %>%
-    mutate(TF = n / sum(n)) %>%  # Divide by total number of bigrams in the document (sum of counts)
-    ungroup()
-
-  # Calculate Document Frequency (DF)
-  df_count <- bigram_count %>%
-    group_by(bigram) %>%
-    summarise(DF = n_distinct(Year)) %>%  # Count how many distinct years (documents) contain the bigram
-    ungroup()
-
-  # Calculate IDF
-  total_docs <- n_distinct(df$Year)
-  df_count <- df_count %>%
-    mutate(IDF = log(total_docs / (DF + 1)))  # Log of total documents divided by the DF, added 1 to avoid division by 0
-
-  # Filter out rows with DF = 1 or NA values
-  df_count <- df_count %>%
-    filter(DF > 1 & !is.na(DF))  # Remove rows with DF equal to 1 or NA values
-
-  # Merge TF and IDF to calculate TF-IDF
-  tfidf <- tf %>%
-    left_join(df_count, by = "bigram") %>%
-    mutate(TFIDF = TF * IDF)  # Calculate TF-IDF
-  
-  # Return the result
-  return(tfidf)
-}
-
-# Calculate the average TF-IDF per year
-avg_tfidf_per_year <- tfidf_df %>%
-  group_by(Year) %>%
-  summarise(Avg_TFIDF = mean(TFIDF, na.rm = TRUE)) %>%
-  filter(Year != 1965)  # Exclude year 1965
-
-# Plot the average TF-IDF per year
-ggplot(avg_tfidf_per_year, aes(x = Year, y = Avg_TFIDF)) +
-  geom_bar(stat = "identity", fill = "steelblue") +
-  labs(title = "Average TF-IDF per Year (Excluding 1965)", x = "Year", y = "Average TF-IDF") +
+```{r echo=FALSE, warning=FALSE}
+# Create a bar plot showing the top bigrams with the desired style
+ggplot(top_bigrams_all_articles, aes(x = reorder(bigram, n), y = n)) +
+  geom_bar(stat = "identity", fill = "skyblue") +
+  coord_flip() +  # Flip coordinates to make the labels readable
+  labs(title = "Top Bigrams by Frequency", x = "Bigram", y = "Frequency") +
   theme_minimal() +
   theme(
-    axis.text.x = element_text(angle = 45, hjust = 1, size = 10), # Rotate x-axis labels
-    axis.text.y = element_text(size = 10),  # Adjust y-axis label size
-    plot.title = element_text(size = 14)   # Adjust title size
+    plot.title = element_text(hjust = 0.5, family = "bodoni_moda", size = 16, margin = margin(b = 15), face = "bold"),
+    plot.subtitle = element_text(hjust = 0.5, family = "montserrat", size = 14),
+    axis.title = element_text(family = "montserrat", size = 14),
+    axis.text = element_text(family = "montserrat", size = 12),
+    text = element_text(size = 12, family = "montserrat"),
+    axis.text.x = element_text(angle = 45, hjust = 1),
+    axis.text.y = element_text(size = 10)
   )
+```
+
+
+
+
+```{r echo=FALSE, warning=FALSE}
+# Filter out the year 1965
+total_bigrams_per_year_filtered <- total_bigrams_per_year %>%
+  filter(Year != 1965)
+
+# Plotting Year vs TF/DF as a bar graph with the new styling
+ggplot(total_bigrams_per_year_filtered, aes(x = Year, y = TF_DF)) +
+  geom_bar(stat = "identity", fill = "skyblue") +  # Bar graph with a color fill
+  labs(title = "Year vs TF/DF of Top Bigrams",
+       x = "Year",
+       y = "TF/DF") +
+  theme_minimal() +  # Use a minimal theme for the plot
+  theme(
+    plot.title = element_text(hjust = 0.5, family = "bodoni_moda", size = 16, margin = margin(b = 15), face = "bold"),
+    plot.subtitle = element_text(hjust = 0.5, family = "montserrat", size = 14),
+    axis.title = element_text(family = "montserrat", size = 14),
+    axis.text = element_text(family = "montserrat", size = 12),
+    text = element_text(size = 12, family = "montserrat"),
+    axis.text.x = element_text(angle = 45, hjust = 1)
+  )
+
+ 
 
 ```
 
-```{r message=FALSE, warning=FALSE, include=FALSE}
-top_bigrams_per_year <- tfidf_df %>%
-  filter(Year != 1965) %>%  # Remove year 1965
-  group_by(Year) %>%
-  slice_max(order_by = TFIDF, n = 5) %>%  # Select top 5 bigrams for each year based on TFIDF
-  ungroup() %>%
-  # Remove bigrams with punctuation
-  filter(!str_detect(bigram, "[[:punct:]]"))  # Filters out bigrams that contain punctuation
 
-top_bigrams_per_year
-```
-library(shiny)
-library(dplyr)
-library(DT)
-library(shinydashboard)
-
-### Get the top bigrams
-top_bigrams_per_year <- tfidf_df %>%
-  filter(Year != 1965) %>%  # Remove year 1965
-  group_by(Year) %>%
-  slice_max(order_by = TFIDF, n = 5) %>%  # Select top 5 bigrams for each year based on TFIDF
-  ungroup()
-
-### UI for the shiny app
-ui <- dashboardPage(
-  dashboardHeader(title = "Top Bigrams by Year"),
-  dashboardSidebar(
-    sidebarMenu(
-      menuItem("Bigrams", tabName = "bigrams", icon = icon("chart-bar"))
-    )
-  ),
-  dashboardBody(
-    tabItems(
-      tabItem(tabName = "bigrams",
-              fluidRow(
-                box(
-                  title = "Select Year", status = "primary", solidHeader = TRUE,
-                  selectInput("year", "Select Year:", choices = unique(top_bigrams_per_year$Year), selected = 1966)
-                ),
-                box(
-                  title = "Top Bigrams for Selected Year", status = "primary", solidHeader = TRUE,
-                  dataTableOutput("top_bigrams")
-                )
-              )
-      )
-    )
-  )
-)
-
-### Server logic for the shiny app
-server <- function(input, output) {
-  output$top_bigrams <- renderDataTable({
-    # Filter data based on the selected year and show top 5 bigrams for that year
-    top_bigrams_per_year %>%
-      filter(Year == input$year) %>%
-      select(bigram, n, TFIDF)  # Show only the bigram, n, and TFIDF columns
-  }, options = list(
-    paging = TRUE,  # Enable pagination
-    searching = TRUE,  # Enable search functionality
-    pageLength = 5  # Show 5 rows per page
-  ))
-}
-
-### Run the shiny app
-shinyApp(ui = ui, server = server)
 
 # **Conclusion**
 

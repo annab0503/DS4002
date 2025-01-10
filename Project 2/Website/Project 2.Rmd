@@ -558,7 +558,7 @@ ggplot(average_emotion_by_admin, aes(x = Administration, y = average_emotion_cou
   geom_hline(yintercept = 0, color = "darkgray", size = 0.5) +  # Add a dark gray horizontal line at y = 0
   labs(
     title = "Emotions Are Becoming More Positive, But More Polarized",
-    subtitle = "Emotion Scores (NPC), Clinton - Biden",
+    subtitle = "Emotion Scores (NRC), Clinton - Biden",
     x = "Presidential Administration",
     y = "Average Emotion Count"
   ) + 

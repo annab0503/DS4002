@@ -51,7 +51,7 @@ font_add_google("Montserrat", "montserrat")     # Alias: montserrat
 1. **How has the volume of media coverage on H-1B visas changed over time?** By examining the quantity of articles published over the years, we aim to identify patterns in media attention and how these fluctuations correspond to significant political events, legislative changes, and economic conditions.
 
 2. **How has the sentiment towards H-1B visas in media coverage evolved across presidential administrations?** Understanding shifts in sentiment provides a window into how different administrations’ policies and rhetoric influenced public discourse on skilled labor migration.  
-3. **Which topics (as represented by bigrams) are the most consistent and widespread across years?* By investigating the most frequently occurring word pairs (key bigrams) in these articles, this question uncovers dominant themes and recurring narratives, offering deeper insights into the framing of H-1B visa discussions.  
+3. **Which topics (as represented by bigrams) are the most consistent and widespread across years?** By investigating the most frequently occurring word pairs (key bigrams) in these articles, this question uncovers dominant themes and recurring narratives, offering deeper insights into the framing of H-1B visa discussions.  
 
 To explore these questions, this study uses three influential outlets — *The New York Times*, *The San Diego Union-Tribune*, and *USA Today* — to examine how media narratives surrounding H-1B visas have evolved from 1997 to 2022. By analyzing trends in coverage, sentiment, and language, we aim go beyond quantitative analysis to explore the nuances of how journalism has both reflected and influenced the broader discourse on skilled labor migration. Through this lens, we seek to understand how media coverage has served as a barometer for societal attitudes and political priorities during pivotal moments in U.S. immigration history.
 
@@ -226,7 +226,7 @@ doc_data$Year <- format(doc_data$Date, "%Y")
 head(doc_data[, c("Document", "Date", "Year")])
 ```
 
-## **How has the volume of media coverage on H-1B visas changed over time?**
+## How has the volume of media coverage on H-1B visas changed over time?
 
 ```{r stacked-bar-plot-with-regression-line, echo=FALSE, warning=FALSE, message=FALSE, fig.width=10, fig.height=6}
 # Count articles per year for each source
@@ -598,7 +598,7 @@ ggplot(average_emotion_by_admin, aes(x = Administration, y = average_emotion_cou
 
 Similar to the Bing sentiment analysis, this secondary analysis reveals a consistent trend of emotions becoming more extreme over time, with the usage of emotional language increasing across media coverage. Interestingly, however, there is a noticeable shift toward more positive emotions overall, as the values of positive emotions consistently outweigh those of negative emotions. This suggests that while the emotional intensity of media coverage has escalated, the overall tone has shifted toward a more optimistic or favorable portrayal, even as discourse surrounding H-1B visas remains charged and fluctuating.
 
-## **Which topics (as represented by bigrams) are the most consistent and widespread across years?**
+## Which topics (as represented by bigrams) are the most consistent and widespread across years?
 
 ```{r message=FALSE, include=FALSE}
 
@@ -810,6 +810,15 @@ ggplot(total_bigrams_per_year_filtered, aes(x = Year, y = TF_DF)) +
 The graph of total bigrams per year shows how the frequency of top bigrams changes over the years, calculated by the TF/DF score. The spike in 2017 could indicate that there was a significant event, such as a policy change or increase in media coverage related to H-1B visas, that led to a surge in discussions around these terms during that time. The gradual upward trend suggests that over time, these bigrams have gained more attention in the articles, signaling an increasing focus on topics like foreign labor, employment visas, and the impact of these policies on American workers. This may reflect the growing relevance of H-1B visa discussions in the broader context of U.S. immigration and labor markets.
 
 # **Conclusion**
+
+In conclusion, the study of media coverage on H-1B visas from 1997 to 2022, through outlets such as The New York Times, The San Diego Union-Tribune, and USA Today, reveals significant fluctuations in coverage that correspond with major political and economic events. The increase in articles around 2015 and 2020, for example, indicates how journalism has not only reflected but also influenced public and political discourse during periods of substantial policy shifts and global crises.
+
+The sentiment analysis performed as part of this study enhances our understanding of the nuances in media narratives, showing how sentiment towards H-1B visas has shifted across different presidential administrations. This analysis has revealed that periods of economic uncertainty and policy change often coincide with more volatile media sentiment, influencing public perception and policy debates.
+
+By examining these trends and sentiments, the study aims to go beyond quantitative analysis to explore how journalism reflects and impacts the broader discourse on skilled labor migration. Media coverage, thus, serves not only as a barometer for societal attitudes and political priorities but also as a crucial player in shaping these perspectives.
+
+This in-depth look at media narratives provides stakeholders in policy, industry, and the workforce with a comprehensive view of the complexities of H-1B visa discourse, highlighting its implications for the global economy and offering insights into how journalism has both mirrored and catalyzed pivotal moments in U.S. immigration history.
+
 
 # **Works Cited**
 - Card, D., et al. (2022). Computational analysis of 140 years of US political speeches reveals more positive but increasingly polarized framing of immigration. *Proceedings of the National Academy of Sciences, 119*(31). https://doi.org/10.1073/pnas.2120510119

@@ -724,7 +724,6 @@ top_bigrams_all_articles <- get_top_bigrams_overall(all_data_combined)
 
 
 
-
 ```{r echo=FALSE, warning=FALSE}
 
 library(dplyr)
@@ -774,6 +773,10 @@ total_bigrams_per_year
 
 
 ```
+
+The analysis of Term Frequency (TF) and Document Frequency (DF) provides insight into the most frequently occurring bigrams (word pairs) and their consistency across years in articles discussing H-1B visas. TF (Term Frequency) measures how often a particular bigram appears in each article across years, revealing the dominant terms within the text. In this case, bigrams like "foreign worker" and "American workers" emerge as central to the conversation about H-1B visas, consistently appearing across the articles. On the other hand, DF (Document Frequency) traditionally counts how many distinct documents or years a specific bigram appears in, offering a broader view of how widespread a term is. By dividing the frequency by the number of years in which at least one occurrence of a bigram appears, this approach normalizes the data and helps track trends in terms of their prevalence across time, rather than just their occurrence in a few documents. The resulting TF/DF ratio gives a clearer understanding of how consistently certain bigrams appear over the years, showing which themes remain prevalent and which ones are more transient or sporadic. This method helps answer key questions about the dominant topics and the recurring narratives in H-1B visa discussions, identifying consistent themes like "foreign labor" that persist over time and highlighting spikes or shifts that may indicate significant events or changes in discourse.
+
+
 ```{r echo=FALSE, warning=FALSE}
 # Create a bar plot showing the top bigrams with the desired style
 ggplot(top_bigrams_all_articles, aes(x = reorder(bigram, n), y = n)) +
@@ -793,6 +796,7 @@ ggplot(top_bigrams_all_articles, aes(x = reorder(bigram, n), y = n)) +
 ```
 
 
+The bar plot showing the top bigrams by frequency presents the most commonly used bigrams across the entire dataset. Phrases such as "passport visa," "foreign worker," and "American workers" appear prominently, which further supports the notion that these are key topics consistently discussed in relation to H-1B visas. The frequency of these bigrams emphasizes their central role in framing the discourse on visa issues, labor markets, and immigration policies. This could reflect the recurring narrative in articles, where these terms represent the main themes of the ongoing debates about the visa system and its effects on both the foreign and domestic workforce. However, some unrelated bigrams or outliers show up in the data, which may be because of errors in processing the text or changes in the context of the articles. These outliers may not be as relevant to the H-1B visa topic, but focusing on the main bigrams helps get rid of the noise
 
 
 ```{r echo=FALSE, warning=FALSE}
@@ -820,7 +824,7 @@ ggplot(total_bigrams_per_year_filtered, aes(x = Year, y = TF_DF)) +
 
 ```
 
-
+The graph of total bigrams per year shows how the frequency of top bigrams changes over the years, calculated by the TF/DF score. The spike in 2017 could indicate that there was a significant event, such as a policy change or increase in media coverage related to H-1B visas, that led to a surge in discussions around these terms during that time. The gradual upward trend suggests that over time, these bigrams have gained more attention in the articles, signaling an increasing focus on topics like foreign labor, employment visas, and the impact of these policies on American workers. This may reflect the growing relevance of H-1B visa discussions in the broader context of U.S. immigration and labor markets.
 
 # **Conclusion**
 

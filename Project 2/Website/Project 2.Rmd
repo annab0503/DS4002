@@ -1,5 +1,5 @@
 ---
-title: "Shaping Perceptions: Media, Policy, and the Shifting Narrative of H-1B Immigration (1997–2022)"
+title: "Shaping Perceptions: Media, Policy, and the Shifting Narrative of H-1B Immigration"
 author: "Anna Brown, Rishika Deshmukh, and Ada Zhang"
 date: "`r format(Sys.Date(), '%B %d, %Y')`"
 output: 
